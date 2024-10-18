@@ -39,12 +39,12 @@ CSS STRUCTURE:
   --bs-body-line-height: 1.7;
   --bs-body-color: #333;
   --bs-body-color-rgb: 51, 51, 51;
-  --bs-body-bg: #ffff00;
+  --bs-body-bg: #ffe100;
   --bs-primary: #FF534A;
   --bs-primary-dark: #d33a32;
   --bs-secondary: #FDEEE9;
   --bs-black: #111;
-  --bs-light: #F1F1F0;
+  --bs-light: #ffe100;
   --bs-dark: #212529;
   --bs-gray: #949494;
   --bs-gray-dark: #51565b;
