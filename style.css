@@ -49,7 +49,7 @@ CSS STRUCTURE:
   --bs-gray: #949494;
   --bs-gray-dark: #51565b;
 
-  --bs-primary-rgb: yellow;
+  --bs-primary-rgb: 255,255, 0;
   --bs-secondary-rgb: 253, 238, 233;
   --bs-black-rgb: 17, 17, 17;
   --bs-light-rgb: 241, 241, 240;
