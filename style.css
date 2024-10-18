@@ -44,12 +44,12 @@ CSS STRUCTURE:
   --bs-primary-dark: #d33a32;
   --bs-secondary: #FDEEE9;
   --bs-black: #111;
-  --bs-light: #F1F1F0;
+  --bs-light: yellow;
   --bs-dark: #212529;
   --bs-gray: #949494;
   --bs-gray-dark: #51565b;
 
-  --bs-primary-rgb: 255, 83, 74;
+  --bs-primary-rgb: yellow;
   --bs-secondary-rgb: 253, 238, 233;
   --bs-black-rgb: 17, 17, 17;
   --bs-light-rgb: 241, 241, 240;
