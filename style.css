@@ -78,13 +78,13 @@ CSS STRUCTURE:
 .map-container {
   width: 100%;
   height: 400px; /* Set the height for the map */
-  border: 2px solid #007bff; /* Optional border style */
+  border: 2px solid #ffe100; /* Optional border style */
   border-radius: 8px; /* Optional rounded corners */
   overflow: hidden; /* Ensure content fits within the border */
 }
 iframe {
   width: 100%;
-  height: 100%;
+  height: 60%;
   border: 0; /* Remove default border */
 }
 
