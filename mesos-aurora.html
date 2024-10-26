@@ -208,12 +208,6 @@
 										<img src="images/banner-image4.jpg" alt="post-image" class="img-fluid mb-4">
 									</figure>
 									<p>We are looking at two (mainly one) such tools today, which we heavily relied on at one of the start-ups I worked at - Apache Mesos and Apache Aurora. They had a short but significant reign; with <strong>Virtual Machines</strong> being it’s predecessor and <strong>Containers</strong> it’s successor. Having worked on Virtual Machines in the past, I found Mesos to be fascinating. Its was way faster, more lightweight and efficient. And the way it achieved this was brilliant.</p>
-									<h4>Consectetur Facilisis Vivamus</h4>
-									<ul class="inner-list">
-										<li>Blandit mauris libero condimentum commodo sociis convallis sit.</li>
-										<li>Magna diam amet justo sed vel dolor et volutpat integer.</li>
-										<li>Laculis sit sapien hac odio elementum egestas neque.</li>
-									</ul>
 									<p>We will be diving deep into these softwares to see how they compare with VMs and Containers. By the end of this, you’ll have a better understanding of how these tools work under the hood and achieve their end goal.</p>
 									<h3 class="info-title">So what are Mesos and Aurora?</h3>
 									<p><strong>Apache Mesos</strong> basically is a distributed systems kernel that abstracts CPU, memory, storage, and other compute resources away from machines (physical or virtual) to enable effective deployment and operation of your applications on ‘isolated instances’.</p>
@@ -227,6 +221,17 @@
 									<p>Aurora on the other hand, was developed at <strong>Twitter</strong> to address the company's specific needs for running long-running services (like microservices) and cron-like scheduled jobs. Twitter had already adopted Mesos for resource management but needed a higher-level abstraction to manage complex distributed applications and services more effectively. It was open-sourced in 2013.</p>
 									<p>Apache Aurora provided a <strong>service scheduler</strong> on top of Mesos for long-running applications (e.g., web services, APIs) and batch jobs (e.g., cron jobs, data processing jobs) and a <strong>job scheduling system</strong> for running fault-tolerant services, helping Twitter handle service failures and reschedule tasks on available servers.</p>
 									<p>Aurora allowed developers to specify application requirements and constraints (e.g., CPU, memory, and disk needs) and handled the placement and lifecycle management of tasks across the Mesos cluster.</p>
+									<h3>How Apache Mesos works:</h3>
+									<h4>Master-Agent Architecture:</h4>
+									<p>Apache Mesos follows a master-agent architecture, which is key to how it manages and abstracts resources:</p>
+									<ul class="inner-list">
+										<li>(a) <strong>Mesos Master:</strong> The central coordinator that manages the overall state of the cluster, including resources, task scheduling, and interactions with frameworks (applications).</li>
+										<li>(b) <strong>Mesos Agents</strong> (formerly called Slaves): Each physical or virtual server in the cluster runs a Mesos agent, which reports the available resources (CPU, memory, disk, etc.) to the master. The agent is responsible for running tasks assigned to it by the Mesos master. The agents act as intermediaries between the physical/virtual hardware and the tasks, effectively abstracting the hardware details.</li>
+									</ul>
+									<p>Applications do not interact with hardware directly but instead request resources from the Mesos master, which schedules tasks to run on the available agents.</p>
+									<h4>Isolation:</h4>
+									<p>Isolation:</p>
+
 									<div class="post-bottom-link d-flex justify-content-between">
 										<div class="block-tag">
 											<ul class="list-unstyled d-flex gap-2">
