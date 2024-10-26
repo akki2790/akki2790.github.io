@@ -225,13 +225,37 @@
 									<h4>Master-Agent Architecture:</h4>
 									<p>Apache Mesos follows a master-agent architecture, which is key to how it manages and abstracts resources:</p>
 									<ul class="inner-list">
-										<li>(a) <strong>Mesos Master:</strong> The central coordinator that manages the overall state of the cluster, including resources, task scheduling, and interactions with frameworks (applications).</li>
-										<li>(b) <strong>Mesos Agents</strong> (formerly called Slaves): Each physical or virtual server in the cluster runs a Mesos agent, which reports the available resources (CPU, memory, disk, etc.) to the master. The agent is responsible for running tasks assigned to it by the Mesos master. The agents act as intermediaries between the physical/virtual hardware and the tasks, effectively abstracting the hardware details.</li>
+										<li> <strong>Mesos Master:</strong> The central coordinator that manages the overall state of the cluster, including resources, task scheduling, and interactions with frameworks (applications).</li>
+										<li> <strong>Mesos Agents</strong> (formerly called Slaves): Each physical or virtual server in the cluster runs a Mesos agent, which reports the available resources (CPU, memory, disk, etc.) to the master. The agent is responsible for running tasks assigned to it by the Mesos master. The agents act as intermediaries between the physical/virtual hardware and the tasks, effectively abstracting the hardware details.</li>
 									</ul>
 									<p>Applications do not interact with hardware directly but instead request resources from the Mesos master, which schedules tasks to run on the available agents.</p>
 									<h4>Isolation:</h4>
-									<p>Isolation:</p>
-
+									<p>This is the most important and technical aspect of Apache Mesos - <strong>‘How it achieves abstraction and isolation of Hardware resources?’</strong> I’ve talked about this in a dedicated section below.</p>
+									<h4>Resource Offers:</h4>
+									<p>One of the key mechanisms Mesos uses to abstract resources is the resource offer model. Instead of having applications request specific resources upfront, Mesos works the other way around:</p>
+									<ul class="inner-list">
+										<li> Each <strong>Mesos agent periodically reports</strong> the available resources (CPU, memory, disk, etc.) on the physical server to the <strong>Mesos master.</strong></li>
+										<li> The <strong>Mesos master</strong> then <strong>offers</strong> these resources to registered frameworks (e.g., Apache Spark, Marathon, Aurora).</li>
+										<li> Frameworks decide whether to accept these resources based on their own requirements and then submit tasks to be run on those resources.</li>
+									</ul>
+									<p>This resource offer model decouples applications from the underlying hardware and creates a high-level abstraction where resources are dynamically offered to applications as needed.</p>
+									<h4>Fine-Grained Allocation:</h4>
+									<p>Mesos provides fine-grained control over the allocation of resources, <strong>allowing frameworks to specify exact amounts</strong> of CPU, memory, disk, and network they require. This allows Mesos to:</p>
+									<ul class="inner-list">
+										<li> <strong>Divide physical resources</strong> on each server (CPU cores, RAM, disk, network bandwidth) into smaller, manageable units.</li>
+										<li> <strong>Isolate resource usage</strong> between tasks, ensuring that no task overuses resources or impacts others running on the same agent.</li>
+									</ul>
+									<p>By breaking down server hardware resources into smaller units, Mesos effectively abstracts the physical server into multiple resource slots that can be distributed across different tasks, creating a virtualization-like environment without the overhead of virtual machines.</p>
+									<h4>Framework Abstraction:</h4>
+									<p></p>
+									<p></p>
+									<p></p>
+									<p></p>
+									<h4>Framework Abstraction:</h4>
+									<p></p>
+									<p></p>
+									<p></p>
+									<p></p>
 									<div class="post-bottom-link d-flex justify-content-between">
 										<div class="block-tag">
 											<ul class="list-unstyled d-flex gap-2">
