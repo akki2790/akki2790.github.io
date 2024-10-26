@@ -281,10 +281,10 @@
 										<li> <strong>Network Namespace: </strong> Each network namespace can have its own network interfaces and routing tables. This allows different applications or containers to have <strong>completely independent networking stacks</strong>, preventing them from interfering with each other’s network traffic.</li>
 										<li> <strong>Mount Namespace: </strong> Processes in a mount namespace can have their own view of the file system, with their own mounted directories and devices. This allows applications to be isolated from each other’s file systems, so they cannot see or modify each other’s files.</li>
 									</ul>
-									<h4>Unified Resource Pool: </h4>
-									<p></p>
-									<p></p>
-									<p></p>
+									<h3>How does Apache Aurora work? </h3>
+									<p>Apache Aurora provides a framework for deploying and managing long-running services, cron jobs, and batch jobs across a Mesos cluster. Here’s how Aurora achieves this within the Mesos ecosystem:</p>
+									<h5>Job Definition and Configuration:</h5>
+									<p>In Aurora, users define <strong>jobs</strong> using a <strong>configuration file</strong> written in a DSL (Domain-Specific Language) like Python or JSON. These jobs specify the resources requirements (CPU, memory, disk) and other parameters (e.g., health checks, replication, etc.).</p>
 									<p></p>
 									<h4>Unified Resource Pool: </h4>
 									<p></p>
