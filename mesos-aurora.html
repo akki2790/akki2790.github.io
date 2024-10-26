@@ -285,40 +285,31 @@
 									<p>Apache Aurora provides a framework for deploying and managing long-running services, cron jobs, and batch jobs across a Mesos cluster. Here’s how Aurora achieves this within the Mesos ecosystem:</p>
 									<h5>Job Definition and Configuration:</h5>
 									<p>In Aurora, users define <strong>jobs</strong> using a <strong>configuration file</strong> written in a DSL (Domain-Specific Language) like Python or JSON. These jobs specify the resources requirements (CPU, memory, disk) and other parameters (e.g., health checks, replication, etc.).</p>
-									<p>Example Job Configuration (Aurora Job File):</p>
+									<em>Example Job Configuration (Aurora Job File):</em>
 									<pre>
 										<code>
-	function greet() {
-	console.log("Hello, world!");
-	}
-	greet();
-										</code>
-									</pre>
-									<p>Example Job Configuration (Aurora Job File):</p>
-									<pre>
-										<code>
-											job = Job(
-											  name = "billing_service",
-											  environment = "prod",
-											  role = "billingteam",
-											  task = Service(
-											    name = "billing_server",
-											    cpu = 0.25,  # 0.25 CPU per instance
-											    ram = 2048,  # 2GB of RAM per instance
-											    disk = 512,  # 512MB of disk space
-											    instances = 8,  # We want 8 instances running
-											    process = Process(
-											      name = "billing_server_process",
-											      cmdline = “/usr/local/bin/start-billing-service",  # Command to start the service
-											      max_failures = 3  # Retry upto 3 times before reporting failure
-											    ),
-											    health_check = HealthCheck(
-											      url = "http://localhost:8080/health",
-											      interval_secs = 10,
-											      timeout_secs = 5
-											    )
-											  )
-											)
+job = Job(
+	name = "billing_service",
+	environment = "prod",
+	role = "billingteam",
+	task = Service(
+	name = "billing_server",
+	cpu = 0.25,  # 0.25 CPU per instance
+	ram = 2048,  # 2GB of RAM per instance
+	disk = 512,  # 512MB of disk space
+	instances = 8,  # We want 8 instances running
+	process = Process(
+		name = "billing_server_process",
+		cmdline = “/usr/local/bin/start-billing-service",  # Command to start the service
+		max_failures = 3  # Retry upto 3 times before reporting failure
+	),
+	health_check = HealthCheck(
+		url = "http://localhost:8080/health",
+		interval_secs = 10,
+		timeout_secs = 5
+	)
+	)
+)
 										</code>
 									</pre>
 									<h5>Service Scheduling and Deployment:  </h5>
