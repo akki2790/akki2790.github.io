@@ -259,14 +259,14 @@
 									<p>Apache Mesos achieves abstraction of server hardware resources by acting as a distributed resource manager or a cluster manager. It abstracts the underlying physical or virtual server infrastructure into a single resource, isolating them with <strong> Cgroups and namespaces.</strong> (Linux kernel features) All this allows applications to efficiently share and utilize the available resources (CPU, memory, disk, network, etc.) across a distributed cluster.</p>
 									<h3>Cgroups and namespaces: </h3>
 									<p><strong>Control Groups (cgroups)</strong> is a Linux kernel feature that limits, monitors, and manages the resources (CPU, memory, disk I/O, network bandwidth, etc.) that a group of processes can use. It allows system administrators or orchestration tools to control the amount of system resources allocated to processes or groups of processes. Without cgroups, processes can potentially consume excessive resources, leading to <strong>resource contention</strong> or even <strong>starvation</strong> of other processes.</p>
-									<h4>Key Features of Cgroups: </h4>
+									<h5>Key Features of Cgroups: </h5>
 									<ul class="inner-list">
 										<li> <strong>Resource Limitation: </strong> You can set upper limits on the amount of CPU, memory, disk I/O, and other resources that a group of processes can consume.</li>
 										<li> <strong>Resource Monitoring: </strong> Cgroups can track the resource usage of processes, providing real-time information about how much CPU or memory a task is consuming.</li>
 										<li> <strong>Resource Prioritization: </strong> By assigning priorities to different cgroups, you can control how resources are shared among processes, making sure that critical processes get more resources than less critical ones.</li>
 										<li> <strong>Freezing/Throttling: </strong> Cgroups can pause or limit resource consumption temporarily if needed, preventing a process from monopolizing resources.</li>
 									</ul>
-									<h4>Examples:</h4>
+									<h5>Examples:</h5>
 									<ul class="inner-list">
 										<li> <strong>CPU Limitation: </strong> Cgroups can ensure that one task (process) uses only 40% of the CPU, while another uses the remaining 60%. This prevents a poorly-behaved or resource-hungry task from hogging all the CPU resources.</li>
 										<li> <strong>Memory Isolation: </strong> Cgroups can cap the amount of memory a process or group of processes can use. If a process exceeds this limit, it will be killed or its allocation will be constrained, protecting other tasks from being affected by out-of-memory errors.</li>
@@ -275,7 +275,7 @@
 									</ul>
 									<p><strong>Namespaces</strong> are a Linux kernel feature that provides <strong>process-level isolation</strong> by wrapping global system resources (such as file systems, network interfaces, process IDs, and user IDs) into <strong>independent instances.</strong> This makes it appear as if each group of processes has its own private view of these resources, even though they are all running on the same underlying operating system. Processes running in one namespace are unaware of the resources in other namespaces, ensuring that they cannot interfere with each other.</p>
 									<p>There are <strong>several types of namespaces, each isolating a different system resource.</strong> Some of these are - PID Namespace, Mount (MNT) Namespace, Network (NET) Namespace, Time Namespace, IPC Namespace and User Namespace.</p>
-									<h4>Examples: </h4>
+									<h5>Examples: </h5>
 									<ul class="inner-list">
 										<li> <strong>PID Namespace: </strong> Processes in different PID namespaces have their own process ID space. This means that two processes in different namespaces can have the same PID but will never see each other. This isolation is essential for containers, where each container behaves as if it has its own private process space.</li>
 										<li> <strong>Network Namespace: </strong> Each network namespace can have its own network interfaces and routing tables. This allows different applications or containers to have <strong>completely independent networking stacks</strong>, preventing them from interfering with each other’s network traffic.</li>
@@ -285,6 +285,61 @@
 									<p>Apache Aurora provides a framework for deploying and managing long-running services, cron jobs, and batch jobs across a Mesos cluster. Here’s how Aurora achieves this within the Mesos ecosystem:</p>
 									<h5>Job Definition and Configuration:</h5>
 									<p>In Aurora, users define <strong>jobs</strong> using a <strong>configuration file</strong> written in a DSL (Domain-Specific Language) like Python or JSON. These jobs specify the resources requirements (CPU, memory, disk) and other parameters (e.g., health checks, replication, etc.).</p>
+									<p>Example Job Configuration (Aurora Job File):</p>
+									<pre>
+										<code>
+											function greet() {
+												console.log("Hello, world!");
+											}
+											greet();
+										</code>
+									</pre>
+									<p>Example Job Configuration (Aurora Job File):</p>
+									<pre>
+										<code>
+											job = Job(
+											  name = "billing_service",
+											  environment = "prod",
+											  role = "billingteam",
+											  task = Service(
+											    name = "billing_server",
+											    cpu = 0.25,  # 0.25 CPU per instance
+											    ram = 2048,  # 2GB of RAM per instance
+											    disk = 512,  # 512MB of disk space
+											    instances = 8,  # We want 8 instances running
+											    process = Process(
+											      name = "billing_server_process",
+											      cmdline = “/usr/local/bin/start-billing-service",  # Command to start the service
+											      max_failures = 3  # Retry upto 3 times before reporting failure
+											    ),
+											    health_check = HealthCheck(
+											      url = "http://localhost:8080/health",
+											      interval_secs = 10,
+											      timeout_secs = 5
+											    )
+											  )
+											)
+										</code>
+									</pre>
+									<h4>Unified Resource Pool: </h4>
+									<p></p>
+									<p></p>
+									<p></p>
+									<p></p>
+									<h4>Unified Resource Pool: </h4>
+									<p></p>
+									<p></p>
+									<p></p>
+									<p></p>
+									<h4>Unified Resource Pool: </h4>
+									<p></p>
+									<p></p>
+									<p></p>
+									<p></p>
+									<h4>Unified Resource Pool: </h4>
+									<p></p>
+									<p></p>
+									<p></p>
 									<p></p>
 									<h4>Unified Resource Pool: </h4>
 									<p></p>
