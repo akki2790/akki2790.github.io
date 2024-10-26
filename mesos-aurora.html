@@ -202,12 +202,12 @@
 							<div class="post-content py-5">
 								<div class="post-description">
 									<h3 class="info-title">The transient world of tech</h3>
-									<p>You come across a new tech, find it fascinating, you try and understand it, learn to use it, even implement it in your workflow. Then a couple seasons pass-by and next thing you know, its obsolete. Some new tech has eclipsed it.</p>
+									<p>You happen to come across a new tech, find it fascinating, you try and understand it, learn to use it, even implement it in your workflow. Then a couple seasons pass-by and next thing you know, its obsolete. Some new tech has eclipsed it.</p>
 									<p>This is the faith of most tools in the world of tech. Sure, you can pledge to keep using something that’s getting obsolete. But, it won’t be easy and it will only get more difficult with time. The community support won’t be strong enough, new tools might not play well with it and the list of issues, shortcomings & todos will keep piling w/o ever being tackled. I am sure this reminds you of a few technologies you came across in a past life, or of legends you’ve heard from your senior colleagues.</p>
 									<figure class="d-flex float-end m-md-5">
 										<img src="images/banner-image4.jpg" alt="post-image" class="img-fluid mb-4">
 									</figure>
-									<blockquote>We are looking at two (mainly one) such tools today, which we heavily relied on at one of the start-ups I worked at - Apache Mesos and Apache Aurora. They had a short but significant reign; with Virtual Machines being it’s predecessor and Containers it’s successor. Having worked on Virtual Machines in the past, I found Mesos to be fascinating. Its was way faster, more lightweight and efficient. And the way it achieved this was brilliant.</blockquote>
+									<p>We are looking at two (mainly one) such tools today, which we heavily relied on at one of the start-ups I worked at - Apache Mesos and Apache Aurora. They had a short but significant reign; with <strong>Virtual Machines</strong> being it’s predecessor and <strong>Containers</strong> it’s successor. Having worked on Virtual Machines in the past, I found Mesos to be fascinating. Its was way faster, more lightweight and efficient. And the way it achieved this was brilliant.</p>
 									<h4>Consectetur Facilisis Vivamus</h4>
 									<ul class="inner-list">
 										<li>Blandit mauris libero condimentum commodo sociis convallis sit.</li>
@@ -216,31 +216,17 @@
 									</ul>
 									<p>We will be diving deep into these softwares to see how they compare with VMs and Containers. By the end of this, you’ll have a better understanding of how these tools work under the hood and achieve their end goal.</p>
 									<h3 class="info-title">So what are Mesos and Aurora?</h3>
-									<p>Tortor diam dignissim amet, in interdum aliquet. Magnis dictum et eros purus
-										fermentum, massa ullamcorper sit sollicitudin. Nascetur libero elementum
-										adipiscing mauris maecenas et magna. Etiam nec, rutrum a diam lacus, nunc
-										integer etiam. Mattis pulvinar non viverra donec pellentesque. Odio mi consequat
-										libero dolor. Porta ut diam lobortis eget leo, lectus. Nunc tempus feugiat massa
-										laoreet ultrices diam magna quam. Congue auctor auctor luctus neque. Enim lorem
-										ultrices diam donec. Sed id placerat consectetur faucibus.</p>
-									<h4>Velit, praesent pharetra malesuada</h4>
-									<p>Id pulvinar amet. Consequat potenti mollis massa iaculis et, dolor, eget lectus.
-										Aliquam pellentesque molestie felis fames sed eget non euismod eget. Et eget
-										ullamcorper urna, elit ac diam tellus viverra lacus.</p>
-									<p>Tortor diam dignissim amet, in interdum aliquet. Magnis dictum et eros purus
-										fermentum, massa ullamcorper sit sollicitudin. Nascetur libero elementum
-										adipiscing mauris maecenas et magna. Etiam nec, rutrum a diam lacus, nunc
-										integer etiam. Mattis pulvinar non viverra donec pellentesque. Odio mi consequat
-										libero dolor. Porta ut diam lobortis eget leo, lectus.</p>
-									<p>Velit, praesent pharetra malesuada id pulvinar amet. Consequat potenti mollis
-										massa iaculis et, dolor, eget lectus. Aliquam pellentesque molestie felis fames
-										sed eget non euismod eget. Et eget ullamcorper urna, elit ac diam tellus viverra
-										lacus.</p>
-									<p>Tortor diam dignissim amet, in interdum aliquet. Magnis dictum et eros purus
-										fermentum, massa ullamcorper sit sollicitudin. Nascetur libero elementum
-										adipiscing mauris maecenas et magna. Etiam nec, rutrum a diam lacus, nunc
-										integer etiam. Mattis pulvinar non viverra donec pellentesque. Odio mi consequat
-										libero dolor. Porta ut diam lobortis eget leo, lectus.</p>
+									<p><strong>Apache Mesos</strong> basically is a distributed systems kernel that abstracts CPU, memory, storage, and other compute resources away from machines (physical or virtual) to enable effective deployment and operation of your applications on ‘isolated instances’.</p>
+									<p>These isolated instances function similar to VMs or Containers, but share the host resources. No need for a Guest OS either. They represent individual workloads/tasks (microservices, jobs, etc.) that run on available hardware resources across your cluster. You can even run multiple applications or frameworks (like Hadoop, Spark, Kubernetes, or even custom frameworks) on the same set of machines without them stepping on one another.</p>
+									<p><strong>Apache Aurora</strong> is a service scheduler that runs on top of Mesos. It handles resource scheduling, fault tolerance, and task monitoring, making it easier to manage large-scale applications. It also offers features like rolling updates, job quotas, and service health checking, which makes it robust for managing both stateless and stateful workloads.</p>
+									<p><strong>Together</strong>, they provide cluster resource management and isolation, with high-level service scheduling and management features.</p>
+									<h3>Who, Why and When?</h3>
+									<p>Apache Mesos was created by Benjamin Hindman, Andy Konwinski, Matei Zaharia, and a few others at the University of California, Berkeley's AMPLab. The project began around 2009 and was open-sourced in 2010. The primary motivation behind it was to address the growing complexity of managing distributed systems; especially in large-scale data centers. The early 2000s saw a rise in cloud computing, and organizations were running multiple distributed systems for various tasks like web applications, batch processing (e.g., Hadoop), and real-time data streaming (e.g., Spark). Each of these systems needed its own cluster management framework.</p>
+									<p>Apache Mesos was designed to create a <strong>unified cluster management platform</strong> that could - run a variety of different distributed applications on a shared pool of resources, dynamically allocate hardware resources (like CPU, memory, storage) to applications as needed and allow applications to co-exist on the same physical or virtual servers, reducing the need to dedicate entire clusters to individual systems.</p>
+									<p>It aimed to provide a <strong>single resource pool</strong> that could be efficiently shared by different frameworks, improving resource utilization and simplifying cluster management.</p>
+									<p>Aurora on the other hand, was developed at <strong>Twitter</strong> to address the company's specific needs for running long-running services (like microservices) and cron-like scheduled jobs. Twitter had already adopted Mesos for resource management but needed a higher-level abstraction to manage complex distributed applications and services more effectively. It was open-sourced in 2013.</p>
+									<p>Apache Aurora provided a <strong>service scheduler</strong> on top of Mesos for long-running applications (e.g., web services, APIs) and batch jobs (e.g., cron jobs, data processing jobs) and a <strong>job scheduling system</strong> for running fault-tolerant services, helping Twitter handle service failures and reschedule tasks on available servers.</p>
+									<p>Aurora allowed developers to specify application requirements and constraints (e.g., CPU, memory, and disk needs) and handled the placement and lifecycle management of tasks across the Mesos cluster.</p>
 									<div class="post-bottom-link d-flex justify-content-between">
 										<div class="block-tag">
 											<ul class="list-unstyled d-flex gap-2">
