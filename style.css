@@ -98,6 +98,18 @@ a {
   transition: all 0.3s ease-out;
 }
 
+pre {
+  background-color: #f0f0f0; /* Light gray background */
+  padding: 10px;            /* Padding around the text */
+  border: 1px solid #ccc;   /* Light gray border */
+  overflow: auto;           /* Enable scrolling for long code */
+}
+
+code {
+  color: #d63384;           /* Change code text color */
+  font-family: 'Courier New', Courier, monospace; /* Use a monospace font */
+}
+
 /* Dropdown */
 .dropdown-menu {
   --bs-dropdown-border-radius: 0;
@@ -646,18 +658,6 @@ width: 95%;
 .swiper-slide-active .txt-fx.zoom .letter,
 .aos-animate .txt-fx.zoom .letter {
   transform: scale(1);
-}
-
-pre {
-  background-color: #f0f0f0; /* Light gray background */
-  padding: 10px;            /* Padding around the text */
-  border: 1px solid #ccc;   /* Light gray border */
-  overflow: auto;           /* Enable scrolling for long code */
-}
-
-code {
-  color: #d63384;           /* Change code text color */
-  font-family: 'Courier New', Courier, monospace; /* Use a monospace font */
 }
 
 /* course-outcomes */
