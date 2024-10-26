@@ -100,7 +100,7 @@ a {
 
 pre {
   background-color: #f0f0f0; /* Light gray background */
-  padding: 10px;            /* Padding around the text */
+  padding: 1px;            /* Padding around the text */
   border: 1px solid #ccc;   /* Light gray border */
   overflow: auto;           /* Enable scrolling for long code */
 }
