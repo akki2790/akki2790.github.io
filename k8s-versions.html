@@ -183,7 +183,7 @@
 									<p>For a lot of people (including myself) the relationship between these two and their release cycles can feel quite confusing at first. With this article, I will try to demystify all that. I’ll also talk about the impact of deprecated APIs, how to tackle them and the tools that assist you in identifying them.</p>
 									<h3 class="info-title">Why is this important?</h3>
 									<p>Various API resources, their versions and their deprecation is something that’ll come up during a Kubernetes cluster version upgrade. In fact, its one of the <strong>most important thing you’ve to account for</strong> before you jump to a new K8s version.</p>
-									<p>Here's how they differ and relate:</p>
+									<h3 class="info-title">>Here's how they differ and relate:</h3>
 									<h5>Kubernetes Version:</h5>
 									<ul class="inner-list">
 										<li> This refers to the version of the Kubernetes platform itself. (the control plane, kubelet, kube-proxy, etc.)</li>
@@ -204,14 +204,12 @@
 									<figure class="d-flex float-end m-md-5">
 										<img src="images/k8s-API-alpha.png" alt="post-image" class="img-fluid mb-4" style="width: 50%;">
 									</figure>
-									<h3>Who, Why and When?</h3>
-									<p>Apache Mesos was created by Benjamin Hindman, Andy Konwinski, Matei Zaharia, and a few others at the University of California, Berkeley's AMPLab. The project began around 2009 and was open-sourced in 2010.The primary motivation behind it was to address the growing complexity of managing distributed systems; especially in large-scale data centers. The early 2000s saw a rise in cloud computing, and organizations were running multiple distributed systems for various tasks like web applications, batch processing (e.g., Hadoop), and real-time data streaming (e.g., Spark). Each of these systems needed its own cluster management framework.</p>
-									<p>Apache Mesos was designed to create a <strong>unified cluster management platform</strong> that could - run a variety of different distributed applications on a shared pool of resources, dynamically allocate hardware resources (like CPU, memory, storage) to applications as needed and allow applications to co-exist on the same physical or virtual servers, reducing the need to dedicate entire clusters to individual systems.</p>
-									<p>It aimed to provide a <strong>single resource pool</strong> that could be efficiently shared by different frameworks, improving resource utilization and simplifying cluster management.</p>
-									<p>Aurora on the other hand, was developed at <strong>Twitter</strong> to address the company's specific needs for running long-running services (like microservices) and cron-like scheduled jobs. Twitter had already adopted Mesos for resource management but needed a higher-level abstraction to manage complex distributed applications and services more effectively. It was open-sourced in 2013.</p>
-									<p>Apache Aurora provided a <strong>service scheduler</strong> on top of Mesos for long-running applications (e.g., web services, APIs) and batch jobs (e.g., cron jobs, data processing jobs) and a <strong>job scheduling system</strong> for running fault-tolerant services, helping Twitter handle service failures and reschedule tasks on available servers.</p>
-									<p>Aurora allowed developers to specify application requirements and constraints (e.g., CPU, memory, and disk needs) and handled the placement and lifecycle management of tasks across the Mesos cluster.</p>
-									<h3>How does Apache Mesos work?</h3>
+									<h3 class="info-title">>Here's how they differ and relate:</h3>
+									<p><strong>Kubernetes version release determines the availability and defaulting of API versions.</strong> For example, a particular API version (like apps/v1) might be introduced as <strong>stable</strong> in a certain Kubernetes release (e.g., v1.9.0). Older API versions may be <strong>deprecated</strong> or removed in future Kubernetes releases. For instance, extensions/v1beta1 for Deployment objects was deprecated and replaced by apps/v1 in Kubernetes v1.16.0.</p>
+									<p><strong>Kubernetes versioning doesn't necessarily map 1:1 to API versions.</strong> While the Kubernetes platform evolves, certain API versions might remain stable (e.g., core/v1) or change more slowly than Kubernetes releases</p>
+									<p><strong>Example: </strong>A Kubernetes cluster running v1.27.0 may support several API versions for the same resource. Like apps/v1beta1 (deprecated) and apps/v1 (stable) being supported at the same time. But in future releases, like v1.30.0, deprecated API versions may no longer be supported, and only stable versions like apps/v1 will be available.</p>
+									<p>In short, Kubernetes versions govern the platform as a whole, while API versions relate to the stability and availability of specific resources and groups.</p>
+									<h3>Impact of Deprecated API Versions on Cluster Upgrades</h3>
 									<h5>Master-Agent Architecture:</h5>
 									<p>Apache Mesos follows a master-agent architecture, which is key to how it manages and abstracts resources:</p>
 									<ul class="inner-list">
