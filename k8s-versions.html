@@ -229,9 +229,15 @@
 									<p>Perform a dry run or test the upgrade in a staging environment to ensure all deprecated APIs have been replaced and resources function as expected.</p>
 									<h5>Plan for Gradual Upgrades: </h5>
 									<p>If upgrading across multiple major versions, consider upgrading incrementally to avoid massive API version changes at once.</p>
-									<h3>Cgroups and namespaces: </h3>
-									<p><strong>Control Groups (cgroups)</strong> is a Linux kernel feature that limits, monitors, and manages the resources (CPU, memory, disk I/O, network bandwidth, etc.) that a group of processes can use. It allows system administrators or orchestration tools to control the amount of system resources allocated to processes or groups of processes. Without cgroups, processes can potentially consume excessive resources, leading to <strong>resource contention</strong> or even <strong>starvation</strong> of other processes.</p>
-									<h5>Key Features of Cgroups: </h5>
+									<h3>How kubent helps</h3>
+									<p><em>kubent</em> is a <strong>tool specifically designed to assist in identifying deprecated API versions</strong> in a Kubernetes cluster before performing an upgrade. Here's how it helps:</p>
+									<ul class="inner-list">
+										<li> <strong>Scan the Cluster: </strong> kubent scans all the resources in the cluster (including CRDs, Deployments, Services, etc.) and reports any instances where deprecated API versions are used.</li>
+										<li> <strong>Detailed Reporting: </strong> It lists the deprecated APIs found, shows which resources are using them, and provides information on the API version that should be used instead.</li>
+										<li> <strong>Upgrade Planning: </strong> By using kubent, you can get a clear view of which resources need to be updated before an upgrade, reducing the risk of downtime or deployment failures due to removed APIs.</li>
+										<li> <strong>Works Across Versions: </strong> It supports scanning for APIs deprecated across multiple Kubernetes versions, helping you ensure compatibility for major version upgrades.</li>
+									</ul>
+									<h5><em>Example Workflow with kubent: <em></h5>
 									<ul class="inner-list">
 										<li> <strong>Resource Limitation: </strong> You can set upper limits on the amount of CPU, memory, disk I/O, and other resources that a group of processes can consume.</li>
 										<li> <strong>Resource Monitoring: </strong> Cgroups can track the resource usage of processes, providing real-time information about how much CPU or memory a task is consuming.</li>
