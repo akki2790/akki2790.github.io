@@ -183,7 +183,7 @@
 									<p>For a lot of people (including myself) the relationship between these two and their release cycles can feel quite confusing at first. With this article, I will try to demystify all that. I’ll also talk about the impact of deprecated APIs, how to tackle them and the tools that assist you in identifying them.</p>
 									<h3 class="info-title">Why is this important?</h3>
 									<p>Various API resources, their versions and their deprecation is something that’ll come up during a Kubernetes cluster version upgrade. In fact, its one of the <strong>most important thing you’ve to account for</strong> before you jump to a new K8s version.</p>
-									<h3 class="info-title">>Here's how they differ and relate:</h3>
+									<h3 class="info-title">How they differ and relate</h3>
 									<h5>Kubernetes Version:</h5>
 									<ul class="inner-list">
 										<li> This refers to the version of the Kubernetes platform itself. (the control plane, kubelet, kube-proxy, etc.)</li>
@@ -204,47 +204,31 @@
 									<figure class="d-flex float-end m-md-5">
 										<img src="images/k8s-API-alpha.png" alt="post-image" class="img-fluid mb-4" style="width: 50%;">
 									</figure>
-									<h3 class="info-title">>Here's how they differ and relate:</h3>
+									<h3 class="info-title">Relationship Between Kubernetes and API Versions</h3>
 									<p><strong>Kubernetes version release determines the availability and defaulting of API versions.</strong> For example, a particular API version (like apps/v1) might be introduced as <strong>stable</strong> in a certain Kubernetes release (e.g., v1.9.0). Older API versions may be <strong>deprecated</strong> or removed in future Kubernetes releases. For instance, extensions/v1beta1 for Deployment objects was deprecated and replaced by apps/v1 in Kubernetes v1.16.0.</p>
 									<p><strong>Kubernetes versioning doesn't necessarily map 1:1 to API versions.</strong> While the Kubernetes platform evolves, certain API versions might remain stable (e.g., core/v1) or change more slowly than Kubernetes releases</p>
 									<p><strong>Example: </strong>A Kubernetes cluster running v1.27.0 may support several API versions for the same resource. Like apps/v1beta1 (deprecated) and apps/v1 (stable) being supported at the same time. But in future releases, like v1.30.0, deprecated API versions may no longer be supported, and only stable versions like apps/v1 will be available.</p>
 									<p>In short, Kubernetes versions govern the platform as a whole, while API versions relate to the stability and availability of specific resources and groups.</p>
 									<h3>Impact of Deprecated API Versions on Cluster Upgrades</h3>
-									<h5>Master-Agent Architecture:</h5>
-									<p>Apache Mesos follows a master-agent architecture, which is key to how it manages and abstracts resources:</p>
+									<h5>Breaking Changes: </h5>
+									<p>Deprecated API versions may be removed in newer Kubernetes versions. If your cluster uses these deprecated APIs, resources that rely on them may fail to work properly after the upgrade. For example, if you are using extensions/v1beta1 for Deployment resources and upgrade to a version where this API is removed, your resources will become unusable.</p>
+									<h5>Deployment Failures: </h5>
+									<p>Helm charts, custom resource definitions (CRDs), or YAML manifests that reference deprecated APIs will fail to apply or update.</p>
+									<h5>Incompatibility: </h5>
+									<p>Automation scripts, CI/CD pipelines, and third-party integrations that rely on deprecated API versions might break after the upgrade.</p>
+									<h3>How to Overcome Issues from Deprecated APIs?</h3>
+									<h5>Audit for Deprecated APIs: </h5>
+									<p>Before upgrading, you should audit your cluster to identify any resources or manifests that use deprecated API versions. This includes: </p>
 									<ul class="inner-list">
-										<li> <strong>Mesos Master:</strong> The central coordinator that manages the overall state of the cluster, including resources, task scheduling, and interactions with frameworks (applications).</li>
-										<li> <strong>Mesos Agents</strong> (formerly called Slaves): Each physical or virtual server in the cluster runs a Mesos agent, which reports the available resources (CPU, memory, disk, etc.) to the master. The agent is responsible for running tasks assigned to it by the Mesos master. The agents act as intermediaries between the physical/virtual hardware and the tasks, effectively abstracting the hardware details.</li>
+										<li> Inspecting Helm charts, YAML files, and other configurations.</li>
+										<li> Checking the Kubernetes API server logs for warnings about deprecated APIs being used.</li>
 									</ul>
-									<p>Applications do not interact with hardware directly but instead request resources from the Mesos master, which schedules tasks to run on the available agents.</p>
-									<h5>Isolation:</h5>
-									<p>This is the most important and technical aspect of Apache Mesos - <strong>‘How it achieves abstraction and isolation of Hardware resources?’</strong> I’ve talked about this in a dedicated section below.</p>
-									<h5>Resource Offers:</h5>
-									<p>One of the key mechanisms Mesos uses to abstract resources is the resource offer model. Instead of having applications request specific resources upfront, Mesos works the other way around:</p>
-									<ul class="inner-list">
-										<li> Each <strong>Mesos agent periodically reports</strong> the available resources (CPU, memory, disk, etc.) on the physical server to the <strong>Mesos master.</strong></li>
-										<li> The <strong>Mesos master</strong> then <strong>offers</strong> these resources to registered frameworks (e.g., Apache Spark, Marathon, Aurora).</li>
-										<li> Frameworks decide whether to accept these resources based on their own requirements and then submit tasks to be run on those resources.</li>
-									</ul>
-									<p>This resource offer model decouples applications from the underlying hardware and creates a high-level abstraction where resources are dynamically offered to applications as needed.</p>
-									<h5>Fine-Grained Allocation:</h5>
-									<p>Mesos provides fine-grained control over the allocation of resources, <strong>allowing frameworks to specify exact amounts</strong> of CPU, memory, disk, and network they require. This allows Mesos to:</p>
-									<ul class="inner-list">
-										<li> <strong>Divide physical resources</strong> on each server (CPU cores, RAM, disk, network bandwidth) into smaller, manageable units.</li>
-										<li> <strong>Isolate resource usage</strong> between tasks, ensuring that no task overuses resources or impacts others running on the same agent.</li>
-									</ul>
-									<p>By breaking down server hardware resources into smaller units, Mesos effectively abstracts the physical server into multiple resource slots that can be distributed across different tasks, creating a virtualization-like environment without the overhead of virtual machines.</p>
-									<h5>Framework Abstraction:</h5>
-									<p>Applications running on Mesos use different <strong>frameworks</strong> (e.g., Apache Aurora, Marathon, or custom frameworks) to manage their workloads. These frameworks <strong>request resources</strong> from Mesos based on their own scheduling logic. And once resources are allocated, they <strong>launch tasks</strong> (e.g., microservices, batch jobs) on those allocated resources.</p>
-									<p>Mesos handles the low-level resource management (like CPU and memory allocation), while the frameworks focus on application-level scheduling. This split creates a further abstraction between the application's logic and the physical resources of the server.</p>
-									<h5>Unified Resource Pool: </h5>
-									<p>By aggregating resources across multiple physical and virtual machines, Mesos creates a <strong>unified resource pool</strong> for the entire cluster. It treats all resources (across CPU, memory, storage, and network) as if they come from a single, large server.</p>
-									<p>Applications running on Mesos are not concerned with where the physical resources reside (which server, data center, etc.). The Mesos master abstracts the underlying servers, allowing the applications to interact only with the available resources, without needing to know about the specific hardware details. This unified resource pool makes it easy to run distributed applications, big data frameworks, and microservices at scale without having to manage the underlying hardware manually.</p>
-									<h5>Scalability and Fault Tolerance:</h5>
-									<p>Mesos design <strong>allows it to scale across thousands of machines.</strong> The Mesos master and agents work together to dynamically adjust resource allocation as new tasks come in. Mesos is capable of handling failures by reassigning tasks to available resources on healthy agents.</p>
-									<p>By abstracting hardware resources at scale, Mesos ensures that no single machine becomes a point of failure and that resources are continuously available, even in the event of failures.</p>
-									<h3>How does Mesos achieve abstraction & isolation of hardware resources?</h3>
-									<p>Apache Mesos achieves abstraction of server hardware resources by acting as a distributed resource manager or a cluster manager. It abstracts the underlying physical or virtual server infrastructure into a single resource, isolating them with <strong> Cgroups and namespaces.</strong> (Linux kernel features) All this allows applications to efficiently share and utilize the available resources (CPU, memory, disk, network, etc.) across a distributed cluster.</p>
+									<h5>Update Resources: </h5>
+									<p>Update the resource definitions to use newer, stable API versions. For example, replace extensions/v1beta1 with apps/v1 for Deployments.</p>
+									<h5>Test in a Staging Environment: </h5>
+									<p>Perform a dry run or test the upgrade in a staging environment to ensure all deprecated APIs have been replaced and resources function as expected.</p>
+									<h5>Plan for Gradual Upgrades: </h5>
+									<p>If upgrading across multiple major versions, consider upgrading incrementally to avoid massive API version changes at once.</p>
 									<h3>Cgroups and namespaces: </h3>
 									<p><strong>Control Groups (cgroups)</strong> is a Linux kernel feature that limits, monitors, and manages the resources (CPU, memory, disk I/O, network bandwidth, etc.) that a group of processes can use. It allows system administrators or orchestration tools to control the amount of system resources allocated to processes or groups of processes. Without cgroups, processes can potentially consume excessive resources, leading to <strong>resource contention</strong> or even <strong>starvation</strong> of other processes.</p>
 									<h5>Key Features of Cgroups: </h5>
