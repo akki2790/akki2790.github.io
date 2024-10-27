@@ -237,12 +237,13 @@
 										<li> <strong>Upgrade Planning: </strong> By using kubent, you can get a clear view of which resources need to be updated before an upgrade, reducing the risk of downtime or deployment failures due to removed APIs.</li>
 										<li> <strong>Works Across Versions: </strong> It supports scanning for APIs deprecated across multiple Kubernetes versions, helping you ensure compatibility for major version upgrades.</li>
 									</ul>
-									<h5><em>Example Workflow with kubent: <em></h5>
+									<h5>Example Workflow with kubent: </h5>
 									<ul class="inner-list">
-										<li> <strong>Resource Limitation: </strong> You can set upper limits on the amount of CPU, memory, disk I/O, and other resources that a group of processes can consume.</li>
-										<li> <strong>Resource Monitoring: </strong> Cgroups can track the resource usage of processes, providing real-time information about how much CPU or memory a task is consuming.</li>
-										<li> <strong>Resource Prioritization: </strong> By assigning priorities to different cgroups, you can control how resources are shared among processes, making sure that critical processes get more resources than less critical ones.</li>
-										<li> <strong>Freezing/Throttling: </strong> Cgroups can pause or limit resource consumption temporarily if needed, preventing a process from monopolizing resources.</li>
+										<li> <strong>Install kubent: </strong> You can install it as a binary or run it as a Kubernetes job.</li>
+										<li> <strong>Scan the Cluster: </strong> Run <em>kubent</em> to scan the cluster.<br>*** add code here *** The tool will generate a report listing all resources using deprecated API versions.</li>
+										<li> <strong>Update Resources: </strong> Based on the output, update the affected resources in your manifests or Helm charts to use the appropriate API versions.</li>
+										<li> <strong>Validate Changes: </strong> After updating the resources, run kubent again to ensure there are no remaining deprecated APIs.</li>
+										<li> <strong>Perform the Upgrade: </strong> Once all deprecated APIs are updated, proceed with the Kubernetes upgrade with confidence that your resources will remain compatible.</li>
 									</ul>
 									<h5>Examples:</h5>
 									<ul class="inner-list">
