@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-	<title>Mesos Aurora Article</title>
+	<title>K8s Versions Article</title>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -181,9 +181,6 @@
 							<div class="post-content py-5">
 								<div class="post-description">
 									<p>For a lot of people (including myself) the relationship between these two and their release cycles can feel quite confusing at first. With this article, I will try to demystify all that. I’ll also talk about the impact of deprecated APIs, how to tackle them and the tools that assist you in identifying them.</p>
-									<figure class="d-flex float-end m-md-5">
-										<img src="images/k8s-API-alpha.png" alt="post-image" class="img-fluid mb-4" style="width: 50%;">
-									</figure>
 									<h3 class="info-title">Why is this important?</h3>
 									<p>Various API resources, their versions and their deprecation is something that’ll come up during a Kubernetes cluster version upgrade. In fact, its one of the <strong>most important thing you’ve to account for</strong> before you jump to a new K8s version.</p>
 									<p>Here's how they differ and relate:</p>
@@ -204,6 +201,9 @@
 											<li> <strong>Stable: </strong>v1 (fully stable, backward-compatible).</li>
 										</ul>
 									</ul>
+									<figure class="d-flex float-end m-md-5">
+										<img src="images/k8s-API-alpha.png" alt="post-image" class="img-fluid mb-4" style="width: 50%;">
+									</figure>
 									<h3>Who, Why and When?</h3>
 									<p>Apache Mesos was created by Benjamin Hindman, Andy Konwinski, Matei Zaharia, and a few others at the University of California, Berkeley's AMPLab. The project began around 2009 and was open-sourced in 2010.The primary motivation behind it was to address the growing complexity of managing distributed systems; especially in large-scale data centers. The early 2000s saw a rise in cloud computing, and organizations were running multiple distributed systems for various tasks like web applications, batch processing (e.g., Hadoop), and real-time data streaming (e.g., Spark). Each of these systems needed its own cluster management framework.</p>
 									<p>Apache Mesos was designed to create a <strong>unified cluster management platform</strong> that could - run a variety of different distributed applications on a shared pool of resources, dynamically allocate hardware resources (like CPU, memory, storage) to applications as needed and allow applications to co-exist on the same physical or virtual servers, reducing the need to dedicate entire clusters to individual systems.</p>
