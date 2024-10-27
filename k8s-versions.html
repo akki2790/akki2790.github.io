@@ -170,9 +170,9 @@
 								<span class="meta-day">
 									<svg width="16" height="16" viewBox="0 0 24 24">
 										<use xlink:href="#clock"></use>
-									</svg>27-10-2024 </span>
+									</svg>XX-XX-2024 </span>
 							</div>
-							<h1 class="display-4 txt-fx slide-up">The short reign of Apache Mesos and Apache Aurora</h1>
+							<h1 class="display-4 txt-fx slide-up">Relationship between Kubernetes versions and API versions</h1>
 							<img src="images/K8s-horizontal.png" alt="single post" class="img-fluid my-4">
 						</section>
 
@@ -180,19 +180,14 @@
 
 							<div class="post-content py-5">
 								<div class="post-description">
-									<h3 class="info-title">The transient world of tech</h3>
-									<p>You happen to come across a new tech, find it fascinating, you try and understand it, learn to use it, even implement it in your workflow. Then a couple seasons pass-by and next thing you know, its obsolete. Some new tech has eclipsed it.</p>
-									<p>This is the faith of most tools in the world of tech. Sure, you can pledge to keep using something that’s getting obsolete. But, it won’t be easy and it will only get more difficult with time. The community support won’t be strong enough, new tools might not play well with it and the list of issues, shortcomings & todos will keep piling w/o ever being tackled. I am sure this reminds you of a few technologies you came across in a past life, or of legends you’ve heard from your senior colleagues.</p>
+									<p>For a lot of people (including myself) the relationship between these two and their release cycles can feel quite confusing at first. With this article, I will try to demystify all that. I’ll also talk about the impact of deprecated APIs, how to tackle them and the tools that assist you in identifying them.</p>
 									<figure class="d-flex float-end m-md-5">
-										<img src="images/virtual-machines.png" alt="post-image" class="img-fluid mb-4">
+										<img src="images/k8s-API-alpha.png" alt="post-image" class="img-fluid mb-4">
 									</figure>
-									<p>We are looking at two (mainly one) such tools today, which we heavily relied on at one of the start-ups I worked at - Apache Mesos and Apache Aurora. They had a short but significant reign; with <strong>Virtual Machines</strong> being it’s predecessor and <strong>Containers</strong> it’s successor. Having worked on Virtual Machines in the past, I found Mesos to be fascinating. Its was way faster, more lightweight and efficient. And the way it achieved this was brilliant.</p>
-									<p>We will be diving deep into these softwares to see how they compare with VMs and Containers. By the end of this, you’ll have a better understanding of how these tools work under the hood and achieve their end goal.</p>
-									<h3 class="info-title">So what are Mesos and Aurora?</h3>
-									<p><strong>Apache Mesos</strong> basically is a distributed systems kernel that abstracts CPU, memory, storage, and other compute resources away from machines (physical or virtual) to enable effective deployment and operation of your applications on ‘isolated instances’.</p>
-									<p>These isolated instances function similar to VMs or Containers, but share the host resources. No need for a Guest OS either. They represent individual workloads/tasks (microservices, jobs, etc.) that run on available hardware resources across your cluster. You can even run multiple applications or frameworks (like Hadoop, Spark, Kubernetes, or even custom frameworks) on the same set of machines without them stepping on one another.</p>
-									<p><strong>Apache Aurora</strong> is a service scheduler that runs on top of Mesos. It handles resource scheduling, fault tolerance, and task monitoring, making it easier to manage large-scale applications. It also offers features like rolling updates, job quotas, and service health checking, which makes it robust for managing both stateless and stateful workloads.</p>
-									<p><strong>Together</strong>, they provide cluster resource management and isolation, with high-level service scheduling and management features.</p>
+									<h3 class="info-title">Why is this important?</h3>
+									<p>Various API resources, their versions and their deprecation is something that’ll come up during a Kubernetes cluster version upgrade. In fact, its one of the <strong>most important thing you’ve to account for</strong> before you jump to a new K8s version.</p>
+									<p>Here's how they differ and relate:</p>
+									<h5>Kubernetes Version:</h5>
 									<h3>Who, Why and When?</h3>
 									<p>Apache Mesos was created by Benjamin Hindman, Andy Konwinski, Matei Zaharia, and a few others at the University of California, Berkeley's AMPLab. The project began around 2009 and was open-sourced in 2010.The primary motivation behind it was to address the growing complexity of managing distributed systems; especially in large-scale data centers. The early 2000s saw a rise in cloud computing, and organizations were running multiple distributed systems for various tasks like web applications, batch processing (e.g., Hadoop), and real-time data streaming (e.g., Spark). Each of these systems needed its own cluster management framework.</p>
 									<p>Apache Mesos was designed to create a <strong>unified cluster management platform</strong> that could - run a variety of different distributed applications on a shared pool of resources, dynamically allocate hardware resources (like CPU, memory, storage) to applications as needed and allow applications to co-exist on the same physical or virtual servers, reducing the need to dedicate entire clusters to individual systems.</p>
