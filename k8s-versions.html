@@ -245,94 +245,14 @@
 										<li> <strong>Validate Changes: </strong> After updating the resources, run kubent again to ensure there are no remaining deprecated APIs.</li>
 										<li> <strong>Perform the Upgrade: </strong> Once all deprecated APIs are updated, proceed with the Kubernetes upgrade with confidence that your resources will remain compatible.</li>
 									</ul>
-									<h5>Examples:</h5>
+									<h3><Summary>Summary</Summary> </h3>
 									<ul class="inner-list">
-										<li> <strong>CPU Limitation: </strong> Cgroups can ensure that one task (process) uses only 40% of the CPU, while another uses the remaining 60%. This prevents a poorly-behaved or resource-hungry task from hogging all the CPU resources.</li>
-										<li> <strong>Memory Isolation: </strong> Cgroups can cap the amount of memory a process or group of processes can use. If a process exceeds this limit, it will be killed or its allocation will be constrained, protecting other tasks from being affected by out-of-memory errors.</li>
-										<li> <strong>Disk I/O: </strong> Cgroups can limit how many disk read/write operations a task can perform. This prevents tasks from monopolizing the disk, which could slow down the performance of other processes.</li>
-										<li> <strong>Freezing/Throttling: </strong> Cgroups can pause or limit resource consumption temporarily if needed, preventing a process from monopolizing resources.</li>
+										<li> <strong>Deprecated API versions </strong>can cause resource failures and deployment issues during cluster upgrades.</li>
+										<li> To <strong>overcome these issues</strong>, you should audit and update resources to use the latest stable APIs.</li>
+										<li> The <em>kubent</em> tool simplifies this process by identifying deprecated API versions in the cluster, helping ensure a smooth and safe upgrade.</li>
 									</ul>
-									<p><strong>Namespaces</strong> are a Linux kernel feature that provides <strong>process-level isolation</strong> by wrapping global system resources (such as file systems, network interfaces, process IDs, and user IDs) into <strong>independent instances.</strong> This makes it appear as if each group of processes has its own private view of these resources, even though they are all running on the same underlying operating system. Processes running in one namespace are unaware of the resources in other namespaces, ensuring that they cannot interfere with each other.</p>
-									<p>There are <strong>several types of namespaces, each isolating a different system resource.</strong> Some of these are - PID Namespace, Mount (MNT) Namespace, Network (NET) Namespace, Time Namespace, IPC Namespace and User Namespace.</p>
-									<h5>Examples: </h5>
-									<ul class="inner-list">
-										<li> <strong>PID Namespace: </strong> Processes in different PID namespaces have their own process ID space. This means that two processes in different namespaces can have the same PID but will never see each other. This isolation is essential for containers, where each container behaves as if it has its own private process space.</li>
-										<li> <strong>Network Namespace: </strong> Each network namespace can have its own network interfaces and routing tables. This allows different applications or containers to have <strong>completely independent networking stacks</strong>, preventing them from interfering with each other’s network traffic.</li>
-										<li> <strong>Mount Namespace: </strong> Processes in a mount namespace can have their own view of the file system, with their own mounted directories and devices. This allows applications to be isolated from each other’s file systems, so they cannot see or modify each other’s files.</li>
-									</ul>
-									<h3>How does Apache Aurora work? </h3>
-									<p>Apache Aurora provides a framework for deploying and managing long-running services, cron jobs, and batch jobs across a Mesos cluster. Here’s how Aurora achieves this within the Mesos ecosystem:</p>
-									<h5>Job Definition and Configuration:</h5>
-									<p>In Aurora, users define <strong>jobs</strong> using a <strong>configuration file</strong> written in a DSL (Domain-Specific Language) like Python or JSON. These jobs specify the resources requirements (CPU, memory, disk) and other parameters (e.g., health checks, replication, etc.).</p>
-									<em>Example Job Configuration (Aurora Job File):</em>
-									<pre>
-										<code>
-job = Job(
-	name = "billing_service",
-	environment = "prod",
-	role = "billingteam",
-	task = Service(
-	name = "billing_server",
-	cpu = 0.25,  # 0.25 CPU per instance
-	ram = 2048,  # 2GB of RAM per instance
-	disk = 512,  # 512MB of disk space
-	instances = 8,  # We want 8 instances running
-	process = Process(
-		name = "billing_server_process",
-		cmdline = “/usr/local/bin/start-billing-service",  # Command to start the service
-		max_failures = 3  # Retry upto 3 times before reporting failure
-	),
-	health_check = HealthCheck(
-		url = "http://localhost:8080/health",
-		interval_secs = 10,
-		timeout_secs = 5
-	)
-	)
-)
-										</code>
-									</pre>
-									<h5>Service Scheduling and Deployment:  </h5>
-									<p>Aurora takes these job definitions and works with Mesos to deploy the jobs across available nodes in the cluster. Aurora ensures that:</p>
-									<ul class="inner-list">
-										<li> Jobs are deployed on the right nodes based on the resource requirements and constraints defined in the configuration. Example: X CPU, Y RAM and Z Disk space.</li>
-										<li> Jobs are replicated, ensuring that a defined number of instances (tasks) are running at all times. Example: 20 instances of microservice X.</li>
-									</ul>
-									<h5>Monitoring and Health Checks:  </h5>
-									<p>Aurora continuously monitors the state of each task and performs <strong>health checks.</strong> If a task crashes or fails its health check, Aurora <strong>automatically restarts</strong> it on another available node.</p>
-									<h5>Resilience and Fault Tolerance: </h5>
-									<p>If a node fails, Aurora re-schedules tasks on other available nodes, ensuring that services remain operational even in the event of hardware or software failures.</p>
-									<h5>Cron Jobs and Batch Processing: </h5>
-									<p>Aurora supports running scheduled tasks (similar to cron jobs) and can also be used for <strong>batch processing.</strong> These jobs are scheduled based on the timing and frequency defined in the job's configuration file</p>
-									<h5>Key Components of Aurora: </h5>
-									<ul class="inner-list">
-										<li> <strong>Scheduler: </strong> The brain of Aurora, responsible for managing the lifecycle of all tasks and interacting with the Mesos master to request resources.</li>
-										<li> <strong>Executor: </strong> The component that runs tasks on Mesos agents, ensuring that tasks are executed as defined by the job configuration.</li>
-										<li> <strong>Thermos: </strong> A lightweight executor framework used by Aurora to monitor and restart tasks. Thermos is responsible for task-level retries and management.</li>
-										<li> <strong>Tasks: </strong> The individual units of work defined in Aurora jobs. A task represents an instance of an application or service running on a Mesos agent.</li>
-									</ul>
-									<h3>Virtual Machines V/S Mesos Instances V/S Containers </h3>
-									<p>Now that we know what Apache Mesos is and how it works with Apache Aurora to offers a powerful platform for managing large-scale distributed systems, lets look at how it differs from (and in some ways is similar to) - what was before (i.e. VMs) and what came after. (i.e. Containers)</p>
-									<h5>Compared to Virtual Machines (VMs): </h5>
-									<p>The primary difference between Mesos instances and Virtual Machines (VMs) lies in the way they manage and abstract resources on a physical server. Here's a detailed comparison:</p>
-									<ul class="inner-list">
-										<li> <strong>Full OS virtualization: </strong> In a VM-based environment, each virtual machine runs a complete guest OS (including its own kernel) on top of the host OS. The hypervisor isolates the VMs and allocates resources, but there is more overhead because <strong>each VM runs a full OS instance.</strong><br>In contrast, Mesos instances do not run a separate OS. Instead, they share the host OS kernel with other instances, reducing overhead.</li>
-										<li> <strong>Isolation: </strong> VMs provide stronger isolation compared to Mesos instances, as they run entirely separate guest OS. Mesos provides application-level isolation using cgroups and namespaces, but instances still share the host's kernel.</li>
-										<li> <strong>Less Granular: </strong> Virtual machines typically have static resource allocation, <strong> meaning once resources (CPU, RAM) are allocated, they are locked</strong> to the VM, limiting flexibility in scaling at finer levels compared to Mesos instances.</li>
-										<li> <strong>Slower Boot Times: </strong> VMs take longer to start because they must boot a full OS, whereas Mesos instances are simply processes started within the existing OS, resulting in much faster startup times.</li>
-										<li> <strong>Strong Isolation: </strong> VMs provide <strong>full isolation</strong> at the OS level. Each VM is completely isolated from others, making it more secure in terms of kernel vulnerabilities. A security breach in one VM typically does not affect other VMs.</li>
-										<li> <strong>Multiple OSes: </strong> If there’s a need to run multiple operating systems (e.g., Linux, Windows) on the same physical host, VMs are preferred since each VM can run a completely different OS.</li>
-										<li> <strong>Multi-Tenancy: </strong> VMs are ideal when strict isolation is required, such as in multi-tenant environments, where different customers or applications should not interact at any level, including OS.</li>
-									</ul>
-									<h5>Compared to Containers: </h5>
-									<p><strong>Mesos instances and Containers</strong> are somewhat related and share some similarities. However, there are key distinctions between the two in terms of how they handle isolation, resource management, and their underlying technologies. Let’s look at what these <strong>similarities, differences and overlaps</strong> are:</p>
-									<ul class="inner-list">
-										<li> <strong>Isolation Mechanisms: </strong> Containers do not require an entire OS; instead, they share the host OS kernel but have isolated user spaces, making them more lightweight compared to VMs. Containers (like Mesos instances) also rely heavily on <strong>Linux Cgroups and namespaces</strong> for isolation, offering a self-contained environment with isolated process IDs (PID), networking, filesystems, and user environments. But this <strong>isolation is stricter than Mesos instances.</strong></li>
-										<li> <strong>Resource Management: </strong> Containers also rely on <strong>cgroups</strong> for resource management, but the resource allocation is usually managed by the container runtime (such as Docker) or an orchestrator like <strong>Kubernetes.</strong> Containers allow you to limit the CPU, memory, and other resources for each container instance. However, resource management may not be as sophisticated or fine-grained as Mesos' multi-resource handling unless integrated with a higher-level orchestrator.</li>
-										<li> <strong>Deployment and Orchestration: </strong> Mesos instances are scheduled and managed by <strong>Mesos</strong> and, optionally, <strong>Aurora</strong> or other frameworks like <strong>Marathon.</strong><br>Containers are typically deployed and managed by a container orchestration platform like <strong>Kubernetes or Docker Swarm</strong>, which is responsible for scheduling, scaling, and managing containers.Orchestrators handle the lifecycle of containers, ensuring availability, load balancing, scaling, and recovery in case of failure.</li>
-										<li> <strong>Statefulness and Persistence: </strong> Mesos instances can handle both <strong>stateless and stateful</strong> workloads. Mesos frameworks (e.g., Aurora, Marathon) have built-in support for <strong>persistent volumes</strong>, allowing stateful services to run with reliable storage. Plus, Mesos has the ability to handle <strong>multiple types of workloads</strong> (microservices, batch jobs, big data processing, etc.) making it highly flexible.<br>Containers are typically designed to be <strong>ephemeral and stateless</strong>. Any persistent storage needs to be <strong>mounted</strong> from external sources, such as network-attached storage, cloud-based storage (e.g., EBS, NFS), or container-specific storage solutions (e.g., Kubernetes Persistent Volumes). While containers can also be used for stateful services, managing persistence requires extra effort and orchestration.</li>
-										<li> <strong>Performance Overhead: </strong> Containers are lightweight, but they do introduce a small amount of overhead compared to running directly on the host. This is due to the added layer of isolation provided by the container runtime. Containerized applications may have <strong>slightly lower performance</strong> than non-containerized applications running on Mesos because of the overhead involved in managing the container's environment.</li>
-										<li> <strong>Mesos Can Use Containers: </strong> While Mesos instances are not exactly containers, <strong>Mesos can use containers</strong> (e.g., Docker, Mesos native containerizer) to run instances, like you run any other job/task on Mesos. In this case, the instances are containers that offer process and resource isolation while sharing the host OS kernel.</li>
-									</ul>
+									<p>By proactively addressing deprecated APIs using tools like <em>kubent</em>, you can avoid many upgrade-related issues and ensure that your cluster is future-proof.</p>
+
 									<div class="post-bottom-link d-flex justify-content-between">
 										<div class="block-social-links d-flex align-items-baseline">
 											<div class="element-title text-uppercase">Share:</div>
