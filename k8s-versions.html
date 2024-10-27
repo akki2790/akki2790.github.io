@@ -212,6 +212,9 @@
 									<h3>Impact of Deprecated API Versions on Cluster Upgrades</h3>
 									<h5>Breaking Changes: </h5>
 									<p>Deprecated API versions may be removed in newer Kubernetes versions. If your cluster uses these deprecated APIs, resources that rely on them may fail to work properly after the upgrade. For example, if you are using extensions/v1beta1 for Deployment resources and upgrade to a version where this API is removed, your resources will become unusable.</p>
+									<figure class="d-flex float-end m-md-5">
+										<img src="images/K8s-API.png" alt="post-image" class="img-fluid mb-4">
+									</figure>
 									<h5>Deployment Failures: </h5>
 									<p>Helm charts, custom resource definitions (CRDs), or YAML manifests that reference deprecated APIs will fail to apply or update.</p>
 									<h5>Incompatibility: </h5>
