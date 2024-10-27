@@ -229,18 +229,18 @@
 									<p>Perform a dry run or test the upgrade in a staging environment to ensure all deprecated APIs have been replaced and resources function as expected.</p>
 									<h5>Plan for Gradual Upgrades: </h5>
 									<p>If upgrading across multiple major versions, consider upgrading incrementally to avoid massive API version changes at once.</p>
-									<h3>How kubent helps</h3>
-									<p><em>kubent</em> is a <strong>tool specifically designed to assist in identifying deprecated API versions</strong> in a Kubernetes cluster before performing an upgrade. Here's how it helps:</p>
+									<h3>How <em>kubent </em> helps</h3>
+									<p><em>kubent </em> is a <strong>tool specifically designed to assist in identifying deprecated API versions</strong> in a Kubernetes cluster before performing an upgrade. Here's how it helps:</p>
 									<ul class="inner-list">
-										<li> <strong>Scan the Cluster: </strong> kubent scans all the resources in the cluster (including CRDs, Deployments, Services, etc.) and reports any instances where deprecated API versions are used.</li>
+										<li> <strong>Scan the Cluster: </strong> <em>kubent </em> scans all the resources in the cluster (including CRDs, Deployments, Services, etc.) and reports any instances where deprecated API versions are used.</li>
 										<li> <strong>Detailed Reporting: </strong> It lists the deprecated APIs found, shows which resources are using them, and provides information on the API version that should be used instead.</li>
-										<li> <strong>Upgrade Planning: </strong> By using kubent, you can get a clear view of which resources need to be updated before an upgrade, reducing the risk of downtime or deployment failures due to removed APIs.</li>
+										<li> <strong>Upgrade Planning: </strong> By using <em>kubent </em>, you can get a clear view of which resources need to be updated before an upgrade, reducing the risk of downtime or deployment failures due to removed APIs.</li>
 										<li> <strong>Works Across Versions: </strong> It supports scanning for APIs deprecated across multiple Kubernetes versions, helping you ensure compatibility for major version upgrades.</li>
 									</ul>
-									<h5>Example Workflow with kubent: </h5>
+									<h5>Example Workflow with <em>kubent </em>: </h5>
 									<ul class="inner-list">
-										<li> <strong>Install kubent: </strong> You can install it as a binary or run it as a Kubernetes job.</li>
-										<li> <strong>Scan the Cluster: </strong> Run <em>kubent</em> to scan the cluster.<br>*** add code here *** The tool will generate a report listing all resources using deprecated API versions.</li>
+										<li> <strong>Install <em>kubent </em>: </strong> You can install it as a binary or run it as a Kubernetes job.</li>
+										<li> <strong>Scan the Cluster: </strong> Run <em>kubent </em> to scan the cluster.<br>*** add code here *** The tool will generate a report listing all resources using deprecated API versions.</li>
 										<li> <strong>Update Resources: </strong> Based on the output, update the affected resources in your manifests or Helm charts to use the appropriate API versions.</li>
 										<li> <strong>Validate Changes: </strong> After updating the resources, run kubent again to ensure there are no remaining deprecated APIs.</li>
 										<li> <strong>Perform the Upgrade: </strong> Once all deprecated APIs are updated, proceed with the Kubernetes upgrade with confidence that your resources will remain compatible.</li>
@@ -249,9 +249,9 @@
 									<ul class="inner-list">
 										<li> <strong>Deprecated API versions </strong>can cause resource failures and deployment issues during cluster upgrades.</li>
 										<li> To <strong>overcome these issues</strong>, you should audit and update resources to use the latest stable APIs.</li>
-										<li> The <em>kubent</em> tool simplifies this process by identifying deprecated API versions in the cluster, helping ensure a smooth and safe upgrade.</li>
+										<li> The <em>kubent </em> tool simplifies this process by identifying deprecated API versions in the cluster, helping ensure a smooth and safe upgrade.</li>
 									</ul>
-									<p>By proactively addressing deprecated APIs using tools like <em>kubent</em>, you can avoid many upgrade-related issues and ensure that your cluster is future-proof.</p>
+									<p>By proactively addressing deprecated APIs using tools like <em>kubent </em>, you can avoid many upgrade-related issues and ensure that your cluster is future-proof.</p>
 
 									<div class="post-bottom-link d-flex justify-content-between">
 										<div class="block-social-links d-flex align-items-baseline">
