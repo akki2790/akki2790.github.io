@@ -202,7 +202,7 @@
 										</ul>
 									</ul>
 									<figure class="d-flex float-end m-md-5">
-										<img src="images/k8s-API-alpha.png" alt="post-image" class="img-fluid mb-4" style="width: 50%;">
+										<img src="images/k8s-API-alpha.png" alt="post-image" class="img-fluid mb-4" style="width: 75%;">
 									</figure>
 									<h3 class="info-title">Relationship Between Kubernetes and API Versions</h3>
 									<p><strong>Kubernetes version release determines the availability and defaulting of API versions.</strong> For example, a particular API version (like apps/v1) might be introduced as <strong>stable</strong> in a certain Kubernetes release (e.g., v1.9.0). Older API versions may be <strong>deprecated</strong> or removed in future Kubernetes releases. For instance, extensions/v1beta1 for Deployment objects was deprecated and replaced by apps/v1 in Kubernetes v1.16.0.</p>
@@ -229,7 +229,7 @@
 									<p>Perform a dry run or test the upgrade in a staging environment to ensure all deprecated APIs have been replaced and resources function as expected.</p>
 									<h5>Plan for Gradual Upgrades: </h5>
 									<p>If upgrading across multiple major versions, consider upgrading incrementally to avoid massive API version changes at once.</p>
-									<h3>How <em>kubent </em> helps</h3>
+									<h3>How <em>kubent </em>  helps</h3>
 									<figure class="d-flex float-end m-md-5">
 										<img src="images/kubent.png" alt="post-image" class="img-fluid mb-4">
 									</figure>
@@ -243,7 +243,57 @@
 									<h5>Example Workflow with <em>kubent </em>: </h5>
 									<ul class="inner-list">
 										<li> <strong>Install <em>kubent </em>: </strong> You can install it as a binary or run it as a Kubernetes job.</li>
-										<li> <strong>Scan the Cluster: </strong> Run <em>kubent </em> to scan the cluster.<br>*** add code here *** The tool will generate a report listing all resources using deprecated API versions.</li>
+										<li> <strong>Scan the Cluster: </strong> Run <em>kubent </em> to scan the cluster. The tool will generate a report listing all resources using deprecated API versions.<br><i>Here's an example output of kubent run while jumping from v1.25.0 to v1.26.0</i></li>
+										<pre>
+											<code>
+$ kubent upgrade
+
+Checking Kubernetes resources for deprecated APIs...
+
+-----------------------------------
+|          Upgrade Summary        |
+-----------------------------------
+Kubernetes Version: v1.25.0
+Upgrade Target: v1.26.0
+
+1. **Namespaces**:
+	- No deprecated APIs found.
+
+2. **Deployments**:
+	- deployment/my-app:
+		- Deprecated API version: extensions/v1beta1
+		- Recommended API version: apps/v1
+		- Action Required: Update your deployment manifest.
+
+3. **Services**:
+	- service/my-service:
+		- No issues found.
+
+4. **Ingress**:
+	- ingress/my-ingress:
+		- Deprecated API version: networking.k8s.io/v1beta1
+		- Recommended API version: networking.k8s.io/v1
+		- Action Required: Update your ingress manifest.
+
+5. **CronJobs**:
+	- cronjob/my-cronjob:
+		- Deprecated API version: batch/v1beta1
+		- Recommended API version: batch/v1
+		- Action Required: Update your cron job manifest.
+
+-----------------------------------
+|           Recommendations       |
+-----------------------------------
+- Review and update the listed resources to ensure compatibility with Kubernetes v1.26.0.
+- Test your applications in a staging environment after making changes.
+- Backup your cluster and configurations before proceeding with the upgrade.
+
+-----------------------------------
+|           Upgrade Ready!        |
+-----------------------------------
+Your cluster is ready for the upgrade. Make the necessary changes before proceeding.
+											</code>
+										</pre>												
 										<li> <strong>Update Resources: </strong> Based on the output, update the affected resources in your manifests or Helm charts to use the appropriate API versions.</li>
 										<li> <strong>Validate Changes: </strong> After updating the resources, run kubent again to ensure there are no remaining deprecated APIs.</li>
 										<li> <strong>Perform the Upgrade: </strong> Once all deprecated APIs are updated, proceed with the Kubernetes upgrade with confidence that your resources will remain compatible.</li>
