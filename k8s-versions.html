@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Mesos Aurora Article</title>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="format-detection" content="telephone=no">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="author" content="">
+	<meta name="keywords" content="">
+	<meta name="description" content="">
+	<link rel="stylesheet" type="text/css" href="css/vendor.css">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" href="style.css">
+
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;700;900&display=swap" rel="stylesheet">
+</head>
+
+<body class="bg-body homepage post-template">
+	<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+		<defs>
+			<symbol xmlns="http://www.w3.org/2000/svg" id="instagram" viewBox="0 0 15 15">
+				<path fill="none" stroke="currentColor"
+					d="M11 3.5h1M4.5.5h6a4 4 0 0 1 4 4v6a4 4 0 0 1-4 4h-6a4 4 0 0 1-4-4v-6a4 4 0 0 1 4-4Zm3 10a3 3 0 1 1 0-6a3 3 0 0 1 0 6Z" />
+			</symbol>
+			<symbol xmlns="http://www.w3.org/2000/svg" id="facebook" viewBox="0 0 15 15">
+				<path fill="none" stroke="currentColor"
+					d="M7.5 14.5a7 7 0 1 1 0-14a7 7 0 0 1 0 14Zm0 0v-8a2 2 0 0 1 2-2h.5m-5 4h5" />
+			</symbol>
+			<symbol xmlns="http://www.w3.org/2000/svg" id="twitter" viewBox="0 0 15 15">
+				<path fill="currentColor"
+					d="m14.478 1.5l.5-.033a.5.5 0 0 0-.871-.301l.371.334Zm-.498 2.959a.5.5 0 1 0-1 0h1Zm-6.49.082h-.5h.5Zm0 .959h.5h-.5Zm-6.99 7V12a.5.5 0 0 0-.278.916L.5 12.5Zm.998-11l.469-.175a.5.5 0 0 0-.916-.048l.447.223Zm3.994 9l.354.353a.5.5 0 0 0-.195-.827l-.159.474Zm7.224-8.027l-.37.336l.18.199l.265-.04l-.075-.495Zm1.264-.94c.051.778.003 1.25-.123 1.606c-.122.345-.336.629-.723 1l.692.722c.438-.42.776-.832.974-1.388c.193-.546.232-1.178.177-2.006l-.998.066Zm0 3.654V4.46h-1v.728h1Zm-6.99-.646V5.5h1v-.959h-1Zm0 .959V6h1v-.5h-1ZM10.525 1a3.539 3.539 0 0 0-3.537 3.541h1A2.539 2.539 0 0 1 10.526 2V1Zm2.454 4.187C12.98 9.503 9.487 13 5.18 13v1c4.86 0 8.8-3.946 8.8-8.813h-1ZM1.03 1.675C1.574 3.127 3.614 6 7.49 6V5C4.174 5 2.421 2.54 1.966 1.325l-.937.35Zm.021-.398C.004 3.373-.157 5.407.604 7.139c.759 1.727 2.392 3.055 4.73 3.835l.317-.948c-2.155-.72-3.518-1.892-4.132-3.29c-.612-1.393-.523-3.11.427-5.013l-.895-.446Zm4.087 8.87C4.536 10.75 2.726 12 .5 12v1c2.566 0 4.617-1.416 5.346-2.147l-.708-.706Zm7.949-8.009A3.445 3.445 0 0 0 10.526 1v1c.721 0 1.37.311 1.82.809l.74-.671Zm-.296.83a3.513 3.513 0 0 0 2.06-1.134l-.744-.668a2.514 2.514 0 0 1-1.466.813l.15.989ZM.222 12.916C1.863 14.01 3.583 14 5.18 14v-1c-1.63 0-3.048-.011-4.402-.916l-.556.832Z" />
+			</symbol>
+			<symbol xmlns="http://www.w3.org/2000/svg" id="pinterest" viewBox="0 0 15 15">
+				<path fill="none" stroke="currentColor"
+					d="m4.5 13.5l3-7m-3.236 3a2.989 2.989 0 0 1-.764-2V7A3.5 3.5 0 0 1 7 3.5h1A3.5 3.5 0 0 1 11.5 7v.5a3 3 0 0 1-3 3a2.081 2.081 0 0 1-1.974-1.423L6.5 9m1 5.5a7 7 0 1 1 0-14a7 7 0 0 1 0 14Z" />
+			</symbol>
+			<symbol xmlns="http://www.w3.org/2000/svg" id="youtube" viewBox="0 0 15 15">
+				<path fill="currentColor"
+					d="m1.61 12.738l-.104.489l.105-.489Zm11.78 0l.104.489l-.105-.489Zm0-10.476l.104-.489l-.105.489Zm-11.78 0l.106.489l-.105-.489ZM6.5 5.5l.277-.416A.5.5 0 0 0 6 5.5h.5Zm0 4H6a.5.5 0 0 0 .777.416L6.5 9.5Zm3-2l.277.416a.5.5 0 0 0 0-.832L9.5 7.5ZM0 3.636v7.728h1V3.636H0Zm15 7.728V3.636h-1v7.728h1ZM1.506 13.227c3.951.847 8.037.847 11.988 0l-.21-.978a27.605 27.605 0 0 1-11.568 0l-.21.978ZM13.494 1.773a28.606 28.606 0 0 0-11.988 0l.21.978a27.607 27.607 0 0 1 11.568 0l.21-.978ZM15 3.636c0-.898-.628-1.675-1.506-1.863l-.21.978c.418.09.716.458.716.885h1Zm-1 7.728a.905.905 0 0 1-.716.885l.21.978A1.905 1.905 0 0 0 15 11.364h-1Zm-14 0c0 .898.628 1.675 1.506 1.863l.21-.978A.905.905 0 0 1 1 11.364H0Zm1-7.728c0-.427.298-.796.716-.885l-.21-.978A1.905 1.905 0 0 0 0 3.636h1ZM6 5.5v4h1v-4H6Zm.777 4.416l3-2l-.554-.832l-3 2l.554.832Zm3-2.832l-3-2l-.554.832l3 2l.554-.832Z" />
+			</symbol>
+			<symbol xmlns="http://www.w3.org/2000/svg" id="dribble" viewBox="0 0 15 15">
+				<path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+					d="M4.839 1.024c3.346 4.041 5.096 7.922 5.704 12.782M.533 6.82c5.985-.138 9.402-1.083 11.97-4.216M2.7 12.594c3.221-4.902 7.171-5.65 11.755-4.293M14.5 7.5a7 7 0 1 0-14 0a7 7 0 0 0 14 0Z" />
+			</symbol>
+			<symbol xmlns="http://www.w3.org/2000/svg" id="arrow-right" viewBox="0 0 24 24">
+				<path fill="currentColor"
+					d="M17.92 11.62a1 1 0 0 0-.21-.33l-5-5a1 1 0 0 0-1.42 1.42l3.3 3.29H7a1 1 0 0 0 0 2h7.59l-3.3 3.29a1 1 0 0 0 0 1.42a1 1 0 0 0 1.42 0l5-5a1 1 0 0 0 .21-.33a1 1 0 0 0 0-.76Z" />
+			</symbol>
+			<symbol xmlns="http://www.w3.org/2000/svg" id="folder" viewBox="0 0 18 18" fill="none">
+				<path
+					d="M14.0946 4.04689H9.56953L9.33895 3.3259C9.18947 2.90285 8.9122 2.53678 8.54555 2.27842C8.1789 2.02006 7.74102 1.8822 7.29258 1.88393H4.00687C3.43356 1.88393 2.88374 2.11181 2.47835 2.51744C2.07296 2.92308 1.84521 3.47324 1.84521 4.04689V13.4197C1.84521 13.9934 2.07296 14.5435 2.47835 14.9492C2.88374 15.3548 3.43356 15.5827 4.00687 15.5827H14.0946C14.6679 15.5827 15.2177 15.3548 15.6231 14.9492C16.0285 14.5435 16.2562 13.9934 16.2562 13.4197V6.20985C16.2562 5.6362 16.0285 5.08604 15.6231 4.68041C15.2177 4.27477 14.6679 4.04689 14.0946 4.04689ZM14.8151 13.4197C14.8151 13.6109 14.7392 13.7943 14.6041 13.9295C14.469 14.0648 14.2857 14.1407 14.0946 14.1407H4.00687C3.81577 14.1407 3.63249 14.0648 3.49736 13.9295C3.36223 13.7943 3.28632 13.6109 3.28632 13.4197V4.04689C3.28632 3.85567 3.36223 3.67229 3.49736 3.53707C3.63249 3.40186 3.81577 3.3259 4.00687 3.3259H7.29258C7.44364 3.32551 7.591 3.37264 7.71384 3.46061C7.83667 3.54859 7.92877 3.67297 7.97711 3.81617L8.3662 4.99859C8.41454 5.1418 8.50664 5.26618 8.62947 5.35415C8.75231 5.44213 8.89967 5.48925 9.05073 5.48886H14.0946C14.2857 5.48886 14.469 5.56483 14.6041 5.70004C14.7392 5.83525 14.8151 6.01863 14.8151 6.20985V13.4197Z"
+					fill="black" />
+			</symbol>
+			<symbol xmlns="http://www.w3.org/2000/svg" id="clock" viewBox="0 0 18 18" fill="none">
+				<path
+					d="M11.0931 9.19042L9.58134 8.3173V5.12838C9.58134 4.93716 9.50543 4.75377 9.3703 4.61856C9.23517 4.48335 9.05189 4.40739 8.86079 4.40739C8.66969 4.40739 8.48641 4.48335 8.35128 4.61856C8.21615 4.75377 8.14024 4.93716 8.14024 5.12838V8.73331C8.14024 8.85987 8.17354 8.9842 8.23678 9.0938C8.30002 9.2034 8.39098 9.29441 8.50051 9.35769L10.3725 10.4392C10.4545 10.4873 10.5452 10.5186 10.6393 10.5315C10.7335 10.5444 10.8292 10.5385 10.9211 10.5142C11.013 10.4899 11.0991 10.4477 11.1746 10.3899C11.2501 10.3322 11.3134 10.26 11.3609 10.1777C11.4084 10.0953 11.4392 10.0044 11.4515 9.91012C11.4637 9.81583 11.4572 9.72004 11.4323 9.62828C11.4074 9.53652 11.3646 9.45059 11.3064 9.37544C11.2482 9.3003 11.1757 9.23741 11.0931 9.19042ZM8.86079 1.52344C7.43567 1.52344 6.04256 1.94629 4.85762 2.73852C3.67268 3.53075 2.74913 4.65678 2.20376 5.97421C1.6584 7.29165 1.5157 8.74131 1.79373 10.1399C2.07175 11.5385 2.75801 12.8231 3.76572 13.8315C4.77343 14.8398 6.05733 15.5265 7.45506 15.8047C8.8528 16.0828 10.3016 15.9401 11.6182 15.3944C12.9349 14.8487 14.0602 13.9246 14.852 12.7389C15.6437 11.5532 16.0663 10.1593 16.0663 8.73331C16.0642 6.82178 15.3044 4.98914 13.9535 3.63748C12.6027 2.28582 10.7712 1.52554 8.86079 1.52344ZM8.86079 14.5012C7.7207 14.5012 6.60621 14.1629 5.65826 13.5291C4.7103 12.8954 3.97146 11.9945 3.53517 10.9406C3.09887 9.88665 2.98472 8.72691 3.20714 7.60805C3.42956 6.48919 3.97857 5.46145 4.78474 4.65479C5.5909 3.84814 6.61802 3.2988 7.73621 3.07624C8.8544 2.85369 10.0134 2.96791 11.0667 3.40447C12.12 3.84103 13.0203 4.58031 13.6537 5.52884C14.2871 6.47737 14.6252 7.59253 14.6252 8.73331C14.6233 10.2625 14.0154 11.7284 12.9347 12.8097C11.8541 13.891 10.389 14.4993 8.86079 14.5012Z"
+					fill="black" />
+			</symbol>
+		</defs>
+	</svg>
+
+	<a class="menu-btn"><span></span></a>
+
+	<div class="container-fluid">
+
+		<header id="header-nav" class="col-lg-2 position-fixed px-5 bg-white h-100">
+			<div class="header-wrap d-flex flex-column justify-content-between h-100">
+				<div class="navigation">
+					<div class="site-logo mt-5">
+						<a href="index.html">
+							<img src="images/main-logo.png" alt="logo" class="img-fluid">
+						</a>
+					</div>
+
+					<nav id="one-page-menu" class="vertical-menu my-5">
+						<ul class="menu-list list-unstyled">
+							<li><a href="index.html#billboard" class="nav-link">Home</a></li>
+							<li><a href="index.html#biodata" class="nav-link">Biodata</a></li>
+							<li><a href="index.html#experience" class="nav-link">Experience</a></li>
+							<li><a href="index.html#portfolio" class="nav-link">Work</a></li>
+							<li><a href="index.html#contact" class="nav-link">Contact</a></li>
+							<li>
+								<a class="nav-link btn-toggle d-flex justify-content-between align-items-center collapsed"
+									data-bs-toggle="collapse" data-bs-target="#pages-collapse" aria-expanded="false">
+									Articles
+								</a>
+								<div id="pages-collapse" class="collapse">
+									<ul class="list-unstyled py-3">
+										<li>
+											<a href="mesos-aurora.html">Mesos Aurora</a>
+										</li>
+										<li>
+											<a href="k8s-versions.html">K8s Versions</a>
+										</li>
+										<li>
+											<a href="K8s-TF-upgrade.html">K8s Upgrade using TF</a>
+										</li>
+										<li>
+											<a href="blog.html">Blog <span class="badge bg-primary">PRO</span></a>
+										</li>
+									</ul>
+								</div>
+							</li>
+						</ul>
+					</nav>
+				</div>
+				<div class="mt-5">
+					<div class="email-links">
+						<a href="mailto:akki2790@gmail.com" class="py-3 my-3 border-bottom d-flex">akki2790@gmail.com</a>
+					</div>
+					<!-- <ul class="list-unstyled d-flex justify-content-start flex-wrap gap-3">
+						<li>
+							<a href="#" class="text-dark">
+								<svg width="24" height="24" viewBox="0 0 24 24">
+									<use xlink:href="#facebook"></use>
+								</svg>
+							</a>
+						</li>
+						<li>
+							<a href="#" class="text-dark">
+								<svg width="24" height="24" viewBox="0 0 24 24">
+									<use xlink:href="#twitter"></use>
+								</svg>
+							</a>
+						</li>
+						<li>
+							<a href="#" class="text-dark">
+								<svg width="24" height="24" viewBox="0 0 24 24">
+									<use xlink:href="#youtube"></use>
+								</svg>
+							</a>
+						</li>
+						<li>
+							<a href="#" class="text-dark">
+								<svg width="24" height="24" viewBox="0 0 24 24">
+									<use xlink:href="#pinterest"></use>
+								</svg>
+							</a>
+						</li>
+						<li>
+							<a href="#" class="text-dark">
+								<svg width="24" height="24" viewBox="0 0 24 24">
+									<use xlink:href="#instagram"></use>
+								</svg>
+							</a>
+						</li>
+					</ul> -->
+				</div>
+			</div>
+		</header>
+
+		<main class="col-lg-10 offset-lg-2">
+			<div class="container">
+				<div class="row justify-content-center">
+					<div class="col-lg-8">
+
+						<section class="pt-5 mt-5" data-aos="fade-up">
+							<div class="post-meta d-flex gap-3 my-4">
+								<span class="post-category">
+									<svg width="16" height="16" viewBox="0 0 24 24">
+										<use xlink:href="#folder"></use>
+									</svg>
+									Blog </span>
+								<span class="meta-day">
+									<svg width="16" height="16" viewBox="0 0 24 24">
+										<use xlink:href="#clock"></use>
+									</svg>27-10-2024 </span>
+							</div>
+							<h1 class="display-4 txt-fx slide-up">The short reign of Apache Mesos and Apache Aurora</h1>
+							<img src="images/mesos.png" alt="single post" class="img-fluid my-4">
+						</section>
+
+						<article class="post-item" data-aos="fade-up" data-aos-delay="100">
+
+							<div class="post-content py-5">
+								<div class="post-description">
+									<h3 class="info-title">The transient world of tech</h3>
+									<p>You happen to come across a new tech, find it fascinating, you try and understand it, learn to use it, even implement it in your workflow. Then a couple seasons pass-by and next thing you know, its obsolete. Some new tech has eclipsed it.</p>
+									<p>This is the faith of most tools in the world of tech. Sure, you can pledge to keep using something that’s getting obsolete. But, it won’t be easy and it will only get more difficult with time. The community support won’t be strong enough, new tools might not play well with it and the list of issues, shortcomings & todos will keep piling w/o ever being tackled. I am sure this reminds you of a few technologies you came across in a past life, or of legends you’ve heard from your senior colleagues.</p>
+									<figure class="d-flex float-end m-md-5">
+										<img src="images/virtual-machines.png" alt="post-image" class="img-fluid mb-4">
+									</figure>
+									<p>We are looking at two (mainly one) such tools today, which we heavily relied on at one of the start-ups I worked at - Apache Mesos and Apache Aurora. They had a short but significant reign; with <strong>Virtual Machines</strong> being it’s predecessor and <strong>Containers</strong> it’s successor. Having worked on Virtual Machines in the past, I found Mesos to be fascinating. Its was way faster, more lightweight and efficient. And the way it achieved this was brilliant.</p>
+									<p>We will be diving deep into these softwares to see how they compare with VMs and Containers. By the end of this, you’ll have a better understanding of how these tools work under the hood and achieve their end goal.</p>
+									<h3 class="info-title">So what are Mesos and Aurora?</h3>
+									<p><strong>Apache Mesos</strong> basically is a distributed systems kernel that abstracts CPU, memory, storage, and other compute resources away from machines (physical or virtual) to enable effective deployment and operation of your applications on ‘isolated instances’.</p>
+									<p>These isolated instances function similar to VMs or Containers, but share the host resources. No need for a Guest OS either. They represent individual workloads/tasks (microservices, jobs, etc.) that run on available hardware resources across your cluster. You can even run multiple applications or frameworks (like Hadoop, Spark, Kubernetes, or even custom frameworks) on the same set of machines without them stepping on one another.</p>
+									<p><strong>Apache Aurora</strong> is a service scheduler that runs on top of Mesos. It handles resource scheduling, fault tolerance, and task monitoring, making it easier to manage large-scale applications. It also offers features like rolling updates, job quotas, and service health checking, which makes it robust for managing both stateless and stateful workloads.</p>
+									<p><strong>Together</strong>, they provide cluster resource management and isolation, with high-level service scheduling and management features.</p>
+									<h3>Who, Why and When?</h3>
+									<p>Apache Mesos was created by Benjamin Hindman, Andy Konwinski, Matei Zaharia, and a few others at the University of California, Berkeley's AMPLab. The project began around 2009 and was open-sourced in 2010. The primary motivation behind it was to address the growing complexity of managing distributed systems; especially in large-scale data centers. The early 2000s saw a rise in cloud computing, and organizations were running multiple distributed systems for various tasks like web applications, batch processing (e.g., Hadoop), and real-time data streaming (e.g., Spark). Each of these systems needed its own cluster management framework.</p>
+									<p>Apache Mesos was designed to create a <strong>unified cluster management platform</strong> that could - run a variety of different distributed applications on a shared pool of resources, dynamically allocate hardware resources (like CPU, memory, storage) to applications as needed and allow applications to co-exist on the same physical or virtual servers, reducing the need to dedicate entire clusters to individual systems.</p>
+									<p>It aimed to provide a <strong>single resource pool</strong> that could be efficiently shared by different frameworks, improving resource utilization and simplifying cluster management.</p>
+									<p>Aurora on the other hand, was developed at <strong>Twitter</strong> to address the company's specific needs for running long-running services (like microservices) and cron-like scheduled jobs. Twitter had already adopted Mesos for resource management but needed a higher-level abstraction to manage complex distributed applications and services more effectively. It was open-sourced in 2013.</p>
+									<p>Apache Aurora provided a <strong>service scheduler</strong> on top of Mesos for long-running applications (e.g., web services, APIs) and batch jobs (e.g., cron jobs, data processing jobs) and a <strong>job scheduling system</strong> for running fault-tolerant services, helping Twitter handle service failures and reschedule tasks on available servers.</p>
+									<p>Aurora allowed developers to specify application requirements and constraints (e.g., CPU, memory, and disk needs) and handled the placement and lifecycle management of tasks across the Mesos cluster.</p>
+									<h3>How does Apache Mesos work?</h3>
+									<h5>Master-Agent Architecture:</h5>
+									<p>Apache Mesos follows a master-agent architecture, which is key to how it manages and abstracts resources:</p>
+									<ul class="inner-list">
+										<li> <strong>Mesos Master:</strong> The central coordinator that manages the overall state of the cluster, including resources, task scheduling, and interactions with frameworks (applications).</li>
+										<li> <strong>Mesos Agents</strong> (formerly called Slaves): Each physical or virtual server in the cluster runs a Mesos agent, which reports the available resources (CPU, memory, disk, etc.) to the master. The agent is responsible for running tasks assigned to it by the Mesos master. The agents act as intermediaries between the physical/virtual hardware and the tasks, effectively abstracting the hardware details.</li>
+									</ul>
+									<p>Applications do not interact with hardware directly but instead request resources from the Mesos master, which schedules tasks to run on the available agents.</p>
+									<h5>Isolation:</h5>
+									<p>This is the most important and technical aspect of Apache Mesos - <strong>‘How it achieves abstraction and isolation of Hardware resources?’</strong> I’ve talked about this in a dedicated section below.</p>
+									<h5>Resource Offers:</h5>
+									<p>One of the key mechanisms Mesos uses to abstract resources is the resource offer model. Instead of having applications request specific resources upfront, Mesos works the other way around:</p>
+									<ul class="inner-list">
+										<li> Each <strong>Mesos agent periodically reports</strong> the available resources (CPU, memory, disk, etc.) on the physical server to the <strong>Mesos master.</strong></li>
+										<li> The <strong>Mesos master</strong> then <strong>offers</strong> these resources to registered frameworks (e.g., Apache Spark, Marathon, Aurora).</li>
+										<li> Frameworks decide whether to accept these resources based on their own requirements and then submit tasks to be run on those resources.</li>
+									</ul>
+									<p>This resource offer model decouples applications from the underlying hardware and creates a high-level abstraction where resources are dynamically offered to applications as needed.</p>
+									<h5>Fine-Grained Allocation:</h5>
+									<p>Mesos provides fine-grained control over the allocation of resources, <strong>allowing frameworks to specify exact amounts</strong> of CPU, memory, disk, and network they require. This allows Mesos to:</p>
+									<ul class="inner-list">
+										<li> <strong>Divide physical resources</strong> on each server (CPU cores, RAM, disk, network bandwidth) into smaller, manageable units.</li>
+										<li> <strong>Isolate resource usage</strong> between tasks, ensuring that no task overuses resources or impacts others running on the same agent.</li>
+									</ul>
+									<p>By breaking down server hardware resources into smaller units, Mesos effectively abstracts the physical server into multiple resource slots that can be distributed across different tasks, creating a virtualization-like environment without the overhead of virtual machines.</p>
+									<h5>Framework Abstraction:</h5>
+									<p>Applications running on Mesos use different <strong>frameworks</strong> (e.g., Apache Aurora, Marathon, or custom frameworks) to manage their workloads. These frameworks <strong>request resources</strong> from Mesos based on their own scheduling logic. And once resources are allocated, they <strong>launch tasks</strong> (e.g., microservices, batch jobs) on those allocated resources.</p>
+									<p>Mesos handles the low-level resource management (like CPU and memory allocation), while the frameworks focus on application-level scheduling. This split creates a further abstraction between the application's logic and the physical resources of the server.</p>
+									<h5>Unified Resource Pool: </h5>
+									<p>By aggregating resources across multiple physical and virtual machines, Mesos creates a <strong>unified resource pool</strong> for the entire cluster. It treats all resources (across CPU, memory, storage, and network) as if they come from a single, large server.</p>
+									<p>Applications running on Mesos are not concerned with where the physical resources reside (which server, data center, etc.). The Mesos master abstracts the underlying servers, allowing the applications to interact only with the available resources, without needing to know about the specific hardware details. This unified resource pool makes it easy to run distributed applications, big data frameworks, and microservices at scale without having to manage the underlying hardware manually.</p>
+									<h5>Scalability and Fault Tolerance:</h5>
+									<p>Mesos design <strong>allows it to scale across thousands of machines.</strong> The Mesos master and agents work together to dynamically adjust resource allocation as new tasks come in. Mesos is capable of handling failures by reassigning tasks to available resources on healthy agents.</p>
+									<p>By abstracting hardware resources at scale, Mesos ensures that no single machine becomes a point of failure and that resources are continuously available, even in the event of failures.</p>
+									<h3>How does Mesos achieve abstraction & isolation of hardware resources?</h3>
+									<p>Apache Mesos achieves abstraction of server hardware resources by acting as a distributed resource manager or a cluster manager. It abstracts the underlying physical or virtual server infrastructure into a single resource, isolating them with <strong> Cgroups and namespaces.</strong> (Linux kernel features) All this allows applications to efficiently share and utilize the available resources (CPU, memory, disk, network, etc.) across a distributed cluster.</p>
+									<h3>Cgroups and namespaces: </h3>
+									<p><strong>Control Groups (cgroups)</strong> is a Linux kernel feature that limits, monitors, and manages the resources (CPU, memory, disk I/O, network bandwidth, etc.) that a group of processes can use. It allows system administrators or orchestration tools to control the amount of system resources allocated to processes or groups of processes. Without cgroups, processes can potentially consume excessive resources, leading to <strong>resource contention</strong> or even <strong>starvation</strong> of other processes.</p>
+									<h5>Key Features of Cgroups: </h5>
+									<ul class="inner-list">
+										<li> <strong>Resource Limitation: </strong> You can set upper limits on the amount of CPU, memory, disk I/O, and other resources that a group of processes can consume.</li>
+										<li> <strong>Resource Monitoring: </strong> Cgroups can track the resource usage of processes, providing real-time information about how much CPU or memory a task is consuming.</li>
+										<li> <strong>Resource Prioritization: </strong> By assigning priorities to different cgroups, you can control how resources are shared among processes, making sure that critical processes get more resources than less critical ones.</li>
+										<li> <strong>Freezing/Throttling: </strong> Cgroups can pause or limit resource consumption temporarily if needed, preventing a process from monopolizing resources.</li>
+									</ul>
+									<h5>Examples:</h5>
+									<ul class="inner-list">
+										<li> <strong>CPU Limitation: </strong> Cgroups can ensure that one task (process) uses only 40% of the CPU, while another uses the remaining 60%. This prevents a poorly-behaved or resource-hungry task from hogging all the CPU resources.</li>
+										<li> <strong>Memory Isolation: </strong> Cgroups can cap the amount of memory a process or group of processes can use. If a process exceeds this limit, it will be killed or its allocation will be constrained, protecting other tasks from being affected by out-of-memory errors.</li>
+										<li> <strong>Disk I/O: </strong> Cgroups can limit how many disk read/write operations a task can perform. This prevents tasks from monopolizing the disk, which could slow down the performance of other processes.</li>
+										<li> <strong>Freezing/Throttling: </strong> Cgroups can pause or limit resource consumption temporarily if needed, preventing a process from monopolizing resources.</li>
+									</ul>
+									<p><strong>Namespaces</strong> are a Linux kernel feature that provides <strong>process-level isolation</strong> by wrapping global system resources (such as file systems, network interfaces, process IDs, and user IDs) into <strong>independent instances.</strong> This makes it appear as if each group of processes has its own private view of these resources, even though they are all running on the same underlying operating system. Processes running in one namespace are unaware of the resources in other namespaces, ensuring that they cannot interfere with each other.</p>
+									<p>There are <strong>several types of namespaces, each isolating a different system resource.</strong> Some of these are - PID Namespace, Mount (MNT) Namespace, Network (NET) Namespace, Time Namespace, IPC Namespace and User Namespace.</p>
+									<h5>Examples: </h5>
+									<ul class="inner-list">
+										<li> <strong>PID Namespace: </strong> Processes in different PID namespaces have their own process ID space. This means that two processes in different namespaces can have the same PID but will never see each other. This isolation is essential for containers, where each container behaves as if it has its own private process space.</li>
+										<li> <strong>Network Namespace: </strong> Each network namespace can have its own network interfaces and routing tables. This allows different applications or containers to have <strong>completely independent networking stacks</strong>, preventing them from interfering with each other’s network traffic.</li>
+										<li> <strong>Mount Namespace: </strong> Processes in a mount namespace can have their own view of the file system, with their own mounted directories and devices. This allows applications to be isolated from each other’s file systems, so they cannot see or modify each other’s files.</li>
+									</ul>
+									<h3>How does Apache Aurora work? </h3>
+									<p>Apache Aurora provides a framework for deploying and managing long-running services, cron jobs, and batch jobs across a Mesos cluster. Here’s how Aurora achieves this within the Mesos ecosystem:</p>
+									<h5>Job Definition and Configuration:</h5>
+									<p>In Aurora, users define <strong>jobs</strong> using a <strong>configuration file</strong> written in a DSL (Domain-Specific Language) like Python or JSON. These jobs specify the resources requirements (CPU, memory, disk) and other parameters (e.g., health checks, replication, etc.).</p>
+									<em>Example Job Configuration (Aurora Job File):</em>
+									<pre>
+										<code>
+job = Job(
+	name = "billing_service",
+	environment = "prod",
+	role = "billingteam",
+	task = Service(
+	name = "billing_server",
+	cpu = 0.25,  # 0.25 CPU per instance
+	ram = 2048,  # 2GB of RAM per instance
+	disk = 512,  # 512MB of disk space
+	instances = 8,  # We want 8 instances running
+	process = Process(
+		name = "billing_server_process",
+		cmdline = “/usr/local/bin/start-billing-service",  # Command to start the service
+		max_failures = 3  # Retry upto 3 times before reporting failure
+	),
+	health_check = HealthCheck(
+		url = "http://localhost:8080/health",
+		interval_secs = 10,
+		timeout_secs = 5
+	)
+	)
+)
+										</code>
+									</pre>
+									<h5>Service Scheduling and Deployment:  </h5>
+									<p>Aurora takes these job definitions and works with Mesos to deploy the jobs across available nodes in the cluster. Aurora ensures that:</p>
+									<ul class="inner-list">
+										<li> Jobs are deployed on the right nodes based on the resource requirements and constraints defined in the configuration. Example: X CPU, Y RAM and Z Disk space.</li>
+										<li> Jobs are replicated, ensuring that a defined number of instances (tasks) are running at all times. Example: 20 instances of microservice X.</li>
+									</ul>
+									<h5>Monitoring and Health Checks:  </h5>
+									<p>Aurora continuously monitors the state of each task and performs <strong>health checks.</strong> If a task crashes or fails its health check, Aurora <strong>automatically restarts</strong> it on another available node.</p>
+									<h5>Resilience and Fault Tolerance: </h5>
+									<p>If a node fails, Aurora re-schedules tasks on other available nodes, ensuring that services remain operational even in the event of hardware or software failures.</p>
+									<h5>Cron Jobs and Batch Processing: </h5>
+									<p>Aurora supports running scheduled tasks (similar to cron jobs) and can also be used for <strong>batch processing.</strong> These jobs are scheduled based on the timing and frequency defined in the job's configuration file</p>
+									<h5>Key Components of Aurora: </h5>
+									<ul class="inner-list">
+										<li> <strong>Scheduler: </strong> The brain of Aurora, responsible for managing the lifecycle of all tasks and interacting with the Mesos master to request resources.</li>
+										<li> <strong>Executor: </strong> The component that runs tasks on Mesos agents, ensuring that tasks are executed as defined by the job configuration.</li>
+										<li> <strong>Thermos: </strong> A lightweight executor framework used by Aurora to monitor and restart tasks. Thermos is responsible for task-level retries and management.</li>
+										<li> <strong>Tasks: </strong> The individual units of work defined in Aurora jobs. A task represents an instance of an application or service running on a Mesos agent.</li>
+									</ul>
+									<h3>Virtual Machines V/S Mesos Instances V/S Containers </h3>
+									<p>Now that we know what Apache Mesos is and how it works with Apache Aurora to offers a powerful platform for managing large-scale distributed systems, lets look at how it differs from (and in some ways is similar to) - what was before (i.e. VMs) and what came after. (i.e. Containers)</p>
+									<h5>Compared to Virtual Machines (VMs): </h5>
+									<p>The primary difference between Mesos instances and Virtual Machines (VMs) lies in the way they manage and abstract resources on a physical server. Here's a detailed comparison:</p>
+									<ul class="inner-list">
+										<li> <strong>Full OS virtualization: </strong> In a VM-based environment, each virtual machine runs a complete guest OS (including its own kernel) on top of the host OS. The hypervisor isolates the VMs and allocates resources, but there is more overhead because <strong>each VM runs a full OS instance.</strong><br>In contrast, Mesos instances do not run a separate OS. Instead, they share the host OS kernel with other instances, reducing overhead.</li>
+										<li> <strong>Isolation: </strong> VMs provide stronger isolation compared to Mesos instances, as they run entirely separate guest OS. Mesos provides application-level isolation using cgroups and namespaces, but instances still share the host's kernel.</li>
+										<li> <strong>Less Granular: </strong> Virtual machines typically have static resource allocation, <strong> meaning once resources (CPU, RAM) are allocated, they are locked</strong> to the VM, limiting flexibility in scaling at finer levels compared to Mesos instances.</li>
+										<li> <strong>Slower Boot Times: </strong> VMs take longer to start because they must boot a full OS, whereas Mesos instances are simply processes started within the existing OS, resulting in much faster startup times.</li>
+										<li> <strong>Strong Isolation: </strong> VMs provide <strong>full isolation</strong> at the OS level. Each VM is completely isolated from others, making it more secure in terms of kernel vulnerabilities. A security breach in one VM typically does not affect other VMs.</li>
+										<li> <strong>Multiple OSes: </strong> If there’s a need to run multiple operating systems (e.g., Linux, Windows) on the same physical host, VMs are preferred since each VM can run a completely different OS.</li>
+										<li> <strong>Multi-Tenancy: </strong> VMs are ideal when strict isolation is required, such as in multi-tenant environments, where different customers or applications should not interact at any level, including OS.</li>
+									</ul>
+									<h5>Compared to Containers: </h5>
+									<p><strong>Mesos instances and Containers</strong> are somewhat related and share some similarities. However, there are key distinctions between the two in terms of how they handle isolation, resource management, and their underlying technologies. Let’s look at what these <strong>similarities, differences and overlaps</strong> are:</p>
+									<ul class="inner-list">
+										<li> <strong>Isolation Mechanisms: </strong> Containers do not require an entire OS; instead, they share the host OS kernel but have isolated user spaces, making them more lightweight compared to VMs. Containers (like Mesos instances) also rely heavily on <strong>Linux Cgroups and namespaces</strong> for isolation, offering a self-contained environment with isolated process IDs (PID), networking, filesystems, and user environments. But this <strong>isolation is stricter than Mesos instances.</strong></li>
+										<li> <strong>Resource Management: </strong> Containers also rely on <strong>cgroups</strong> for resource management, but the resource allocation is usually managed by the container runtime (such as Docker) or an orchestrator like <strong>Kubernetes.</strong> Containers allow you to limit the CPU, memory, and other resources for each container instance. However, resource management may not be as sophisticated or fine-grained as Mesos' multi-resource handling unless integrated with a higher-level orchestrator.</li>
+										<li> <strong>Deployment and Orchestration: </strong> Mesos instances are scheduled and managed by <strong>Mesos</strong> and, optionally, <strong>Aurora</strong> or other frameworks like <strong>Marathon.</strong><br>Containers are typically deployed and managed by a container orchestration platform like <strong>Kubernetes or Docker Swarm</strong>, which is responsible for scheduling, scaling, and managing containers.Orchestrators handle the lifecycle of containers, ensuring availability, load balancing, scaling, and recovery in case of failure.</li>
+										<li> <strong>Statefulness and Persistence: </strong> Mesos instances can handle both <strong>stateless and stateful</strong> workloads. Mesos frameworks (e.g., Aurora, Marathon) have built-in support for <strong>persistent volumes</strong>, allowing stateful services to run with reliable storage. Plus, Mesos has the ability to handle <strong>multiple types of workloads</strong> (microservices, batch jobs, big data processing, etc.) making it highly flexible.<br>Containers are typically designed to be <strong>ephemeral and stateless</strong>. Any persistent storage needs to be <strong>mounted</strong> from external sources, such as network-attached storage, cloud-based storage (e.g., EBS, NFS), or container-specific storage solutions (e.g., Kubernetes Persistent Volumes). While containers can also be used for stateful services, managing persistence requires extra effort and orchestration.</li>
+										<li> <strong>Performance Overhead: </strong> Containers are lightweight, but they do introduce a small amount of overhead compared to running directly on the host. This is due to the added layer of isolation provided by the container runtime. Containerized applications may have <strong>slightly lower performance</strong> than non-containerized applications running on Mesos because of the overhead involved in managing the container's environment.</li>
+										<li> <strong>Mesos Can Use Containers: </strong> While Mesos instances are not exactly containers, <strong>Mesos can use containers</strong> (e.g., Docker, Mesos native containerizer) to run instances, like you run any other job/task on Mesos. In this case, the instances are containers that offer process and resource isolation while sharing the host OS kernel.</li>
+									</ul>
+									<div class="post-bottom-link d-flex justify-content-between">
+										<div class="block-social-links d-flex align-items-baseline">
+											<div class="element-title text-uppercase">Share:</div>
+											<ul class="list-unstyled d-flex gap-2">
+												<li>
+													<a href="#" class="btn btn-light">Linkedin</a>
+												</li>
+												<li>
+													<a href="#" class="btn btn-light">Twitter</a>
+												</li>
+												<li>
+													<a href="#" class="btn btn-light">Facebook</a>
+												</li>
+												<li>
+													<a href="#" class="btn btn-light">Threads</a>
+												</li>
+											</ul>
+										</div>
+									</div>
+								</div>
+								<!-- <div id="single-post-navigation" class="mt-5">    # add links to prev and next articles
+									<div class="post-navigation d-flex justify-content-between">
+										<a itemprop="url" class="post-prev" href="#">
+											<span class="text-muted">Previous</span>
+											<h2 class="page-nav-title">Top 10 fashion trend for summer</h2>
+										</a>
+										<a itemprop="url" class="post-next text-end" href="#">
+											<span class="text-muted">Next</span>
+											<h2 class="page-nav-title">Crazy fashion with unique moment</h2>
+										</a>
+									</div>
+								</div> -->
+							</div>
+						</article>
+
+						<!-- <div id="post-author-info" class="border-top border-bottom py-4">  # about the author (me)
+							<div class="row d-flex align-items-center">
+								<div class="col-lg-3">
+									<div class="image-holder">
+										<a itemprop="url" href="#">
+											<img src="images/author-image.jpg" class="img-fluid rounded-circle"
+												alt="author">
+										</a>
+									</div>
+								</div>
+								<div class="col-lg-9">
+									<div class="post-author-content">
+										<div class="element-title d-flex align-items-center gap-3">
+											<h4><a itemprop="url" href="">Anna Younes</a></h4>
+											<span class="author-position"><em>Fashion Designer</em></span>
+										</div>
+										<p>Nascetur libero elementum adipiscing mauris maecenas et magna. Etiam nec,
+											rutrum a diam lacus, nunc integer etiam. Mattis pulvinar non viverra donec
+											pellentesque. Odio mi consequat libero dolor. Porta ut diam lobortis eget
+											leo, lectus. Tortor diam dignissim amet, in interdum aliquet. Magnis dictum
+											et eros purus fermentum, massa ullamcorper sit sollicitudin.</p>
+									</div>
+								</div>
+							</div>
+						</div> -->
+
+						<!-- <div class="section-header mt-5">
+							<h2 class="section-title">Related Posts</h2>
+						</div>section-header -->
+
+						<!-- <div class="row">
+							<div class="col-lg-6">
+								<article class="post-item pb-5">
+									<div class="post-meta d-flex gap-3 my-4">
+										<span class="post-category">
+											<svg width="16" height="16" viewBox="0 0 24 24">
+												<use xlink:href="#folder"></use>
+											</svg>
+											Blog </span>
+										<span class="meta-day">
+											<svg width="16" height="16" viewBox="0 0 24 24">
+												<use xlink:href="#clock"></use>
+											</svg>27-10-2024 </span>
+									</div>
+									<div class="post-image">
+										<img src="images/post-image1.jpg" alt="image" class="post-grid-image img-fluid">
+									</div>
+									<div class="post-content">
+										<h3 class="post-title my-4">
+											<a href="single-post.html">Best rules to follow for achieving business
+												goals</a>
+										</h3>
+										<p>Business migration into the cloud has been one of the most boggling
+											innovations of the last
+											decade. Cloud computing has revolutionized the world of information
+											technology.</p>
+									</div>
+									<a href="single-post.html" class="text-decoration-underline">Read More</a>
+								</article>
+							</div>
+							<div class="col-lg-6">
+								<article class="post-item pb-5">
+									<div class="post-meta d-flex gap-3 my-4">
+										<span class="post-category">
+											<svg width="16" height="16" viewBox="0 0 24 24">
+												<use xlink:href="#folder"></use>
+											</svg>
+											Business </span>
+										<span class="meta-day">
+											<svg width="16" height="16" viewBox="0 0 24 24">
+												<use xlink:href="#clock"></use>
+											</svg>12-03-2021 </span>
+									</div>
+									<div class="post-image">
+										<img src="images/post-image2.jpg" alt="image" class="post-grid-image img-fluid">
+									</div>
+									<div class="post-content">
+										<h3 class="post-title my-4">
+											<a href="single-post.html">6 Ways to Improve Your Emotional Health And
+												Maintain A Balanced
+												Life</a>
+										</h3>
+										<p>Business migration into the cloud has been one of the most boggling
+											innovations of the last
+											decade. Cloud computing has revolutionized the world of information
+											technology.</p>
+									</div>
+									<a href="single-post.html" class="text-decoration-underline">Read More</a>
+								</article>
+							</div>
+						</div> -->
+
+					</div>
+				</div>
+			</div>
+		</main>
+
+	</div>
+
+	<script src="js/jquery-1.11.0.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+		crossorigin="anonymous"></script>
+	<script src="js/plugins.js"></script>
+	<script src="js/script.js"></script>
+</body>
+
+</html>
