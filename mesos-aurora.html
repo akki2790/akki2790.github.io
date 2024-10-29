@@ -237,6 +237,9 @@
 									<h3>How does Mesos achieve abstraction & isolation of hardware resources?</h3>
 									<p>Apache Mesos achieves abstraction of server hardware resources by acting as a distributed resource manager or a cluster manager. It abstracts the underlying physical or virtual server infrastructure into a single resource, isolating them with <strong> Cgroups and namespaces.</strong> (Linux kernel features) All this allows applications to efficiently share and utilize the available resources (CPU, memory, disk, network, etc.) across a distributed cluster.</p>
 									<h3>Cgroups and namespaces: </h3>
+									<figure class="d-flex float-end m-md-5">
+										<img src="images/cgroups-namespaces.png" alt="post-image" class="img-fluid mb-4">
+									</figure>
 									<p><strong>Control Groups (cgroups)</strong> is a Linux kernel feature that limits, monitors, and manages the resources (CPU, memory, disk I/O, network bandwidth, etc.) that a group of processes can use. It allows system administrators or orchestration tools to control the amount of system resources allocated to processes or groups of processes. Without cgroups, processes can potentially consume excessive resources, leading to <strong>resource contention</strong> or even <strong>starvation</strong> of other processes.</p>
 									<h5>Key Features of Cgroups: </h5>
 									<ul class="inner-list">
