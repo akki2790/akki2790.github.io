@@ -182,22 +182,22 @@
 								<div class="post-description">
 									<p>For a lot of people (including myself) the relationship between these two and their release cycles can feel quite confusing at first. With this article, I will try to demystify all that. I’ll also talk about the impact of deprecated APIs, how to tackle them and the tools that assist you in identifying them.</p>
 									<h3 class="info-title">Why is this important?</h3>
-									<p>Various API resources, their versions and their deprecation is something that’ll come up during a Kubernetes cluster version upgrade. In fact, its one of the <strong>most important thing you’ve to account for</strong> before you jump to a new K8s version.</p>
+									<p>Various API resources, their versions and their deprecation is something that’ll come up during a Kubernetes cluster version upgrade. In fact, its the <strong>most important thing you’ve to account for</strong> before you jump to a new K8s version.</p>
 									<h3 class="info-title">How they differ and relate</h3>
 									<h5>Kubernetes Version:</h5>
 									<ul class="inner-list">
 										<li> This refers to the version of the Kubernetes platform itself. (the control plane, kubelet, kube-proxy, etc.)</li>
-										<li> Kubernetes uses a versioning scheme like v1.x.x (e.g., v1.27.0), following semantic versioning.</li>
-										<li> Each Kubernetes version introduces new features, improvements, bug fixes, and sometimes deprecates or removes certain API versions.</li>
+										<li> Kubernetes uses a semantic versioning scheme like v1.x.x. (e.g., <code>v1.27.0</code>)</li>
+										<li> Each Kubernetes version introduces new features, improvements, bug fixes, and <strong>sometimes deprecates or removes certain API versions.</strong></li>
 									</ul>
 									<h5>API Version:</h5>
 									<ul class="inner-list">
-										<li> Kubernetes organizes its API into different groups and versions. (like apps/v1, batch/v1, core/v1, etc.)</li>
+										<li> Kubernetes organizes its API into different groups and versions. (e.g., apps/v1, batch/v1, core/v1, etc.)</li>
 										<li> The API version refers to the version of a specific API resource or group. (e.g., Deployment, Pod, Service, ConfigMap etc.)</li>
 										<li> These API versions follow a format:</li>
 										<ul class="inner-list">
 											<li> <strong>Alpha: </strong>v1alpha1, v1alpha2 (experimental, unstable, may change or be removed)</li>
-											<li> <strong>Beta: </strong>v1beta1, v1beta2 (more stable but subject to change).</li>
+											<li> <strong>Beta: </strong>v1beta1, v1beta2 (more stable than alpha, but subject to change).</li>
 											<li> <strong>Stable: </strong>v1 (fully stable, backward-compatible).</li>
 										</ul>
 									</ul>
@@ -206,7 +206,7 @@
 									</figure>
 									<h3 class="info-title">Relationship Between Kubernetes and API Versions</h3>
 									<p><strong>Kubernetes version release determines the availability and defaulting of API versions.</strong> For example, a particular API version (like apps/v1) might be introduced as <strong>stable</strong> in a certain Kubernetes release (e.g., v1.9.0). Older API versions may be <strong>deprecated</strong> or removed in future Kubernetes releases. For instance, extensions/v1beta1 for Deployment objects was deprecated and replaced by apps/v1 in Kubernetes v1.16.0.</p>
-									<p><strong>Kubernetes versioning doesn't necessarily map 1:1 to API versions.</strong> While the Kubernetes platform evolves, certain API versions might remain stable (e.g., core/v1) or change more slowly than Kubernetes releases</p>
+									<p><strong>Kubernetes versioning doesn't necessarily map 1:1 to API versions.</strong> While the Kubernetes platform evolves, certain API versions might remain stable (e.g., core/v1) or change more slowly than Kubernetes releases.</p>
 									<p><strong>Example: </strong>A Kubernetes cluster running v1.27.0 may support several API versions for the same resource. Like apps/v1beta1 (deprecated) and apps/v1 (stable) being supported at the same time. But in future releases, like v1.30.0, deprecated API versions may no longer be supported, and only stable versions like apps/v1 will be available.</p>
 									<p>In short, Kubernetes versions govern the platform as a whole, while API versions relate to the stability and availability of specific resources and groups.</p>
 									<h3>Impact of Deprecated API Versions on Cluster Upgrades</h3>
