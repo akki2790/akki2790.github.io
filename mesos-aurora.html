@@ -342,9 +342,6 @@ job = Job(
 										<li> <strong>Performance Overhead: </strong> Containers are lightweight, but they do introduce a small amount of overhead compared to running directly on the host. This is due to the added layer of isolation provided by the container runtime. Containerized applications may have <strong>slightly lower performance</strong> than non-containerized applications running on Mesos because of the overhead involved in managing the container's environment.</li>
 										<li> <strong>Mesos Can Use Containers: </strong> While Mesos instances are not exactly containers, <strong>Mesos can use containers</strong> (e.g., Docker, Mesos native containerizer) to run instances, like you run any other job/task on Mesos. In this case, the instances are containers that offer process and resource isolation while sharing the host OS kernel.</li>
 									</ul>
-									<figure class="d-flex float-end m-md-5">
-										<img src="images/legends.gif" alt="post-image" class="img-fluid mb-4">
-									</figure>
 									<div class="post-bottom-link d-flex justify-content-between">
 										<div class="block-social-links d-flex align-items-baseline">
 											<div class="element-title text-uppercase">Share:</div>
