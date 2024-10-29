@@ -187,7 +187,7 @@
 									<h5>Kubernetes Version:</h5>
 									<ul class="inner-list">
 										<li> This refers to the version of the Kubernetes platform itself. (the control plane, kubelet, kube-proxy, etc.)</li>
-										<li> Kubernetes uses a semantic versioning scheme like v1.x.x. (e.g., <pre><code>v1.27.0</code></pre>)</li>
+										<li> Kubernetes uses a semantic versioning scheme like v1.x.x. (e.g., v1.27.0)</li>
 										<li> Each Kubernetes version introduces new features, improvements, bug fixes, and <strong>sometimes deprecates or removes certain API versions.</strong></li>
 									</ul>
 									<h5>API Version:</h5>
@@ -236,7 +236,7 @@
 									<figure class="d-flex float-end m-md-5">
 										<img src="images/kubent.png" alt="post-image" class="img-fluid mb-4">
 									</figure>
-									<p><em>kubent </em> is a <strong>tool specifically designed to assist in identifying deprecated API versions</strong> in a Kubernetes cluster before performing an upgrade. Here's how it helps:</p>
+									<p><em>kubent </em> (Kube No Trouble) is one of the tools <strong>specifically designed to assist in identifying deprecated API versions</strong> in a Kubernetes cluster before performing an upgrade. Some other notable alternatives to this tool are <em>Plural </em> and <em>Pluto </em>. Here's how <em>kubent </em> helps:</p>
 									<ul class="inner-list">
 										<li> <strong>Scan the Cluster: </strong> <em>kubent </em> scans all the resources in the cluster (including CRDs, Deployments, Services, etc.) and reports any instances where deprecated API versions are used.</li>
 										<li> <strong>Detailed Reporting: </strong> It lists the deprecated APIs found, shows which resources are using them, and provides information on the API version that should be used instead.</li>
