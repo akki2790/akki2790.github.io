@@ -183,9 +183,6 @@
 									<h3 class="info-title">Introduction</h3>
 									<p>The relationship between a Topic’s partition count and the number of consumers in a consumer group consuming from that topic is somewhat complex. When I started with Kafka years ago, this was something that I found very confusing. Especially, if you had new partitions being added or if you had consumers joining or leaving a consumer group. With this article I aim to simplify this relationship and talk about the different scenarios you might encounter while managing your Kafka cluster</p>
 									<p>For starters, let’s get some of the basic stuff out of the way. If you’re pretty new to Kafka or need a refresher on what ‘consumers’ and ‘consumer groups’ are, or how ‘Topics’ and ‘Partitions’ relate, stick around. I’ll be briefly going over this in the next sections. Feel free to skip this if you’re familiar with these topics.</p>
-									<figure class="d-flex float-end m-md-5">
-										<img src="images/kafka-architecture-2.png" alt="post-image" class="img-fluid mb-4" style="width: 50%; height: auto;">
-									</figure>
 									<h3 class="info-title">Topics and Partitions:</h3>
 									<p>Topics and partitions are closely related and fundamental to how Kafka organizes, stores, and distributes data across a cluster. <strong>A topic is a logical channel or stream to which records (messages) are sent by producers and from which consumers read.</strong> Topics are <strong>multi-subscriber.</strong> This means multiple consumers can subscribe to the same topic and read data independently. You can use the analogy of radio; where different radio stations broadcast their signal on different frequencies/channels and people tune-in to a particular channel to consume that content. <strong>Here, radio stations are Producers, channels are Topics and people are Consumer Groups.</strong> In real world, you could have separate topics for different application components like "logs", "user-activity", or “transactions”.</p>
 									<p>Partitions on the other hand, are a way to divide a topic's data into smaller, manageable chunks. Each Kafka topic is divided into one or more partitions, and these partitions are distributed across multiple brokers (machines) in the Kafka cluster. When a producer sends a message to a topic, Kafka writes that message to one of the topic's partitions. Each partition is an <strong>ordered, immutable sequence of records</strong> (messages), and each message within a partition is assigned a <strong>unique offset</strong>, which acts as its index. Partitions provide <strong>parallelism and scalability</strong> in Kafka as they allow Kafka to distribute the load across multiple brokers and because multiple consumers can consume from different partitions in parallel.</p>
@@ -207,13 +204,9 @@
 									<p>The partition count of a topic and the number of consumers are closely related, particularly in how they affect the parallelism and throughput of a consumer group. <strong>Kafka guarantees that a partition can be consumed by only one consumer at a time within a consumer group</strong>. This means that each partition will have exactly one consumer actively reading from it at any given time. i.e. if a topic has N partitions, the maximum number of consumers (within a single consumer group) that can actively read in parallel from that topic is N.  <strong>The number of partitions defines the maximum parallelism</strong>.</p>
 									<h5>Example Scenario:</h5>
 									<p>Lets look at a real world example. Imagine you have a Kafka topic called ‘orders’ that stores information about pending customer orders at a restaurant.</p>
-									<p><em># Topic: messages</em></p>
-									<p>Orders: order1, order2, order3, order4, order5, order6, order7, order8, order9</p>
+									<p><em># Topic: messages</em><br>Orders: order1, order2, order3, order4, order5, order6, order7, order8, order9</p>
 									<p>You’ve <strong>3 chefs</strong> in the kitchen each capable of satisfying any order sent their way. So, to handle the load efficiently, you divide this topic into <strong>3 partitions.</strong></p>
-									<p>Orders</p>
-									<p>└── Partition 0: order1, order2, order3</p>
-									<p>└── Partition 1: order4, order5, order6</p>
-									<p>└── Partition 2: order7, order8, order9</p>
+									<p>Orders<br>└── Partition 0: order1, order2, order3<br>└── Partition 1: order4, order5, order6<br>└── Partition 2: order7, order8, order9</p>
 									<p>And you create a consumer group with 3 consumers (Chef A, Chef B, and Chef C) to process these orders. With this setup:</p>
 									<ul class="inner-list">
 										<li> Chef A is assigned Partition 0</li>
