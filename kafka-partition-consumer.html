@@ -187,7 +187,7 @@
 									<p>Topics and partitions are closely related and fundamental to how Kafka organizes, stores, and distributes data across a cluster. <strong>A topic is a logical channel or stream to which records (messages) are sent by producers and from which consumers read.</strong> Topics are <strong>multi-subscriber.</strong> This means multiple consumers can subscribe to the same topic and read data independently. You can use the analogy of radio; where different radio stations broadcast their signal on different frequencies/channels and people tune-in to a particular channel to consume that content. <strong>Here, radio stations are Producers, channels are Topics and people are Consumer Groups.</strong> In real world, you could have separate topics for different application components like "logs", "user-activity", or “transactions”.</p>
 									<p>Partitions on the other hand, are a way to divide a topic's data into smaller, manageable chunks. Each Kafka topic is divided into one or more partitions, and these partitions are distributed across multiple brokers (machines) in the Kafka cluster. When a producer sends a message to a topic, Kafka writes that message to one of the topic's partitions. Each partition is an <strong>ordered, immutable sequence of records</strong> (messages), and each message within a partition is assigned a <strong>unique offset</strong>, which acts as its index. Partitions provide <strong>parallelism and scalability</strong> in Kafka as they allow Kafka to distribute the load across multiple brokers and because multiple consumers can consume from different partitions in parallel.</p>
 									<figure class="d-flex float-end m-md-5">
-										<img src="images/kafka-architecture-2_75.png" alt="post-image" class="img-fluid mb-4">
+										<img src="images/kafka-architecture-2_75.png" alt="post-image" class="img-fluid mb-4" style="width: 50%; height: auto;">
 									</figure>
 									<p>Let's look at an example, say you have a topic named “user-activity” and you configure it with 4 partitions. The data in this topic could be distributed across the 4 partitions as shown below:</p>
 									<ul class="inner-list">
@@ -224,16 +224,16 @@
 									<h5>1. More Consumers than Partitions:</h5>
 									<p>Example Scenario:</p>
 									<ul class="inner-list">
-										<li> </strong>Topic:</strong> 3 partitions</li>
-										<li> </strong>Consumers:</strong> 5 in the same group</li>
+										<li> <strong>Topic:</strong> 3 partitions</li>
+										<li> <strong>Consumers:</strong> 5 in the same group</li>
 									</ul>
 									<p>If the number of consumers exceeds the number of partitions, <strong>some consumers will be idle</strong>. In the given example, we have 3 partitions and 5 consumers in the same group. Of the 5 consumers, only 3 will be active (one for each partition), and remaining 2 consumers will stay unassigned and won’t consume any data.</p>
 									<p>In this case, the excess consumers do not contribute to increased throughput because Kafka cannot assign more than one consumer per partition.</strong> To maximize efficiency, the number of partitions should match or exceed the number of consumers so that every consumer is active</strong>.</p>
 									<h5>2. More Partitions than Consumers: </h5>
 									<p>Example Scenario:</p>
 									<ul class="inner-list">
-										<li> </strong>Topic:</strong> 8 partitions</li>
-										<li> </strong>Consumers:</strong> 4 in the same group</li>
+										<li> <strong>Topic:</strong> 8 partitions</li>
+										<li> <strong>Consumers:</strong> 4 in the same group</li>
 									</ul>
 									<p>If the number of consumers is fewer than the number of partitions, <strong>some consumers will be responsible for reading from multiple partitions</strong>. In the given example, we have 8 partitions and 4 consumers. So, each consumer will be assigned 2 partitions. This can increase the load on each consumer but ensures that all partitions are consumed.</p>
 									<p>Having fewer consumers than partitions still works, <strong>but it will increase the workload on individual consumers</strong>, possibly leading to bottlenecks if the consumers can't handle the load.</p>
