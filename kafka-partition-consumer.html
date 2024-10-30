@@ -197,23 +197,16 @@
 										<li> Partition 3: {"user5", "search"}</li>
 									</ul>
 									<p>You can think of Partitions as a physical subcomponents of a Topic that are used to store and distribute data across brokers, ensuring parallelism, scalability, and high throughput.</p>
-									<h3>Who, Why and When?</h3>
-									<p>Apache Mesos was created by <strong>Benjamin Hindman, Andy Konwinski, Matei Zaharia,</strong> and a few others at the <strong>University of California, Berkeley's AMPLab</strong>. The project began around 2009 and was open-sourced in 2010.The primary motivation behind it was to address the growing complexity of managing distributed systems; especially in large-scale data centers. The early 2000s saw a rise in cloud computing, and organizations were running multiple distributed systems for various tasks like web applications, batch processing (e.g., Hadoop), and real-time data streaming (e.g., Spark). Each of these systems needed its own cluster management framework.</p>
-									<p>Apache Mesos was designed to create a <strong>unified cluster management platform</strong> that could - run a variety of different distributed applications on a shared pool of resources, dynamically allocate hardware resources (like CPU, memory, storage) to applications as needed and allow applications to co-exist on the same physical or virtual servers, reducing the need to dedicate entire clusters to individual systems.</p>
-									<p>It aimed to provide a <strong>single resource pool</strong> that could be efficiently shared by different frameworks, improving resource utilization and simplifying cluster management.</p>
-									<p>Aurora on the other hand was created sometime later. It was developed at <strong>Twitter</strong> to address the company's specific needs for running long-running services (like microservices) and cron-like scheduled jobs. <strong>Twitter had already adopted Mesos for resource management but needed a higher-level abstraction to manage complex distributed applications and services more effectively.</strong> It was open-sourced in 2013.</p>
-									<p>Apache Aurora provided a <strong>service scheduler</strong> on top of Mesos for long-running applications (e.g., web services, APIs) and batch jobs (e.g., cron jobs, data processing jobs) and a <strong>job scheduling system</strong> for running fault-tolerant services, helping Twitter handle service failures and reschedule tasks on available servers.</p>
-									<p>Aurora allowed developers to specify application requirements and constraints (e.g., CPU, memory, and disk needs) and handled the placement and lifecycle management of tasks across the Mesos cluster.</p>
-									<h3>How does Apache Mesos work?</h3>
-									<h5>Master-Agent Architecture:</h5>
-									<p>Apache Mesos follows a master-agent architecture, which is key to how it manages and abstracts resources:</p>
-									<ul class="inner-list">
-										<li> <strong>Mesos Master:</strong> The central coordinator that manages the overall state of the cluster, including resources, task scheduling, and interactions with frameworks (applications).</li>
-										<li> <strong>Mesos Agents</strong> (formerly called Slaves): Each physical or virtual server in the cluster runs a Mesos agent, which reports the available resources (CPU, memory, disk, etc.) to the master. The agent is responsible for running tasks assigned to it by the Mesos master. The agents act as intermediaries between the physical/virtual hardware and the tasks, effectively abstracting the hardware details.</li>
-									</ul>
-									<p>Applications do not interact with hardware directly but instead request resources from the Mesos master, which schedules tasks to run on the available agents.</p>
-									<h5>Isolation:</h5>
-									<p>This is the most important and technical aspect of Apache Mesos - <strong>‘How it achieves abstraction and isolation of Hardware resources?’</strong> I’ve talked about this in a dedicated section below.</p>
+									<h3>Consumer Groups:</h3>
+									<p>A consumer group in Kafka is a way to organize one or more consumers that work together to read messages from a Kafka topic. Consumers in the same group coordinate with each other so that <strong>each message in a topic is read by only one consumer in the group.</strong> This allows Kafka to distribute the load of processing messages across multiple consumers while maintaining fault tolerance.</p>
+									<p>On the other hand, <strong>different consumer groups can read the same messages independently.</strong> This allows for multiple processing systems to process the same data without interfering with each other. You could have one consumers group for logging and another for data analytics consuming from the same partition within a topic. Consumer groups provide parallel processing, fault tolerance and scalability.</p>
+									<h3>Partition count and number of Consumers:</h3>
+									<p>The partition count of a topic and the number of consumers are closely related, particularly in how they affect the parallelism and throughput of a consumer group. <strong>Kafka guarantees that a partition can be consumed by only one consumer at a time within a consumer group.</strong> This means that each partition will have exactly one consumer actively reading from it at any given time. i.e. if a topic has N partitions, the maximum number of consumers (within a single consumer group) that can actively read in parallel from that topic is N.  <strong>The number of partitions defines the maximum parallelism.</strong></p>
+									<h5>Example Scenario:</h5>
+									<p>Lets look at a real world example. Imagine you have a Kafka topic called ‘orders’ that stores information about pending customer orders at a restaurant.</p>
+									<p><em># Topic: messages</em></p>
+									<p>Orders: order1, order2, order3, order4, order5, order6, order7, order8, order9</p>
+									<p>You’ve <strong>3 chefs</strong> in the kitchen each capable of satisfying any order sent their way. So, to handle the load efficiently, you divide this topic into <strong>3 partitions.</strong></p>
 									<h5>Resource Offers:</h5>
 									<p>One of the key mechanisms Mesos uses to abstract resources is the resource offer model. Instead of having applications request specific resources upfront, Mesos works the other way around:</p>
 									<ul class="inner-list">
