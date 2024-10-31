@@ -272,6 +272,28 @@
 									<h6>Offsets and Rebalancing:</h6>
 									<p><strong>The existing offsets for the original partitions are unaffected</strong> by the addition of new partitions. Consumers will continue to consume from their current offsets in the old partitions. <strong>The new partitions will start with offset 0</strong>, as they are empty when created. As new messages are produced into these new partitions, they will be consumed starting from offset 0.</p>
 									<p><strong>Rebalancing</strong> happens automatically after the number of partitions changes, which ensures that all partitions (old and new) are distributed evenly across the consumers in the group.</p>
+									<h5>5. Adding consumers to a consumer group: </h5>
+									<p>When you add more consumers to a consumer group, Kafka rebalances the partition assignments across the new consumer group size. This means that some partitions will be reassigned to new consumers.</p>
+									<p>Since each partition can only be consumed by a single consumer within a consumer group, <strong>adding consumers increases the degree of parallelism only if there are more partitions than consumers.</strong> If there are more partitions, additional consumers will allow more partitions to be consumed in parallel. If you add more consumers than there are partitions, those extra consumers will remain idle.</p>
+									<h6>Impact on offset:</h6>
+									<p>You might be asking, what happens to the offset when scaling up the number of consumers in a consumer group consuming from a topic with more partitions than consumers? Since in that case, some of the partitions will be consumed my new consumers after the rebalance. Where do they start consuming from? The same shift in consumers can happen when you reduce the number of consumers.</p>
+									<p>In both cases, <strong>the partition rebalancing occurs, but offsets are preserved on a per-partition basis,</strong> even after rebalancing. Offsets are stored per partition in Kafka, and each consumer tracks its own partition offsets in Kafka’s internal storage (the __consumer_offsets topic). When partitions are reassigned to new consumers:</p>
+									<ul class="inner-list">
+										<li> The new consumer assigned to a particular partition will <strong>continue from the latest committed offset</strong> of that partition, even though the consumer itself has changed. i.e. it will start where the previous consumer left off, maintaining Kafka’s guarantee of ordered processing within each partition.</li>
+										<li> This ensures that no messages are reprocessed or skipped due to rebalancing; the offset per partition is seamlessly preserved, maintaining data consistency.</li>
+									</ul>
+									<p>During rebalancing, there might be a slight delay in consumption while partitions and offsets are reassigned. This process is typically quick but can cause a brief pause in message processing for the rebalanced partitions.</p>
+									<h5>5. Adding consumers to a consumer group: </h5>
+									<p>When you add more consumers to a consumer group, Kafka rebalances the partition assignments across the new consumer group size. This means that some partitions will be reassigned to new consumers.</p>
+									<p>Since each partition can only be consumed by a single consumer within a consumer group, <strong>adding consumers increases the degree of parallelism only if there are more partitions than consumers.</strong> If there are more partitions, additional consumers will allow more partitions to be consumed in parallel. If you add more consumers than there are partitions, those extra consumers will remain idle.</p>
+									<h6>Impact on offset:</h6>
+									<p>You might be asking, what happens to the offset when scaling up the number of consumers in a consumer group consuming from a topic with more partitions than consumers? Since in that case, some of the partitions will be consumed my new consumers after the rebalance. Where do they start consuming from? The same shift in consumers can happen when you reduce the number of consumers.</p>
+									<p>In both cases, <strong>the partition rebalancing occurs, but offsets are preserved on a per-partition basis,</strong> even after rebalancing. Offsets are stored per partition in Kafka, and each consumer tracks its own partition offsets in Kafka’s internal storage (the __consumer_offsets topic). When partitions are reassigned to new consumers:</p>
+									<ul class="inner-list">
+										<li> The new consumer assigned to a particular partition will <strong>continue from the latest committed offset</strong> of that partition, even though the consumer itself has changed. i.e. it will start where the previous consumer left off, maintaining Kafka’s guarantee of ordered processing within each partition.</li>
+										<li> This ensures that no messages are reprocessed or skipped due to rebalancing; the offset per partition is seamlessly preserved, maintaining data consistency.</li>
+									</ul>
+									<p></p>
 									<ul class="inner-list">
 										<li> <strong>CPU Limitation: </strong> Cgroups can ensure that one task (process) uses only 40% of the CPU, while another uses the remaining 60%. This prevents a poorly-behaved or resource-hungry task from hogging all the CPU resources.</li>
 										<li> <strong>Memory Isolation: </strong> Cgroups can cap the amount of memory a process or group of processes can use. If a process exceeds this limit, it will be killed or its allocation will be constrained, protecting other tasks from being affected by out-of-memory errors.</li>
