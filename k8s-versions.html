@@ -209,7 +209,6 @@
 									<p><strong>Kubernetes version release determines the availability and defaulting of API versions.</strong> For example, a particular API version (like apps/v1) might be introduced as <strong>stable</strong> in a certain Kubernetes release (e.g., v1.9.0). Older API versions may be <strong>deprecated</strong> or removed in future Kubernetes releases. For instance, extensions/v1beta1 for Deployment objects was deprecated and replaced by apps/v1 in Kubernetes v1.16.0.</p>
 									<p><strong>Kubernetes versioning doesn't necessarily map 1:1 to API versions.</strong> While the Kubernetes platform evolves, certain API versions might remain stable (e.g., core/v1) or change more slowly than Kubernetes releases.</p>
 									<p><strong>Example: </strong>A Kubernetes cluster running v1.27.0 may support several API versions for the same resource. Like apps/v1beta1 (deprecated) and apps/v1 (stable) being supported at the same time. But in future releases, like v1.30.0, deprecated API versions may no longer be supported, and only stable versions like apps/v1 will be available.</p>
-									<p>In short, Kubernetes versions govern the platform as a whole, while API versions relate to the stability and availability of specific resources and groups.</p>
 									<h3>Impact of Deprecated API Versions on Cluster Upgrades</h3>
 									<h5>Breaking Changes: </h5>
 									<p>Deprecated API versions may be removed in newer Kubernetes versions. If your cluster uses these deprecated APIs, <strong>resources that rely on them may fail to work properly after the upgrade.</strong> For example, if you are using extensions/v1beta1 for Deployment resources and upgrade to a version where this API is removed, your resources will become unusable.</p>
@@ -304,8 +303,9 @@ Your cluster is ready for the upgrade. Make the necessary changes before proceed
 									</ul>
 									<h3>Summary </h3>
 									<ul class="inner-list">
-										<li> <strong>Deprecated API versions </strong>can cause resource failures and deployment issues during cluster upgrades.</li>
-										<li> To <strong>overcome these issues</strong>, you should audit and update resources to use the latest stable APIs.</li>
+										<li> Kubernetes versions govern the platform as a whole, while API versions relate to the stability and availability of specific resources and groups.</li>
+										<li> Deprecated API versions can cause resource failures and deployment issues during cluster upgrades.</li>
+										<li> To overcome these issues, you should audit and update resources to use the latest stable APIs.</li>
 										<li> The <em>kubent </em> tool simplifies this process by identifying deprecated API versions in the cluster, helping ensure a smooth and safe upgrade.</li>
 									</ul>
 									<p>By proactively addressing deprecated APIs using tools like <em>kubent </em>, you can avoid many upgrade-related issues and ensure that your cluster is future-proof.</p>
