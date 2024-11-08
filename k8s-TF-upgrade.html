@@ -200,6 +200,24 @@
 									<ul class="inner-list">
 										<li> Scan for deprecated APIs in your Cluster with tools like ‘kubectl deprecations’, ’kubent’ or ‘Pluto’. These tools will list all resources that need updating and the exact API version you need to update to.</li>
 										<li> Update the affected resources in your manifests or Helm charts with the new API versions. Here’s an example of upgrading a Deployment:</li>
+										<pre>
+											<code>
+apiVersion: apps/v1	# from extensions/v1beta1
+kind: Deployment
+metadata:
+	name: my-deployment
+spec:
+	replicas: 3
+	...
+											</code>
+										</pre>
+										<li> After updating your manifest files or Helm charts, apply the changes to your cluster before or after the Terraform upgrade to ensure the resources use the correct API</li>
+										<pre>
+											<code>
+kubectl apply -f updated-deployment.yaml
+											</code>
+										</pre>
+										<li>Ensure there are no remaining deprecated APIs by running ‘kubent’ or ‘Pluto’ again.</li>
 									</ul>
 									<p>Before upgrading, check the current Kubernetes version of your cluster and confirm the version you want to upgrade to is supported by your cloud provider.</p>
 									<p>Apache Mesos was created by Benjamin Hindman, Andy Konwinski, Matei Zaharia, and a few others at the University of California, Berkeley's AMPLab. The project began around 2009 and was open-sourced in 2010.The primary motivation behind it was to address the growing complexity of managing distributed systems; especially in large-scale data centers. The early 2000s saw a rise in cloud computing, and organizations were running multiple distributed systems for various tasks like web applications, batch processing (e.g., Hadoop), and real-time data streaming (e.g., Spark). Each of these systems needed its own cluster management framework.</p>
