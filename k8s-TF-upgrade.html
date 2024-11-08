@@ -283,8 +283,6 @@ terraform apply
 gcloud container clusters describe gke-cluster --region us-central1
 										</code>
 									</pre>
-
-
 									<h3 class="info-title">Runbook for upgrading EKS (Elastic Kubernetes Service) with Terraform</h3>
 									<h5 class="info-title">Step 1: Modify the Kubernetes Version in Terraform</h5>
 									<p>In AWS EKS, the Kubernetes version is defined in the aws_eks_cluster resource. Update the version attribute to specify the new Kubernetes version.</p>
@@ -352,153 +350,58 @@ terraform apply
 aws eks describe-cluster --name eks-cluster --query cluster.version --output text
 										</code>
 									</pre>
-
-
-
-
-
-
-
-
-
-
-									<p>It aimed to provide a <strong>single resource pool</strong> that could be efficiently shared by different frameworks, improving resource utilization and simplifying cluster management.</p>
-									<p>Aurora on the other hand, was developed at <strong>Twitter</strong> to address the company's specific needs for running long-running services (like microservices) and cron-like scheduled jobs. Twitter had already adopted Mesos for resource management but needed a higher-level abstraction to manage complex distributed applications and services more effectively. It was open-sourced in 2013.</p>
-									<p>Apache Aurora provided a <strong>service scheduler</strong> on top of Mesos for long-running applications (e.g., web services, APIs) and batch jobs (e.g., cron jobs, data processing jobs) and a <strong>job scheduling system</strong> for running fault-tolerant services, helping Twitter handle service failures and reschedule tasks on available servers.</p>
-									<p>Aurora allowed developers to specify application requirements and constraints (e.g., CPU, memory, and disk needs) and handled the placement and lifecycle management of tasks across the Mesos cluster.</p>
-									<h3>How does Apache Mesos work?</h3>
-									<h5>Master-Agent Architecture:</h5>
-									<p>Apache Mesos follows a master-agent architecture, which is key to how it manages and abstracts resources:</p>
-									<ul class="inner-list">
-										<li> <strong>Mesos Master:</strong> The central coordinator that manages the overall state of the cluster, including resources, task scheduling, and interactions with frameworks (applications).</li>
-										<li> <strong>Mesos Agents</strong> (formerly called Slaves): Each physical or virtual server in the cluster runs a Mesos agent, which reports the available resources (CPU, memory, disk, etc.) to the master. The agent is responsible for running tasks assigned to it by the Mesos master. The agents act as intermediaries between the physical/virtual hardware and the tasks, effectively abstracting the hardware details.</li>
-									</ul>
-									<p>Applications do not interact with hardware directly but instead request resources from the Mesos master, which schedules tasks to run on the available agents.</p>
-									<h5>Isolation:</h5>
-									<p>This is the most important and technical aspect of Apache Mesos - <strong>‘How it achieves abstraction and isolation of Hardware resources?’</strong> I’ve talked about this in a dedicated section below.</p>
-									<h5>Resource Offers:</h5>
-									<p>One of the key mechanisms Mesos uses to abstract resources is the resource offer model. Instead of having applications request specific resources upfront, Mesos works the other way around:</p>
-									<ul class="inner-list">
-										<li> Each <strong>Mesos agent periodically reports</strong> the available resources (CPU, memory, disk, etc.) on the physical server to the <strong>Mesos master.</strong></li>
-										<li> The <strong>Mesos master</strong> then <strong>offers</strong> these resources to registered frameworks (e.g., Apache Spark, Marathon, Aurora).</li>
-										<li> Frameworks decide whether to accept these resources based on their own requirements and then submit tasks to be run on those resources.</li>
-									</ul>
-									<p>This resource offer model decouples applications from the underlying hardware and creates a high-level abstraction where resources are dynamically offered to applications as needed.</p>
-									<h5>Fine-Grained Allocation:</h5>
-									<p>Mesos provides fine-grained control over the allocation of resources, <strong>allowing frameworks to specify exact amounts</strong> of CPU, memory, disk, and network they require. This allows Mesos to:</p>
-									<ul class="inner-list">
-										<li> <strong>Divide physical resources</strong> on each server (CPU cores, RAM, disk, network bandwidth) into smaller, manageable units.</li>
-										<li> <strong>Isolate resource usage</strong> between tasks, ensuring that no task overuses resources or impacts others running on the same agent.</li>
-									</ul>
-									<p>By breaking down server hardware resources into smaller units, Mesos effectively abstracts the physical server into multiple resource slots that can be distributed across different tasks, creating a virtualization-like environment without the overhead of virtual machines.</p>
-									<h5>Framework Abstraction:</h5>
-									<p>Applications running on Mesos use different <strong>frameworks</strong> (e.g., Apache Aurora, Marathon, or custom frameworks) to manage their workloads. These frameworks <strong>request resources</strong> from Mesos based on their own scheduling logic. And once resources are allocated, they <strong>launch tasks</strong> (e.g., microservices, batch jobs) on those allocated resources.</p>
-									<p>Mesos handles the low-level resource management (like CPU and memory allocation), while the frameworks focus on application-level scheduling. This split creates a further abstraction between the application's logic and the physical resources of the server.</p>
-									<h5>Unified Resource Pool: </h5>
-									<p>By aggregating resources across multiple physical and virtual machines, Mesos creates a <strong>unified resource pool</strong> for the entire cluster. It treats all resources (across CPU, memory, storage, and network) as if they come from a single, large server.</p>
-									<p>Applications running on Mesos are not concerned with where the physical resources reside (which server, data center, etc.). The Mesos master abstracts the underlying servers, allowing the applications to interact only with the available resources, without needing to know about the specific hardware details. This unified resource pool makes it easy to run distributed applications, big data frameworks, and microservices at scale without having to manage the underlying hardware manually.</p>
-									<h5>Scalability and Fault Tolerance:</h5>
-									<p>Mesos design <strong>allows it to scale across thousands of machines.</strong> The Mesos master and agents work together to dynamically adjust resource allocation as new tasks come in. Mesos is capable of handling failures by reassigning tasks to available resources on healthy agents.</p>
-									<p>By abstracting hardware resources at scale, Mesos ensures that no single machine becomes a point of failure and that resources are continuously available, even in the event of failures.</p>
-									<h3>How does Mesos achieve abstraction & isolation of hardware resources?</h3>
-									<p>Apache Mesos achieves abstraction of server hardware resources by acting as a distributed resource manager or a cluster manager. It abstracts the underlying physical or virtual server infrastructure into a single resource, isolating them with <strong> Cgroups and namespaces.</strong> (Linux kernel features) All this allows applications to efficiently share and utilize the available resources (CPU, memory, disk, network, etc.) across a distributed cluster.</p>
-									<h3>Cgroups and namespaces: </h3>
-									<p><strong>Control Groups (cgroups)</strong> is a Linux kernel feature that limits, monitors, and manages the resources (CPU, memory, disk I/O, network bandwidth, etc.) that a group of processes can use. It allows system administrators or orchestration tools to control the amount of system resources allocated to processes or groups of processes. Without cgroups, processes can potentially consume excessive resources, leading to <strong>resource contention</strong> or even <strong>starvation</strong> of other processes.</p>
-									<h5>Key Features of Cgroups: </h5>
-									<ul class="inner-list">
-										<li> <strong>Resource Limitation: </strong> You can set upper limits on the amount of CPU, memory, disk I/O, and other resources that a group of processes can consume.</li>
-										<li> <strong>Resource Monitoring: </strong> Cgroups can track the resource usage of processes, providing real-time information about how much CPU or memory a task is consuming.</li>
-										<li> <strong>Resource Prioritization: </strong> By assigning priorities to different cgroups, you can control how resources are shared among processes, making sure that critical processes get more resources than less critical ones.</li>
-										<li> <strong>Freezing/Throttling: </strong> Cgroups can pause or limit resource consumption temporarily if needed, preventing a process from monopolizing resources.</li>
-									</ul>
-									<h5>Examples:</h5>
-									<ul class="inner-list">
-										<li> <strong>CPU Limitation: </strong> Cgroups can ensure that one task (process) uses only 40% of the CPU, while another uses the remaining 60%. This prevents a poorly-behaved or resource-hungry task from hogging all the CPU resources.</li>
-										<li> <strong>Memory Isolation: </strong> Cgroups can cap the amount of memory a process or group of processes can use. If a process exceeds this limit, it will be killed or its allocation will be constrained, protecting other tasks from being affected by out-of-memory errors.</li>
-										<li> <strong>Disk I/O: </strong> Cgroups can limit how many disk read/write operations a task can perform. This prevents tasks from monopolizing the disk, which could slow down the performance of other processes.</li>
-										<li> <strong>Freezing/Throttling: </strong> Cgroups can pause or limit resource consumption temporarily if needed, preventing a process from monopolizing resources.</li>
-									</ul>
-									<p><strong>Namespaces</strong> are a Linux kernel feature that provides <strong>process-level isolation</strong> by wrapping global system resources (such as file systems, network interfaces, process IDs, and user IDs) into <strong>independent instances.</strong> This makes it appear as if each group of processes has its own private view of these resources, even though they are all running on the same underlying operating system. Processes running in one namespace are unaware of the resources in other namespaces, ensuring that they cannot interfere with each other.</p>
-									<p>There are <strong>several types of namespaces, each isolating a different system resource.</strong> Some of these are - PID Namespace, Mount (MNT) Namespace, Network (NET) Namespace, Time Namespace, IPC Namespace and User Namespace.</p>
-									<h5>Examples: </h5>
-									<ul class="inner-list">
-										<li> <strong>PID Namespace: </strong> Processes in different PID namespaces have their own process ID space. This means that two processes in different namespaces can have the same PID but will never see each other. This isolation is essential for containers, where each container behaves as if it has its own private process space.</li>
-										<li> <strong>Network Namespace: </strong> Each network namespace can have its own network interfaces and routing tables. This allows different applications or containers to have <strong>completely independent networking stacks</strong>, preventing them from interfering with each other’s network traffic.</li>
-										<li> <strong>Mount Namespace: </strong> Processes in a mount namespace can have their own view of the file system, with their own mounted directories and devices. This allows applications to be isolated from each other’s file systems, so they cannot see or modify each other’s files.</li>
-									</ul>
-									<h3>How does Apache Aurora work? </h3>
-									<p>Apache Aurora provides a framework for deploying and managing long-running services, cron jobs, and batch jobs across a Mesos cluster. Here’s how Aurora achieves this within the Mesos ecosystem:</p>
-									<h5>Job Definition and Configuration:</h5>
-									<p>In Aurora, users define <strong>jobs</strong> using a <strong>configuration file</strong> written in a DSL (Domain-Specific Language) like Python or JSON. These jobs specify the resources requirements (CPU, memory, disk) and other parameters (e.g., health checks, replication, etc.).</p>
-									<em>Example Job Configuration (Aurora Job File):</em>
+									<h3 class="info-title">Runbook for upgrading AKS (Azure Kubernetes Service) with Terraform</h3>
+									<h5 class="info-title">Step 1: Modify the Kubernetes Version in Terraform</h5>
+									<p>In AKS, the Kubernetes version is defined in the azurerm_kubernetes_cluster resource. Update the kubernetes_version attribute to the desired version.</p>
 									<pre>
 										<code>
-job = Job(
-	name = "billing_service",
-	environment = "prod",
-	role = "billingteam",
-	task = Service(
-	name = "billing_server",
-	cpu = 0.25,  # 0.25 CPU per instance
-	ram = 2048,  # 2GB of RAM per instance
-	disk = 512,  # 512MB of disk space
-	instances = 8,  # We want 8 instances running
-	process = Process(
-		name = "billing_server_process",
-		cmdline = “/usr/local/bin/start-billing-service",  # Command to start the service
-		max_failures = 3  # Retry upto 3 times before reporting failure
-	),
-	health_check = HealthCheck(
-		url = "http://localhost:8080/health",
-		interval_secs = 10,
-		timeout_secs = 5
-	)
-	)
-)
+resource "azurerm_kubernetes_cluster" "aks_cluster" {
+	name                = "aks-cluster"
+	location            = azurerm_resource_group.rg.location
+	resource_group_name = azurerm_resource_group.rg.name
+	dns_prefix          = "exampleaks"
+	
+	default_node_pool {
+		name       = "agentpool"
+		node_count = 3
+		vm_size    = "Standard_DS2_v2"
+	}
+	
+	# Upgrade to the desired Kubernetes version
+	kubernetes_version = "1.26.0"
+	}
 										</code>
 									</pre>
-									<h5>Service Scheduling and Deployment:  </h5>
-									<p>Aurora takes these job definitions and works with Mesos to deploy the jobs across available nodes in the cluster. Aurora ensures that:</p>
+									<h5 class="info-title">Step 2: Plan the Changes</h5>
+									<p>Run the terraform plan command to preview the upgrade:</p>
+									<pre>
+										<code>
+terraform plan
+										</code>
+									</pre>
+									<h5 class="info-title">Step 3: Apply the Changes</h5>
+									<p>Once you’re satisfied with the plan, apply the changes to upgrade the cluster:</p>
+									<pre>
+										<code>
+terraform apply
+										</code>
+									</pre>
+									<p>This will trigger the Kubernetes version upgrade for both the master and the nodes.</p>
+									<h5 class="info-title">Step 4: Verify the Upgrade</h5>
+									<p>After the upgrade, verify the new Kubernetes version of the AKS cluster:</p>
+									<pre>
+										<code>
+az aks show --resource-group myResourceGroup --name aks-cluster --query kubernetesVersion --output table
+										</code>
+									</pre>
+									<h3>Best Practices for Kubernetes Upgrades with Terraform</h3>
 									<ul class="inner-list">
-										<li> Jobs are deployed on the right nodes based on the resource requirements and constraints defined in the configuration. Example: X CPU, Y RAM and Z Disk space.</li>
-										<li> Jobs are replicated, ensuring that a defined number of instances (tasks) are running at all times. Example: 20 instances of microservice X.</li>
+										<li> <strong>Backup Configuration: </strong> Always take a backup of your current cluster state and configuration before performing any upgrades.></li>
+										<li> <strong>Upgrade in Phases: </strong> If possible, perform incremental upgrades rather than jumping between several major versions to avoid breaking changes.</li>
+										<li> <strong>Test in a Staging Environment: </strong> Before upgrading production clusters, test the upgrade in a staging environment.</li>
+										<li> <strong>Monitor the Cluster: </strong> During and after the upgrade, monitor the cluster for any issues, especially with workloads or APIs that may be affected by deprecated features.</li>
 									</ul>
-									<h5>Monitoring and Health Checks:  </h5>
-									<p>Aurora continuously monitors the state of each task and performs <strong>health checks.</strong> If a task crashes or fails its health check, Aurora <strong>automatically restarts</strong> it on another available node.</p>
-									<h5>Resilience and Fault Tolerance: </h5>
-									<p>If a node fails, Aurora re-schedules tasks on other available nodes, ensuring that services remain operational even in the event of hardware or software failures.</p>
-									<h5>Cron Jobs and Batch Processing: </h5>
-									<p>Aurora supports running scheduled tasks (similar to cron jobs) and can also be used for <strong>batch processing.</strong> These jobs are scheduled based on the timing and frequency defined in the job's configuration file</p>
-									<h5>Key Components of Aurora: </h5>
-									<ul class="inner-list">
-										<li> <strong>Scheduler: </strong> The brain of Aurora, responsible for managing the lifecycle of all tasks and interacting with the Mesos master to request resources.</li>
-										<li> <strong>Executor: </strong> The component that runs tasks on Mesos agents, ensuring that tasks are executed as defined by the job configuration.</li>
-										<li> <strong>Thermos: </strong> A lightweight executor framework used by Aurora to monitor and restart tasks. Thermos is responsible for task-level retries and management.</li>
-										<li> <strong>Tasks: </strong> The individual units of work defined in Aurora jobs. A task represents an instance of an application or service running on a Mesos agent.</li>
-									</ul>
-									<h3>Virtual Machines V/S Mesos Instances V/S Containers </h3>
-									<p>Now that we know what Apache Mesos is and how it works with Apache Aurora to offers a powerful platform for managing large-scale distributed systems, lets look at how it differs from (and in some ways is similar to) - what was before (i.e. VMs) and what came after. (i.e. Containers)</p>
-									<h5>Compared to Virtual Machines (VMs): </h5>
-									<p>The primary difference between Mesos instances and Virtual Machines (VMs) lies in the way they manage and abstract resources on a physical server. Here's a detailed comparison:</p>
-									<ul class="inner-list">
-										<li> <strong>Full OS virtualization: </strong> In a VM-based environment, each virtual machine runs a complete guest OS (including its own kernel) on top of the host OS. The hypervisor isolates the VMs and allocates resources, but there is more overhead because <strong>each VM runs a full OS instance.</strong><br>In contrast, Mesos instances do not run a separate OS. Instead, they share the host OS kernel with other instances, reducing overhead.</li>
-										<li> <strong>Isolation: </strong> VMs provide stronger isolation compared to Mesos instances, as they run entirely separate guest OS. Mesos provides application-level isolation using cgroups and namespaces, but instances still share the host's kernel.</li>
-										<li> <strong>Less Granular: </strong> Virtual machines typically have static resource allocation, <strong> meaning once resources (CPU, RAM) are allocated, they are locked</strong> to the VM, limiting flexibility in scaling at finer levels compared to Mesos instances.</li>
-										<li> <strong>Slower Boot Times: </strong> VMs take longer to start because they must boot a full OS, whereas Mesos instances are simply processes started within the existing OS, resulting in much faster startup times.</li>
-										<li> <strong>Strong Isolation: </strong> VMs provide <strong>full isolation</strong> at the OS level. Each VM is completely isolated from others, making it more secure in terms of kernel vulnerabilities. A security breach in one VM typically does not affect other VMs.</li>
-										<li> <strong>Multiple OSes: </strong> If there’s a need to run multiple operating systems (e.g., Linux, Windows) on the same physical host, VMs are preferred since each VM can run a completely different OS.</li>
-										<li> <strong>Multi-Tenancy: </strong> VMs are ideal when strict isolation is required, such as in multi-tenant environments, where different customers or applications should not interact at any level, including OS.</li>
-									</ul>
-									<h5>Compared to Containers: </h5>
-									<p><strong>Mesos instances and Containers</strong> are somewhat related and share some similarities. However, there are key distinctions between the two in terms of how they handle isolation, resource management, and their underlying technologies. Let’s look at what these <strong>similarities, differences and overlaps</strong> are:</p>
-									<ul class="inner-list">
-										<li> <strong>Isolation Mechanisms: </strong> Containers do not require an entire OS; instead, they share the host OS kernel but have isolated user spaces, making them more lightweight compared to VMs. Containers (like Mesos instances) also rely heavily on <strong>Linux Cgroups and namespaces</strong> for isolation, offering a self-contained environment with isolated process IDs (PID), networking, filesystems, and user environments. But this <strong>isolation is stricter than Mesos instances.</strong></li>
-										<li> <strong>Resource Management: </strong> Containers also rely on <strong>cgroups</strong> for resource management, but the resource allocation is usually managed by the container runtime (such as Docker) or an orchestrator like <strong>Kubernetes.</strong> Containers allow you to limit the CPU, memory, and other resources for each container instance. However, resource management may not be as sophisticated or fine-grained as Mesos' multi-resource handling unless integrated with a higher-level orchestrator.</li>
-										<li> <strong>Deployment and Orchestration: </strong> Mesos instances are scheduled and managed by <strong>Mesos</strong> and, optionally, <strong>Aurora</strong> or other frameworks like <strong>Marathon.</strong><br>Containers are typically deployed and managed by a container orchestration platform like <strong>Kubernetes or Docker Swarm</strong>, which is responsible for scheduling, scaling, and managing containers.Orchestrators handle the lifecycle of containers, ensuring availability, load balancing, scaling, and recovery in case of failure.</li>
-										<li> <strong>Statefulness and Persistence: </strong> Mesos instances can handle both <strong>stateless and stateful</strong> workloads. Mesos frameworks (e.g., Aurora, Marathon) have built-in support for <strong>persistent volumes</strong>, allowing stateful services to run with reliable storage. Plus, Mesos has the ability to handle <strong>multiple types of workloads</strong> (microservices, batch jobs, big data processing, etc.) making it highly flexible.<br>Containers are typically designed to be <strong>ephemeral and stateless</strong>. Any persistent storage needs to be <strong>mounted</strong> from external sources, such as network-attached storage, cloud-based storage (e.g., EBS, NFS), or container-specific storage solutions (e.g., Kubernetes Persistent Volumes). While containers can also be used for stateful services, managing persistence requires extra effort and orchestration.</li>
-										<li> <strong>Performance Overhead: </strong> Containers are lightweight, but they do introduce a small amount of overhead compared to running directly on the host. This is due to the added layer of isolation provided by the container runtime. Containerized applications may have <strong>slightly lower performance</strong> than non-containerized applications running on Mesos because of the overhead involved in managing the container's environment.</li>
-										<li> <strong>Mesos Can Use Containers: </strong> While Mesos instances are not exactly containers, <strong>Mesos can use containers</strong> (e.g., Docker, Mesos native containerizer) to run instances, like you run any other job/task on Mesos. In this case, the instances are containers that offer process and resource isolation while sharing the host OS kernel.</li>
-									</ul>
+									<p>By following these steps, you can ensure a smooth Kubernetes version upgrade using Terraform.</p>
 									<div class="post-bottom-link d-flex justify-content-between">
 										<div class="block-social-links d-flex align-items-baseline">
 											<div class="element-title text-uppercase">Share:</div>
