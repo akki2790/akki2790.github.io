@@ -285,6 +285,73 @@ gcloud container clusters describe gke-cluster --region us-central1
 									</pre>
 
 
+									<h3 class="info-title">Runbook for upgrading EKS (Elastic Kubernetes Service) with Terraform</h3>
+									<h5 class="info-title">Step 1: Modify the Kubernetes Version in Terraform</h5>
+									<p>In AWS EKS, the Kubernetes version is defined in the aws_eks_cluster resource. Update the version attribute to specify the new Kubernetes version.</p>
+									<pre>
+										<code>
+resource "aws_eks_cluster" "eks_cluster" {
+	name     = "eks-cluster"
+	role_arn = aws_iam_role.eks_cluster_role.arn
+	version  = "1.26"  # Specify the new Kubernetes version
+	
+	vpc_config {
+		subnet_ids = aws_subnet.eks_subnets[*].id
+	}
+	
+	# Other cluster configurations...
+	}
+										</code>
+									</pre>
+									<h5 class="info-title">Step 2: Plan the Changes</h5>
+									<p>Run the terraform plan command to preview the upgrade:</p>
+									<pre>
+										<code>
+terraform plan
+										</code>
+									</pre>
+									<h5 class="info-title">Step 3: Apply the Changes</h5>
+									<p>Once you’re satisfied with the plan, apply the changes to upgrade the cluster:</p>
+									<pre>
+										<code>
+terraform apply
+										</code>
+									</pre>
+									<p>With this, EKS will upgrade the control plane to the new version. However, note that this does not automatically update the worker nodes. You must also upgrade the node groups.</p>
+									<h5 class="info-title">Step 4: Upgrade Node Groups</h5>
+									<p>For managed node groups, update the version attribute of the aws_eks_node_group resource.</p>
+									<pre>
+										<code>
+resource "aws_eks_node_group" "worker_group" {
+	cluster_name    = aws_eks_cluster.eks_cluster.name
+	node_group_name = "my-node-group"
+	node_role_arn   = aws_iam_role.worker_role.arn
+	subnet_ids      = aws_subnet.eks_subnets[*].id
+	instance_types  = ["t3.medium"]
+	
+	scaling_config {
+		desired_size = 3
+		max_size     = 5
+		min_size     = 1
+	}
+	
+	version = "1.26"  # New version for worker nodes
+	}
+										</code>
+									</pre>
+									<p>Once again, apply the changes to upgrade the nodes</p>
+									<pre>
+										<code>
+terraform apply
+										</code>
+									</pre>
+									<h5 class="info-title">Step 5: Verify the Upgrade</h5>
+									<p>Once the upgrade is complete, confirm the version of your EKS cluster:</p>
+									<pre>
+										<code>
+aws eks describe-cluster --name eks-cluster --query cluster.version --output text
+										</code>
+									</pre>
 
 
 
