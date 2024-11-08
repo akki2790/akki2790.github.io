@@ -229,23 +229,72 @@ kubectl apply -f updated-deployment.yaml
 									</ul>
 									<h5>4. Plan the Changes</h5>
 									<ul class="inner-list">
-										<li> Run Terraform plan to review the changes before applying them. This helps you verify that the new Kubernetes version is correctly configured.</li>
+										Run Terraform plan to review the changes before applying them. This helps you verify that the new Kubernetes version is correctly configured.
 									</ul>
-									<h5>5. Apply the Changes</h5>
+									<h5 class="info-title">5. Apply the Changes</h5>
 									<ul class="inner-list">
-										<li> Apply the Terraform changes to upgrade the cluster.</li>
+										Apply the Terraform changes to upgrade the cluster.
 									</ul>
-									<h5>6. Verify the Upgrade</h5>
+									<h5 class="info-title">6. Verify the Upgrade</h5>
 									<ul class="inner-list">
-										<li> Confirm that the cluster has been upgraded, and ensure all resources are functioning properly after the upgrade.</li>
+										Confirm that the cluster has been upgraded, and ensure all resources are functioning properly after the upgrade.
 									</ul>
-									<h5>7. Test and Validate</h5>
+									<h5 class="info-title">7. Test and Validate</h5>
 									<ul class="inner-list">
-										<li> Run a few integration tests or perform workload checks to ensure no issues with the upgraded version.</li>
+										Run a few integration tests or perform workload checks to ensure no issues with the upgraded version.
 									</ul>
-									<p>Before upgrading, check the current Kubernetes version of your cluster and confirm the version you want to upgrade to is supported by your cloud provider.</p>
-									<p>Apache Mesos was created by Benjamin Hindman, Andy Konwinski, Matei Zaharia, and a few others at the University of California, Berkeley's AMPLab. The project began around 2009 and was open-sourced in 2010.The primary motivation behind it was to address the growing complexity of managing distributed systems; especially in large-scale data centers. The early 2000s saw a rise in cloud computing, and organizations were running multiple distributed systems for various tasks like web applications, batch processing (e.g., Hadoop), and real-time data streaming (e.g., Spark). Each of these systems needed its own cluster management framework.</p>
-									<p>Apache Mesos was designed to create a <strong>unified cluster management platform</strong> that could - run a variety of different distributed applications on a shared pool of resources, dynamically allocate hardware resources (like CPU, memory, storage) to applications as needed and allow applications to co-exist on the same physical or virtual servers, reducing the need to dedicate entire clusters to individual systems.</p>
+									<h3 class="info-title">Runbook for upgrading GKE (Google Kubernetes Engine) with Terraform</h3>
+									<h5 class="info-title">Step 1: Modify the Kubernetes Version in Terraform</h5>
+									<p>In GKE, Kubernetes clusters are defined using the google_container_cluster resource. You’ll need to update the min_master_version field and the node_version field to specify the desired version.</p>
+									<pre>
+										<code>
+resource "google_container_cluster" "primary" {
+	name               = "gke-cluster"
+	location           = "us-central1"
+	initial_node_count = 3
+	
+	# Upgrade the Kubernetes version
+	min_master_version = "1.26.0"  # The new Kubernetes version for the master
+	node_version       = "1.26.0"  # The new Kubernetes version for nodes
+	
+	# Other cluster configurations...
+	}
+										</code>
+									</pre>
+									<h5 class="info-title">Step 2: Plan the Changes</h5>
+									<p>Run the terraform plan command to preview the upgrade:</p>
+									<pre>
+										<code>
+terraform plan
+										</code>
+									</pre>
+									<h5 class="info-title">Step 3: Apply the Changes</h5>
+									<p>Once you’re satisfied with the plan, apply the changes to upgrade the cluster:</p>
+									<pre>
+										<code>
+terraform apply
+										</code>
+									</pre>
+									<p>This will trigger the Kubernetes version upgrade for both the master and the nodes.</p>
+									<h5 class="info-title">Step 4: Verify the Upgrade</h5>
+									<p>After Terraform applies the changes, check the version of your cluster:</p>
+									<pre>
+										<code>
+gcloud container clusters describe gke-cluster --region us-central1
+										</code>
+									</pre>
+
+
+
+
+
+
+
+
+
+
+
+
 									<p>It aimed to provide a <strong>single resource pool</strong> that could be efficiently shared by different frameworks, improving resource utilization and simplifying cluster management.</p>
 									<p>Aurora on the other hand, was developed at <strong>Twitter</strong> to address the company's specific needs for running long-running services (like microservices) and cron-like scheduled jobs. Twitter had already adopted Mesos for resource management but needed a higher-level abstraction to manage complex distributed applications and services more effectively. It was open-sourced in 2013.</p>
 									<p>Apache Aurora provided a <strong>service scheduler</strong> on top of Mesos for long-running applications (e.g., web services, APIs) and batch jobs (e.g., cron jobs, data processing jobs) and a <strong>job scheduling system</strong> for running fault-tolerant services, helping Twitter handle service failures and reschedule tasks on available servers.</p>
