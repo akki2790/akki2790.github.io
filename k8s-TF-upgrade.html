@@ -245,6 +245,7 @@ kubectl apply -f updated-deployment.yaml
 									</ul>
 									<img src="images/GCP-4.png" alt="single post" class="img-fluid my-4">
 									<h3 class="info-title">Runbook for upgrading GKE (Google Kubernetes Engine) with Terraform</h3>
+									<br>
 									<h5 class="info-title">Step 1: Modify the Kubernetes Version in Terraform</h5>
 									<p>In GKE, Kubernetes clusters are defined using the google_container_cluster resource. You’ll need to update the min_master_version field and the node_version field to specify the desired version.</p>
 									<pre>
@@ -284,8 +285,11 @@ terraform apply
 gcloud container clusters describe gke-cluster --region us-central1
 										</code>
 									</pre>
+									<br>
+									<br>
 									<img src="images/AWS-3.png" alt="single post" class="img-fluid my-4">
 									<h3 class="info-title">Runbook for upgrading EKS (Elastic Kubernetes Service) with Terraform</h3>
+									<p>&nbsp;</p>
 									<h5 class="info-title">Step 1: Modify the Kubernetes Version in Terraform</h5>
 									<p>In AWS EKS, the Kubernetes version is defined in the aws_eks_cluster resource. Update the version attribute to specify the new Kubernetes version.</p>
 									<pre>
@@ -353,7 +357,9 @@ aws eks describe-cluster --name eks-cluster --query cluster.version --output tex
 										</code>
 									</pre>
 									<img src="images/Azure.png" alt="single post" class="img-fluid my-4">
+									<p>&nbsp;</p>
 									<h3 class="info-title">Runbook for upgrading AKS (Azure Kubernetes Service) with Terraform</h3>
+									<div></div>
 									<h5 class="info-title">Step 1: Modify the Kubernetes Version in Terraform</h5>
 									<p>In AKS, the Kubernetes version is defined in the azurerm_kubernetes_cluster resource. Update the kubernetes_version attribute to the desired version.</p>
 									<pre>
@@ -397,6 +403,7 @@ terraform apply
 az aks show --resource-group myResourceGroup --name aks-cluster --query kubernetesVersion --output table
 										</code>
 									</pre>
+									<div></div>
 									<h3>Best Practices for Kubernetes Upgrades with Terraform</h3>
 									<ul class="inner-list">
 										<li> <strong>Backup Configuration: </strong> Always take a backup of your current cluster state and configuration before performing any upgrades.></li>
