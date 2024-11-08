@@ -195,7 +195,9 @@
 									<h3>General Steps to Upgrade a Kubernetes Cluster with Terraform</h3>
 									<p>      </p>
 									<h5>1. Review the Current Kubernetes Version</h5>
-									<p>Before upgrading, check the current Kubernetes version of your cluster and confirm the version you want to upgrade to is supported by your cloud provider.</p>
+									<ul class="inner-list">
+										Before upgrading, check the current Kubernetes version of your cluster and confirm the version you want to upgrade to is supported by your cloud provider.
+									</ul>
 									<h5>2. Update Deprecated APIs</h5>
 									<ul class="inner-list">
 										<li> Scan for deprecated APIs in your Cluster with tools like ‘kubectl deprecations’, ’kubent’ or ‘Pluto’. These tools will list all resources that need updating and the exact API version you need to update to.</li>
@@ -218,7 +220,7 @@ kubectl apply -f updated-deployment.yaml
 											</code>
 										</pre>
 										<li>Ensure there are no remaining deprecated APIs by running ‘kubent’ or ‘Pluto’ again.</li>
-										Note: You can avoid using one of these tools and Manually inspect your manifests (YAML files, Helm charts, etc.) instead, or Check the Kubernetes API server logs for warnings about deprecated APIs being used. But like all things, its better to avoid manual work as it’s prone to errors. Especially, when you’re dealing with something as critical as a production cluster.
+										<strong>Note:</strong> You can avoid using one of these tools and Manually inspect your manifests (YAML files, Helm charts, etc.) instead, or Check the Kubernetes API server logs for warnings about deprecated APIs being used. But like all things, its better to avoid manual work as it’s prone to errors. Especially, when you’re dealing with something as critical as a production cluster.
 									</ul>
 									<h5>3. Modify Terraform Configuration</h5>
 									<ul class="inner-list">
