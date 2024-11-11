@@ -360,7 +360,7 @@ aws eks describe-cluster --name eks-cluster --query cluster.version --output tex
 									<h3 class="info-title">Runbook for upgrading AKS (Azure Kubernetes Service) with Terraform</h3>
 									<br>
 									<h5 class="info-title">Step 1: Modify the Kubernetes Version in Terraform</h5>
-									<p>In AKS, the Kubernetes version is defined in the azurerm_kubernetes_cluster resource. Update the kubernetes_version attribute to the desired version.</p>
+									<p>In AKS, the Kubernetes version is defined in the <strong>azurerm_kubernetes_cluster</strong> resource. Update the <strong>kubernetes_version</strong> attribute to the desired version.</p>
 									<pre>
 										<code>
 resource "azurerm_kubernetes_cluster" "aks_cluster" {
@@ -394,7 +394,7 @@ terraform plan
 terraform apply
 										</code>
 									</pre>
-									<p>This will trigger the Kubernetes version upgrade for both the master and the nodes.</p>
+									<p>This will trigger the Kubernetes version upgrade <strong>for both the master and the nodes</strong>.</p>
 									<h5 class="info-title">Step 4: Verify the Upgrade</h5>
 									<p>After the upgrade, verify the new Kubernetes version of the AKS cluster:</p>
 									<pre>
@@ -410,7 +410,7 @@ az aks show --resource-group myResourceGroup --name aks-cluster --query kubernet
 										<li> <strong>Test in a Staging Environment: </strong> Before upgrading production clusters, test the upgrade in a staging environment.</li>
 										<li> <strong>Monitor the Cluster: </strong> During and after the upgrade, monitor the cluster for any issues, especially with workloads or APIs that may be affected by deprecated features.</li>
 									</ul>
-									<p>By following these steps, you can ensure a smooth Kubernetes version upgrade using Terraform.</p>
+									<p>By following these steps, you will ensure a smooth Kubernetes version upgrade.</p>
 									<div class="post-bottom-link d-flex justify-content-between">
 										<div class="block-social-links d-flex align-items-baseline">
 											<div class="element-title text-uppercase">Share:</div>
