@@ -183,10 +183,10 @@
 									<h3 class="info-title">Terraform and it’s role</h3>
 									<p>Terraform is a Infrastructure as Code (IaC) tool that automates the management and provisioning of infrastructure. This infrastructure can be in the cloud or in a private data center. It uses a declarative coding language to describe the desired state of the infrastructure and interacts with your infrastructure provider/vendor via well-defined APIs to make sure your infrastructure matches the desired state in your code.</p>
 									<p>It is important to understand that Terraform mainly deals with Infrastructure alone. Its not ideal for configuration management. It manages tasks like creating or upgrading the VPCs, S3 Buckets, EC2 Instances, EKS clusters, node groups, etc.</p>
-									<p>During a cluster upgrade, you might expect it to take care of deprecated API versions too. (If you’re not aware of what these are, go through this article I wrote). But, it won’t. <strong>Terraform does not inspect or update the Kubernetes manifests or API objects</strong> (like Deployments, Services, or Ingress) running inside the cluster. Handling deprecated API versions within Kubernetes is something that needs to be addressed separately. Here’s what Terraform does for you while upgrading a EKS Cluster:</p>
+									<p>During a cluster upgrade, you might expect it to take care of deprecated API versions too. (If you’re not aware of what these are, go through this article I wrote). But, it won’t. <strong>Terraform does not inspect or update the Kubernetes manifests or API objects running inside the cluster.</strong> (like Deployments, Services, or Ingress) Handling deprecated API versions within Kubernetes is something that needs to be addressed separately. Here’s what Terraform does for you while upgrading a EKS Cluster:</p>
 									<ul class="inner-list">
 										<li> Terraform manages the infrastructure provisioning and updates for the <strong>EKS control plane</strong> and <strong>worker nodes</strong>.</li>
-										<li> When you specify a new Kubernetes version (e.g., 1.24 to 1.25) in Terraform's aws_eks_cluster resource, it upgrades the control plane to that version.</li>
+										<li> In the case of AWS, when you specify a new Kubernetes version (e.g., 1.24 to 1.25) in Terraform's aws_eks_cluster resource, it upgrades the control plane to that version.</li>
 										<li> If you’re using managed node groups, Terraform can also upgrade the nodes by updating the aws_eks_node_group resource with the new version.</li>
 									</ul>
 									<h3 class="info-title">The Cluster Upgrade</h3>
@@ -220,20 +220,19 @@ kubectl apply -f updated-deployment.yaml
 											</code>
 										</pre>
 										<li>Ensure there are no remaining deprecated APIs by running ‘kubent’ or ‘Pluto’ again.</li>
-										<strong>Note:</strong> You can avoid using one of these tools and Manually inspect your manifests (YAML files, Helm charts, etc.) instead, or Check the Kubernetes API server logs for warnings about deprecated APIs being used. But like all things, its better to avoid manual work as it’s prone to errors. Especially, when you’re dealing with something as critical as a production cluster.
+										<strong>Note:</strong> You can avoid using one of these tools and Manually inspect your manifests instead, or check the Kubernetes API server logs for warnings about deprecated APIs being used. But like all things, its better to avoid manual work as it’s prone to errors. Especially, when you’re dealing with something as critical as a production cluster.
 									</ul>
 									<h5>3. Modify Terraform Configuration</h5>
 									<ul class="inner-list">
-										<li> Update the Kubernetes version in the Terraform configuration. (depending on your cloud provider).</li>
-										<li> Do this for the control plane first, followed by the managed node groups. Repeat the next 3 steps for managed node groups once again </li>
+										Update the Kubernetes version in the Terraform configuration. (depending on your cloud provider)
 									</ul>
 									<h5>4. Plan the Changes</h5>
 									<ul class="inner-list">
-										Run Terraform plan to review the changes before applying them. This helps you verify that the new Kubernetes version is correctly configured.
+										Run Terraform plan to review the changes before applying them. Make sure everything looks good.
 									</ul>
 									<h5 class="info-title">5. Apply the Changes</h5>
 									<ul class="inner-list">
-										Apply the Terraform changes to upgrade the cluster.
+										Apply the Terraform changes to upgrade the cluster. This step might take a few minutes to complete.
 									</ul>
 									<h5 class="info-title">6. Verify the Upgrade</h5>
 									<ul class="inner-list">
@@ -241,13 +240,13 @@ kubectl apply -f updated-deployment.yaml
 									</ul>
 									<h5 class="info-title">7. Test and Validate</h5>
 									<ul class="inner-list">
-										Run a few integration tests or perform workload checks to ensure no issues with the upgraded version.
+										Run a few integration tests or perform workload checks to ensure there're no issues with the upgraded version.
 									</ul>
 									<img src="images/GCP-4.png" alt="single post" class="img-fluid my-4">
 									<h3 class="info-title">Runbook for upgrading GKE (Google Kubernetes Engine) with Terraform</h3>
 									<br>
 									<h5 class="info-title">Step 1: Modify the Kubernetes Version in Terraform</h5>
-									<p>In GKE, Kubernetes clusters are defined using the google_container_cluster resource. You’ll need to update the min_master_version field and the node_version field to specify the desired version.</p>
+									<p>In GKE, Kubernetes clusters are defined using the <strong>google_container_cluster</strong> resource. You’ll need to update the <strong>min_master_version</strong> field and the <strong>node_version</strong> field to specify the desired version.</p>
 									<pre>
 										<code>
 resource "google_container_cluster" "primary" {
@@ -277,7 +276,7 @@ terraform plan
 terraform apply
 										</code>
 									</pre>
-									<p>This will trigger the Kubernetes version upgrade for both the master and the nodes.</p>
+									<p>This will trigger the Kubernetes version upgrade for <strong>both the master and the nodes.</strong></p>
 									<h5 class="info-title">Step 4: Verify the Upgrade</h5>
 									<p>After Terraform applies the changes, check the version of your cluster:</p>
 									<pre>
