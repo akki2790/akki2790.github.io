@@ -221,16 +221,16 @@ scrape_configs:
 									</pre>
 									<p>In this example, the federation server only scrapes the up and {job="node"} metrics from two child Prometheus servers. (prometheus-server-1 and prometheus-server-2)</p>
 									<h3 class="info-title">A Real-World Example</h3>
-									<p>Consider a large-scale global e-commerce platform like eBay, which has multiple data centers spread across different regions around the world. Its platform might consists of thousands of microservices, and other system components deployed across these data centers. The system would likely involve many geographically distributed backend services for handling:</p>
+									<p>Consider a large-scale global e-commerce platform like eBay, which likely has multiple data centers spread across different regions around the world. Its platform might consists of thousands of microservices, and other system components deployed across these data centers. The system would likely involve many geographically distributed backend services for handling:</p>
 									<ul class="inner-list">
-										<li> Web applications (e.g., product pages, cart, checkout, sellers, reviews, product suggestions etc)</li>
-										<li> Databases (SQL, NoSQL)</li>
-										<li> Messaging systems (e.g., Kafka, RabbitMQ)</li>
-										<li> Storage services (e.g., Amazon S3)</li>
-										<li> Cacheing systems (e.g., memcached, redis)</li>
-										<li> Payment gateways</li>
-										<li> Third-party API integrations</li>
-										<li> CDNs and load balancers to manage traffic</li>
+										<li> <strong>Web applications</strong> (e.g., product pages, cart, checkout, sellers, reviews, product suggestions etc)</li>
+										<li> <strong>Databases</strong> (SQL, NoSQL)</li>
+										<li> <strong>Messaging systems</strong> (e.g., Kafka, RabbitMQ)</li>
+										<li> <strong>Storage services</strong> (e.g., Amazon S3)</li>
+										<li> <strong>Cacheing systems</strong> (e.g., memcached, redis)</li>
+										<li> <strong>Payment gateways</strong></li>
+										<li> <strong>Third-party API integrations</strong></li>
+										<li> <strong>CDNs and load balancers to manage traffic</strong></li>
 									</ul>
 									<p>Given the criticality of the platform, the size and complexity of its infrastructure, monitoring each component becomes crucial for ensuring smooth operation, optimum performance, and uptime. This is where Prometheus federation becomes a necessity for scaling the monitoring system efficiently and effectively.</p>
 									<p>This global e-commerce platform will have hundreds of microservices, application servers, database servers, and network devices all spread across the world. <strong>Given the scale we’re dealing with, having a single Prometheus instance collecting metrics from every application, server and network device across the world becomes impractical due to</strong>:</p>
