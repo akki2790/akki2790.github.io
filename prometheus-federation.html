@@ -294,32 +294,30 @@ scrape_configs:
 									<pre>
 										<code>
 scrape_configs:
-- job_name: 'federation'
+  - job_name: 'federation'
 	scrape_interval: 5m
 	honor_labels: true
 	metrics_path: '/federate'
 	params:
-	'match[]':
-	  - '{job="checkout"}'
-	  - 'up'
-	  - 'http_requests_total{status="5xx"}'
-	  - 'http_request_duration_seconds'
+	  'match[]':
+	    - '{job="checkout"}'
+	    - 'up'
+	    - 'http_requests_total{status="5xx"}'
+	    - 'http_request_duration_seconds'
 	static_configs:
-	- targets:
-	  - 'prometheus-northamerica.example.com:9090'
-	  - 'prometheus-europe.example.com:9090'
-	  - 'prometheus-asia.example.com:9090'								  
+	  - targets:
+	    - 'prometheus-northamerica.example.com:9090'
+	    - 'prometheus-europe.example.com:9090'
+	    - 'prometheus-asia.example.com:9090'								  
 										</code>
 									</pre>
-									<h3>Benefits of Federation in This Scenario:</h3>
+									<h3>Benefits of Federation:</h3>
 									<ul class="inner-list">
-										<li> One partition can be consumed by only one consumer from a consumer group. If there are more consumers than partitions, some consumers will be idle. If there are fewer consumers than partitions, some consumers will consume from multiple partitions.</li>
-										<li> No two consumers in the same group will process the same partition at the same time. This partition-to-consumer mapping within a consumer group ensures efficient data consumption while maintaining the ordering guarantees within each partition.</li>
-										<li> If a consumer fails, Kafka automatically reassigns the resp. partition to another active consumer in the same group.</li>
-										<li> You can add more partitions to a Kafka topic at any time, but existing data is not re-distributed. New partitions will only be used for new incoming messages.</li>
-										<li> After a rebalance, consumers continue consuming from their current offsets in the original partitions, and the new partitions will be assigned to consumers after a rebalance. i.e. offsets for the old partitions are not affected, and new partitions start with offset 0.</li>
-										<li> The preservation of offsets after scaling up is one of Kafka’s core strengths, allowing consumer groups to scale up or down while maintaining reliable and ordered message processing.</li>
-										<li> The rebalancing process is automatic, but it does temporarily interrupt message consumption while partitions are reassigned.</li>
+										<li> <strong>Scalability:</strong> Each regional Prometheus server handles its own local metrics load. The global Prometheus only scrapes aggregated data, reducing the load on both the network and the Global Prometheus instance itself</li>
+										<li> <strong>Low Latency:</strong> Each region’s metrics are collected locally, avoiding cross-region network delays. More granular monitoring and alerting can happen at the local level. The global Prometheus only fetches summary data from each region, which is much smaller in volume.</li>
+										<li> <strong>Fault Isolation:</strong> If a regional Prometheus server goes down, only the monitoring for that region is affected. The global monitoring system still functions and alerts about the regional failure. We can also add a backup global prometheus server for redundancy.</li>
+										<li> <strong>Global Visibility:</strong> The federation server provides a high-level global view, enabling stakeholders to see the overall health and trends of the system across different regions. This is crucial for executives, SREs, and global incident response teams.</li>
+										<li> <strong>Efficiency:</strong> Only the essential, aggregated metrics are sent to the global instance. This avoids data overload and makes it easier to manage the large-scale monitoring infrastructure.</li>
 									</ul>
 									<div class="post-bottom-link d-flex justify-content-between">
 										<div class="block-social-links d-flex align-items-baseline">
