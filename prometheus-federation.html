@@ -244,7 +244,7 @@ scrape_configs:
 									<p>1. <strong>Regional Prometheus Instances (Child Servers):</strong></p>
 									<ul class="inner-list">
 										<li> Each region (and the resp. Infrastructure) will have <strong>its own Prometheus instance</strong> dedicated to monitoring the local services.</li>
-										<li> These regional prometheus instances also scrape granular system metrics and other KPIs (e.g., CPU usage, memory, disk I/O, response times, request rates, user traffic, new signups per day etc) from infrastructure in their respective region and store them locally</li>
+										<li> These regional prometheus instances also scrape granular system metrics and other KPIs (e.g., CPU usage, memory, disk I/O, response times, request rates, user traffic, new signups per day etc) from infrastructure in their respective regions and store them locally.</li>
 									</ul>
 									<p>2. <strong>Global Prometheus Instance (Federation Server):</strong></p>
 									<ul class="inner-list">
@@ -263,14 +263,14 @@ scrape_configs:
 									<ul class="inner-list">
 										<li> <strong>North America Region:</strong></li>
 										<ul class="inner-list">
-											<li>Services: Checkout (microservice), Payment Gateway, Regional Shipping Service.</li>
-											<li>Infrastructure: 500 servers (both physical and virtual), databases, caching layers.</li>
+											<li>Services: Checkout (microservice), Payment Gateway, Regional Shipping Service etc.</li>
+											<li>Infrastructure: 500 servers (both physical and virtual), databases, caching layers etc.</li>
 											<li>The Prometheus server in North America scrapes granular system and service metrics for all these servers and applications, and stores detailed time-series data locally.</li>
 										</ul>
 										<li> <strong>Europe Region:</strong></li>
 										<ul class="inner-list">
-											<li>Services: Checkout, European Payment Gateway, Regional Shipping Service.</li>
-											<li>Infrastructure: 300 servers, databases, storage services.</li>
+											<li>Services: Checkout, European Payment Gateway, Regional Shipping etc.</li>
+											<li>Infrastructure: 300 servers, databases, storage services etc.</li>
 											<li>The Europe Prometheus instance scrapes and stores similar detailed metrics, but only for the applications and infrastructure in Europe.</li>
 										</ul>
 										<li> <strong>Asia Region:</strong></li>
@@ -282,8 +282,8 @@ scrape_configs:
 									</ul>
 									<h5>The Federation Server</h5>
 									<ul class="inner-list">
-										<li> Our <strong>central federation prometheus server</strong> is configured to scrape aggregated metrics from each of these regional Prometheus instances.</li>
-										<li> For example, the global Prometheus instance scrapes metrics from each region by querying only the high-level metrics it cares about. It might pull:</li>
+										<li> Our central federation prometheus server is configured to scrape aggregated metrics from each of these regional Prometheus instances.</li>
+										<li> For example, the global Prometheus instance scrapes metrics from each region by <strong> querying only the high-level metrics it cares about.</strong>  It might pull:</li>
 										<ul class="inner-list">
 											<li>The up metric for all services to check their availability.</li>
 											<li>Aggregated error rates. (http_requests_total where status=5xx).</li>
@@ -313,7 +313,7 @@ scrape_configs:
 									</pre>
 									<h5>Benefits of Federation in this scenario:</h5>
 									<ul class="inner-list">
-										<li> <strong>Scalability:</strong> Each regional Prometheus server handles its own local metrics load. The global Prometheus only scrapes aggregated data, reducing the load on both the network and the Global Prometheus instance itself</li>
+										<li> <strong>Scalability:</strong> Each regional Prometheus server handles its own local metrics load. The global Prometheus only scrapes aggregated data, reducing the load on both the network and the Global Prometheus instance itself.</li>
 										<li> <strong>Low Latency:</strong> Each region’s metrics are collected locally, avoiding cross-region network delays. More granular monitoring and alerting can happen at the local level. The global Prometheus only fetches summary data from each region, which is much smaller in volume.</li>
 										<li> <strong>Fault Isolation:</strong> If a regional Prometheus server goes down, only the monitoring for that region is affected. The global monitoring system still functions and alerts about the regional failure. We can also add a backup global prometheus server for redundancy.</li>
 										<li> <strong>Global Visibility:</strong> The federation server provides a high-level global view, enabling stakeholders to see the overall health and trends of the system across different regions. This is crucial for executives, SREs, and global incident response teams.</li>
