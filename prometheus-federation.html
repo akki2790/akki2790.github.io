@@ -192,10 +192,16 @@
 									<h3 class="info-title">Federation in Prometheus</h3>
 									<p>In context of the Prometheus monitoring system, federation refers to the ability to scale monitoring by collecting and aggregating metrics from multiple Prometheus servers. It enables hierarchical or multi-level monitoring by allowing one Prometheus server (often called a federation server or mother-ship) to scrape selected time series from other Prometheus servers.</p>
 									<p>This is particularly useful in large-scale deployments where you have multiple independent Prometheus instances monitoring different parts of an infrastructure. With federation you can aggregate and centralize those metrics for broader analysis.</p>
-										<img src="images/kafka-architecture-2_50.png" alt="post-image" class="img-fluid mb-4">
-									</figure>
-									<p>Partitions on the other hand, are a way to divide a topic's data into smaller, manageable chunks. Each Kafka topic is divided into one or more partitions, and these partitions are distributed across multiple brokers (machines) in the Kafka cluster. When a producer sends a message to a topic, Kafka writes that message to one of the topic's partitions. Each partition is an <strong>ordered, immutable sequence of records</strong> (messages), and each message within a partition is assigned a <strong>unique offset</strong>, which acts as its index. Partitions provide <strong>parallelism and scalability</strong> in Kafka as they allow Kafka to distribute the load across multiple brokers and because multiple consumers can consume from different partitions in parallel.</p>
-									<p>Let's look at an example, say you have a topic named “user-activity” and you configure it with 4 partitions. The data in this topic could be distributed as shown below:</p>
+									<h5>Benefits of federation in Prometheus:</h5>
+									<ul class="inner-list">
+										<li> Aggregation: A federating Prometheus server can pull metrics from multiple child servers, providing a global view of metrics across multiple regions, sub-systems, environments or accounts.</li>
+										<li> Selective Scraping: With federation you can select which metrics to scrape from the child servers. This is useful for saving network bandwidth and reducing data overhead. Usually, you want to collect only high-level or aggregated metrics, while detailed, granular data remains on the child servers.</li>
+										<li> Hierarchical Monitoring: Federation enables a multi-tier setup where lower-level Prometheus instances handle detailed, local monitoring, and higher-level servers handle aggregated metrics, providing better scalability.</li>
+										<li> Reduced Load: By scraping only aggregated or specific metrics at the federation level, you can reduce the amount of data transferred, making the system more efficient.</li>
+									</ul>
+									<p>For example, in a large organization, each data center or environment might have its own Prometheus instance. A central Prometheus server can federate metrics from each of these child instances to provide an aggregated overview of the entire system's health and performance, without needing to scrape every individual metric.</p>
+									<p>Federation is configured by adding scrape_config entries in the Prometheus configuration, specifying which metrics to scrape from the target or remote servers.</p>
+									<h5>Example configuration: </h5>
 									<ul class="inner-list">
 										<li> Partition 0: {"user1", "login"}, {"user2", "click"}</li>
 										<li> Partition 1: {"user3", "purchase"}</li>
