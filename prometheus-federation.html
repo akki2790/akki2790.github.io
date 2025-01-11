@@ -194,10 +194,10 @@
 									<p>This is particularly useful in large-scale deployments where you have multiple independent Prometheus instances monitoring different parts of an infrastructure. With federation you can aggregate and centralize those metrics for broader analysis.</p>
 									<h5>Benefits of federation in Prometheus:</h5>
 									<ul class="inner-list">
-										<li> Aggregation: A federating Prometheus server can pull metrics from multiple child servers, providing a global view of metrics across multiple regions, sub-systems, environments or accounts.</li>
-										<li> Selective Scraping: With federation you can select which metrics to scrape from the child servers. This is useful for saving network bandwidth and reducing data overhead. Usually, you want to collect only high-level or aggregated metrics, while detailed, granular data remains on the child servers.</li>
-										<li> Hierarchical Monitoring: Federation enables a multi-tier setup where lower-level Prometheus instances handle detailed, local monitoring, and higher-level servers handle aggregated metrics, providing better scalability.</li>
-										<li> Reduced Load: By scraping only aggregated or specific metrics at the federation level, you can reduce the amount of data transferred, making the system more efficient.</li>
+										<li> <strong>Aggregation:</strong> A federating Prometheus server can pull metrics from multiple child servers, providing a global view of metrics across multiple regions, sub-systems, environments or accounts.</li>
+										<li> <strong>Selective Scraping:</strong> With federation you can select which metrics to scrape from the child servers. This is useful for saving network bandwidth and reducing data overhead. Usually, you want to collect only high-level or aggregated metrics, while detailed, granular data remains on the child servers.</li>
+										<li> <strong>Hierarchical Monitoring:</strong> Federation enables a multi-tier setup where lower-level Prometheus instances handle detailed, local monitoring, and higher-level servers handle aggregated metrics, providing better scalability.</li>
+										<li> <strong>Reduced Load:</strong> By scraping only aggregated or specific metrics at the federation level, you can reduce the amount of data transferred, making the system more efficient.</li>
 									</ul>
 									<p>For example, in a large organization, each data center or environment might have its own Prometheus instance. A central Prometheus server can federate metrics from each of these child instances to provide an aggregated overview of the entire system's health and performance, without needing to scrape every individual metric.</p>
 									<p>Federation is configured by adding scrape_config entries in the Prometheus configuration, specifying which metrics to scrape from the target or remote servers.</p>
