@@ -187,10 +187,10 @@
 							<div class="post-content py-5">
 								<div class="post-description">
 									<h3 class="info-title">What is Federation?</h3>
-									<p>The term federation refers to a organizational system in which multiple smaller entities (such as states, regions, or organizations) come together to form a larger, unified entity while retaining some level of individual autonomy.</p>
+									<p>The term federation refers to a system in which multiple smaller entities (such as states, regions, or organizations) come together to form a larger, unified entity while retaining some level of individual autonomy.</p>
 									<p>In a political context, it typically involves a shared central government with member states under it; but each member still maintains its own independence in certain areas. (like policies, rules and state taxes etc) In an organizational context, federation can refer to a group of entities that join together to pursue common goal while maintaining their separate identities. For example, in sports, a federation might be an umbrella organization that coordinates the activities of various member teams or leagues.</p>
 									<h3 class="info-title">Federation in Prometheus</h3>
-									<p>In context of the Prometheus monitoring system, federation refers to the ability to scale monitoring by collecting and aggregating metrics from multiple Prometheus servers. It enables hierarchical or multi-level monitoring by allowing one Prometheus server (often called a federation server or mother-ship) to scrape selected time series from other Prometheus servers.</p>
+									<p>In context of the Prometheus monitoring system, federation refers to the ability to scale monitoring by collecting and aggregating metrics from multiple Prometheus servers. This enables hierarchical or multi-level monitoring by allowing one Prometheus server (often called a federation server or mother-ship) to scrape selected time series metrics from other Prometheus servers.</p>
 									<p>This is particularly useful in large-scale deployments where you have multiple independent Prometheus instances monitoring different parts of an infrastructure. With federation you can aggregate and centralize those metrics for broader analysis.</p>
 									<h5>Benefits of federation in Prometheus:</h5>
 									<ul class="inner-list">
@@ -200,7 +200,7 @@
 										<li> <strong>Reduced Load:</strong> By scraping only aggregated or specific metrics at the federation level, you can reduce the amount of data transferred, making the system more efficient.</li>
 									</ul>
 									<p>For example, in a large organization, each data center or environment might have its own Prometheus instance. A central Prometheus server can federate metrics from each of these child instances to provide an aggregated overview of the entire system's health and performance, without needing to scrape every individual metric.</p>
-									<p>Federation is configured by adding scrape_config entries in the Prometheus configuration, specifying which metrics to scrape from the target or remote servers.</p>
+									<p>Federation is configured by adding <em>scrape_config</em> entries in the Prometheus configuration, specifying which metrics to scrape from the target or remote servers.</p>
 									<h5>Example configuration: </h5>
 									<pre>
 										<code>
