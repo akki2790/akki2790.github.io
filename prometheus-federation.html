@@ -202,6 +202,23 @@
 									<p>For example, in a large organization, each data center or environment might have its own Prometheus instance. A central Prometheus server can federate metrics from each of these child instances to provide an aggregated overview of the entire system's health and performance, without needing to scrape every individual metric.</p>
 									<p>Federation is configured by adding scrape_config entries in the Prometheus configuration, specifying which metrics to scrape from the target or remote servers.</p>
 									<h5>Example configuration: </h5>
+									<pre>
+										<code>
+scrape_configs:
+- job_name: 'federation'
+	scrape_interval: 5m
+	honor_labels: true
+	metrics_path: '/federate'
+	params:
+		'match[]':
+			- '{job="node"}'
+			- 'up'
+	static_configs:
+		- targets:
+			- 'prometheus-server-1:9090'
+			- ‘prometheus-server-2:9090'
+										</code>
+									</pre>
 									<ul class="inner-list">
 										<li> Partition 0: {"user1", "login"}, {"user2", "click"}</li>
 										<li> Partition 1: {"user3", "purchase"}</li>
