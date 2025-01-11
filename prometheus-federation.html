@@ -258,24 +258,38 @@ scrape_configs:
 										</ul>
 										<li>This global instance can be used by platform engineers and SREs who need a high-level overview of the system's health worldwide.</li>
 									</ul>
-									<p>If the consumers in a group are fewer than the number of partitions, <strong>some consumers will be responsible for reading from multiple partitions</strong>. In the given example, we have 8 partitions and 4 consumers. So, each consumer will be assigned 2 partitions. This can increase the load on each consumer but ensures that all partitions are consumed.</p>
-									<p>Having fewer consumers than partitions still works, <strong>but it will increase the workload on individual consumers</strong>, possibly leading to bottlenecks if the consumers can't handle the load.</p>
-									<h5>3. Equal Number of Consumers and Partitions:</h5>
-									<p>Example Scenario:</p>
+									<h5>The system and infrastructure we need to monitor:</h5>
+									<p>Lets dive deeper into what this monitoring system needs to monitor and how it will accomplish this for our global e-commerce platform:</p>
 									<ul class="inner-list">
-										<li> <strong>Topic:</strong> 6 partitions</li>
-										<li> <strong>Consumers:</strong> 6 in the same group</li>
+										<li> <strong>North America Region:</strong></li>
+										<ul class="inner-list">
+											<li>Services: Checkout (microservice), Payment Gateway, Regional Shipping Service.</li>
+											<li>Infrastructure: 500 servers (both physical and virtual), databases, caching layers.</li>
+											<li>The Prometheus server in North America scrapes granular system and service metrics for all these servers and applications, and stores detailed time-series data locally.</li>
+										</ul>
+										<li> <strong>Europe Region:</strong></li>
+										<ul class="inner-list">
+											<li>Services: Checkout, European Payment Gateway, Regional Shipping Service.</li>
+											<li>Infrastructure: 300 servers, databases, storage services.</li>
+											<li>The Europe Prometheus instance scrapes and stores similar detailed metrics, but only for the applications and infrastructure in Europe.</li>
+										</ul>
+										<li> <strong>Asia Region:</strong></li>
+										<ul class="inner-list">
+											<li>Services: Checkout, Analytics, Payment Processing.</li>
+											<li>Infrastructure: 1000 servers, NoSQL databases, queuing systems.</li>
+											<li>The Asia Prometheus instance focuses on monitoring microservices, queuing systems and databases within the Asian data centers.</li>
+										</ul>
 									</ul>
-									<p>When the number of consumers equals the number of partitions, <strong>each consumer is assigned one partition.</strong> This setup ensures that all consumers are working in parallel, and each partition is processed by exactly one consumer. In the given example, Kafka will assign 1 partition to each consumer. All consumers will be active and will handle exactly one partition.</p>
-									<p>Having an equal number of consumers and partitions provides <strong>optimal resource utilization and parallelism</strong> in most cases.</p>
-									<h5>4. Adding partitions to existing Topics: </h5>
-									<p>Yes, this is something you can do. Partition count is not set in stone. This can be useful when you want to handle increased message throughput, or if you have added more consumers and want to further parallelize processing. But, this scaling can happen only in one direction. You <strong>can add more partitions</strong> to an existing Kafka topic on the go; <strong>you can’t remove them.</strong> So, scaling-up partition count is something you should think through.</p>
-									<p>Say you need to handle increased message throughput and decide to go from 3 partitions to 5. Before you start, you should understand how your cluster will behave after a rebalance. Let’s take a look at what happens:</p>
-									<h6>Impact on Consumers:</h6>
-									<p>Consumers in a consumer group continue reading from the original partitions with their existing offsets. <strong>Kafka will not reassign old messages to the new partitions,</strong> so consumers do not lose track of their current position (offset) in the original partitions. For the new partitions, Kafka will assign them to consumers in the group after a rebalance. After rebalancing:</p>
+									<h5>The Federation Server</h5>
 									<ul class="inner-list">
-										<li> Consumers in the group will be assigned both old and new partitions, depending on the number of consumers and partitions.</li>
-										<li> Consumers will start reading from the new partitions starting from offset 0 for new messages in those partitions.</li>
+										<li> Our <strong>central federation prometheus server</strong> is configured to scrape aggregated metrics from each of these regional Prometheus instances.</li>
+										<li> For example, the global Prometheus instance scrapes metrics from each region by querying only the high-level metrics it cares about. It might pull:</li>
+										<ul class="inner-list">
+											<li>The up metric for all services to check their availability.</li>
+											<li>Aggregated error rates. (http_requests_total where status=5xx).</li>
+											<li>High-level latency metrics. (e.g., http_request_duration_seconds).</li>
+											<li>Saturation or resource usage like node_cpu_seconds_total aggregated across all nodes in a region.</li>
+										</ul>
 									</ul>
 									<p>Example Scenario:</p>
 									<p>Let's say you have a topic user-events with 3 partitions and a consumer group with 3 consumers. Before Adding Partitions:</p>
