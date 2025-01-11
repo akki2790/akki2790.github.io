@@ -311,7 +311,7 @@ scrape_configs:
 	    - 'prometheus-asia.example.com:9090'								  
 										</code>
 									</pre>
-									<h3>Benefits of Federation:</h3>
+									<h5>Benefits of Federation in this scenario:</h5>
 									<ul class="inner-list">
 										<li> <strong>Scalability:</strong> Each regional Prometheus server handles its own local metrics load. The global Prometheus only scrapes aggregated data, reducing the load on both the network and the Global Prometheus instance itself</li>
 										<li> <strong>Low Latency:</strong> Each region’s metrics are collected locally, avoiding cross-region network delays. More granular monitoring and alerting can happen at the local level. The global Prometheus only fetches summary data from each region, which is much smaller in volume.</li>
@@ -319,6 +319,8 @@ scrape_configs:
 										<li> <strong>Global Visibility:</strong> The federation server provides a high-level global view, enabling stakeholders to see the overall health and trends of the system across different regions. This is crucial for executives, SREs, and global incident response teams.</li>
 										<li> <strong>Efficiency:</strong> Only the essential, aggregated metrics are sent to the global instance. This avoids data overload and makes it easier to manage the large-scale monitoring infrastructure.</li>
 									</ul>
+									<h3 class="info-title">Summary</h3>
+									<p>Prometheus federation is a powerful technique for monitoring large-scale, globally distributed infrastructures like that of a global e-commerce platform. By leveraging federation, the monitoring system becomes highly scalable, efficient, and fault-tolerant, enabling real-time insights into the platform's health across different geographic regions without overwhelming the system with unnecessary granular data.</p>
 									<div class="post-bottom-link d-flex justify-content-between">
 										<div class="block-social-links d-flex align-items-baseline">
 											<div class="element-title text-uppercase">Share:</div>
