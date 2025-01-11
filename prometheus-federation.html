@@ -232,27 +232,31 @@ scrape_configs:
 										<li> Third-party API integrations</li>
 										<li> CDNs and load balancers to manage traffic</li>
 									</ul>
-									<p>Each chef works on orders from its assigned partition, ensuring that the workload is divided and processed in parallel:</p>
+									<p>Given the criticality of the platform, the size and complexity of its infrastructure, monitoring each component becomes crucial for ensuring smooth operation, optimum performance, and uptime. This is where Prometheus federation becomes a necessity for scaling the monitoring system efficiently and effectively.</p>
+									<p>This global e-commerce platform will have hundreds of microservices, application servers, database servers, and network devices all spread across the world. <strong>Given the scale we’re dealing with, having a single Prometheus instance collecting metrics from every application, server and network device across the world becomes impractical due to</strong>:</p>
 									<ul class="inner-list">
-										<li> Chef A reads order1, order2, order3</li>
-										<li> Chef B reads order4, order5, order6</li>
-										<li> Chef C reads order7, order8, order9</li>
+										<li> <strong>High Latency:</strong> Scraping all global metrics from a single central Prometheus server would lead to high network latencies, especially between geographically distant data centers.</li>
+										<li> <strong>Scalability:</strong> A single Prometheus server will struggle with the load of collecting and storing millions of time-series metrics.</li>
+										<li> <strong>Fault Tolerance:</strong> the entire global monitoring system will go blind if this single Prometheus server fails. This will lead to missed alerts and degraded operational insights. Troubleshooting for issues could become impossible in this situation.</li>
 									</ul>
-									<p>Ideally you would want to maximize parallelism and efficiency, and for that you’ll need the number of partitions to be equal to the number of consumers within a group, as shown in the above example. But, in real world Kafka clusters that’s often not the case.</p>
-									<p>The following scenarios will help you understand what happens when this equilibrium is not maintained:</p>
-									<h5>1. More Consumers than Partitions:</h5>
-									<p>Example Scenario:</p>
+									<p>To overcome these shortcomings, Prometheus federation can be used to build a <strong>hierarchical monitoring architecture.</strong> Let’s go through the design and architecture of such a monitoring system.</p>
+									<h5>Federation Architecture</h5>
+									<p>1. <strong>Regional Prometheus Instances (Child Servers):</strong></p>
 									<ul class="inner-list">
-										<li> <strong>Topic:</strong> 3 partitions</li>
-										<li> <strong>Consumers:</strong> 5 in the same group</li>
+										<li> Each region (and the resp. Infrastructure) will have <strong>its own Prometheus instance</strong> dedicated to monitoring the local services.</li>
+										<li> These regional prometheus instances also scrape granular system metrics and other KPIs (e.g., CPU usage, memory, disk I/O, response times, request rates, user traffic, new signups per day etc) from infrastructure in their respective region and store them locally</li>
 									</ul>
-									<p>If the number of consumers exceeds the number of partitions, <strong>some consumers will be idle</strong>. In the given example, we have 3 partitions and 5 consumers in the same group. Of the 5 consumers, only 3 will be active (one for each partition), and remaining 2 consumers will stay unassigned and won’t consume any data.</p>
-									<p>In this case, the excess consumers do not contribute to increased throughput because Kafka cannot assign more than one consumer per partition.</strong> To maximize efficiency, the number of partitions should match or exceed the number of consumers so that every consumer is active</strong>.</p>
-									<h5>2. More Partitions than Consumers: </h5>
-									<p>Example Scenario:</p>
+									<p>2. <strong>Global Prometheus Instance (Federation Server):</strong></p>
 									<ul class="inner-list">
-										<li> <strong>Topic:</strong> 8 partitions</li>
-										<li> <strong>Consumers:</strong> 4 in the same group</li>
+										<li> A central Prometheus instance is set up to federate high-level, aggregated metrics from the regional Prometheus instances. This instance is responsible for global monitoring, incident response, and alerting.</li>
+										<li> It doesn’t scrape the detailed time series data but rather focuses on metrics like:</li>
+										<ul class="inner-list">
+											<li><strong>Service availability</strong> (e.g., is the checkout microservice up in all regions?)</li>
+											<li><strong>Response time summaries</strong> (e.g., p99 latency of the API gateways across the globe</li>
+											<li><strong>Error rates</strong> (e.g., 5xx error rates in the North American region)</li>
+											<li><strong>Aggregated resource utilization</strong> (e.g., overall CPU and memory usage trends in each region)</li>
+										</ul>
+										<li>This global instance can be used by platform engineers and SREs who need a high-level overview of the system's health worldwide.</li>
 									</ul>
 									<p>If the consumers in a group are fewer than the number of partitions, <strong>some consumers will be responsible for reading from multiple partitions</strong>. In the given example, we have 8 partitions and 4 consumers. So, each consumer will be assigned 2 partitions. This can increase the load on each consumer but ensures that all partitions are consumed.</p>
 									<p>Having fewer consumers than partitions still works, <strong>but it will increase the workload on individual consumers</strong>, possibly leading to bottlenecks if the consumers can't handle the load.</p>
