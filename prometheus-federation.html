@@ -205,42 +205,32 @@
 									<pre>
 										<code>
 scrape_configs:
-- job_name: 'federation'
-	scrape_interval: 5m
-	honor_labels: true
-	metrics_path: '/federate'
-	params:
-		'match[]':
-			- '{job="node"}'
-			- 'up'
-	static_configs:
-		- targets:
-			- 'prometheus-server-1:9090'
-			- ‘prometheus-server-2:9090'
+	- job_name: 'federation'
+		scrape_interval: 5m
+		honor_labels: true
+		metrics_path: '/federate'
+		params:
+			'match[]':
+				- '{job="node"}'
+				- 'up'
+		static_configs:
+			- targets:
+				- 'prometheus-server-1:9090'
+				- ‘prometheus-server-2:9090'
 										</code>
 									</pre>
+									<p>In this example, the federation server only scrapes the up and {job="node"} metrics from two child Prometheus servers. (prometheus-server-1 and prometheus-server-2)</p>
+									<h3 class="info-title">A Real-World Example</h3>
+									<p>Consider a large-scale global e-commerce platform like eBay, which has multiple data centers spread across different regions around the world. Its platform might consists of thousands of microservices, and other system components deployed across these data centers. The system would likely involve many geographically distributed backend services for handling:</p>
 									<ul class="inner-list">
-										<li> Partition 0: {"user1", "login"}, {"user2", "click"}</li>
-										<li> Partition 1: {"user3", "purchase"}</li>
-										<li> Partition 2: {"user4", "logout"}</li>
-										<li> Partition 3: {"user5", "search"}</li>
-									</ul>
-									<p>You can think of Partitions as a physical subcomponents of a Topic that are used to store and distribute data across brokers, ensuring parallelism, scalability, and high throughput.</p>
-									<h3>Consumer Groups:</h3>
-									<p>A consumer group in Kafka is a way to organize one or more consumers that work together to read messages from a Kafka topic. Consumers in the same group coordinate with each other so that <strong>each message in a topic is read by only one consumer in the group</strong>. This allows Kafka to distribute the load of processing messages across multiple consumers while maintaining fault tolerance.</p>
-									<p>On the other hand, <strong>different consumer groups can read the same messages independently</strong>. This allows for multiple processing systems to process the same data without interfering with each other. You could have one consumers group for logging and another for data analytics consuming from the same partition within a topic. Consumer groups provide parallel processing, fault tolerance and scalability.</p>
-									<h3>Partition count and number of Consumers:</h3>
-									<p>The partition count of a topic and the number of consumers are closely related, particularly in how they affect the parallelism and throughput of a consumer group. <strong>Kafka guarantees that a partition can be consumed by only one consumer at a time within a consumer group</strong>. This means that each partition will have exactly one consumer actively reading from it at any given time. i.e. if a topic has N partitions, the maximum number of consumers (within a single consumer group) that can actively read in parallel from that topic is N.  <strong>The number of partitions defines the maximum parallelism</strong>.</p>
-									<h5>Example Scenario:</h5>
-									<p>Lets look at a real world example. Imagine you have a Kafka topic called ‘orders’ that stores information about pending customer orders at a restaurant.</p>
-									<p><em># Topic: messages</em><br>Orders: order1, order2, order3, order4, order5, order6, order7, order8, order9</p>
-									<p>You’ve <strong>3 chefs</strong> in the kitchen each capable of satisfying any order sent their way. So, to handle the load efficiently, you divide this topic into <strong>3 partitions.</strong></p>
-									<p>Orders<br>└── Partition 0: order1, order2, order3<br>└── Partition 1: order4, order5, order6<br>└── Partition 2: order7, order8, order9</p>
-									<p>And you create a consumer group with 3 consumers (Chef A, Chef B, and Chef C) to process these orders. With this setup:</p>
-									<ul class="inner-list">
-										<li> Chef A is assigned Partition 0</li>
-										<li> Chef B is assigned Partition 1</li>
-										<li> Chef C is assigned Partition 2</li>
+										<li> Web applications (e.g., product pages, cart, checkout, sellers, reviews, product suggestions etc)</li>
+										<li> Databases (SQL, NoSQL)</li>
+										<li> Messaging systems (e.g., Kafka, RabbitMQ)</li>
+										<li> Storage services (e.g., Amazon S3)</li>
+										<li> Cacheing systems (e.g., memcached, redis)</li>
+										<li> Payment gateways</li>
+										<li> Third-party API integrations</li>
+										<li> CDNs and load balancers to manage traffic</li>
 									</ul>
 									<p>Each chef works on orders from its assigned partition, ensuring that the workload is divided and processed in parallel:</p>
 									<ul class="inner-list">
