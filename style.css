@@ -424,6 +424,9 @@ header {
   bottom: -4px;
   left: -5px;
 }
+.skill-chart li .chart-percentage.sixty-percent {
+width: 60%; 
+}
 .skill-chart li .chart-percentage.seventy-percent {
 width: 70%; 
 }
