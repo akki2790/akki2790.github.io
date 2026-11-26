@@ -40,6 +40,20 @@
       el: ".swiper-pagination",
       clickable: true,
     },
+    // Prev/next arrow buttons
+    navigation: {
+      nextEl: ".portfolio-Swiper .swiper-button-next",
+      prevEl: ".portfolio-Swiper .swiper-button-prev",
+    },
+    // Two-finger horizontal trackpad scroll (vertical scroll still scrolls the page)
+    mousewheel: {
+      forceToAxis: true,
+    },
+    keyboard: {
+      enabled: true,
+      onlyInViewport: true,
+    },
+    grabCursor: true,
     breakpoints: {
       300: {
         slidesPerView: 2,
