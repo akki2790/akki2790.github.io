@@ -775,9 +775,28 @@ html.eol-exploding main {
 .eol-title {
   margin: 0;
   color: #E99A38;
-  font-size: clamp(2.5rem, 8vw, 6rem);
-  letter-spacing: 0.08em;
+  font-family: "VT323", "Courier New", monospace;
+  font-weight: 400;
+  font-size: clamp(2rem, 11vw, 8rem);
+  line-height: 1;
+  letter-spacing: 0.15em;
+  white-space: nowrap;
   text-shadow: 0 0 12px rgba(233, 154, 56, 0.8), 0 0 40px rgba(233, 154, 56, 0.45);
+}
+/* Solid block terminal cursor, blinking at a standard ~530ms on / 530ms off. */
+.eol-cursor {
+  display: inline-block;
+  width: 0.55em;
+  height: 0.62em;
+  margin-left: 0.05em;
+  vertical-align: baseline;
+  background: currentColor;
+  box-shadow: 0 0 12px rgba(233, 154, 56, 0.8), 0 0 40px rgba(233, 154, 56, 0.45);
+  animation: eol-blink 1.06s step-end infinite;
+}
+@keyframes eol-blink {
+  0% { opacity: 1; }
+  50% { opacity: 0; }
 }
 .eol-text {
   margin: 0;
@@ -786,14 +805,16 @@ html.eol-exploding main {
 }
 .eol-rez {
   margin-top: 1rem;
-  padding: 1.4rem 4.4rem;
+  padding: 1.1rem 4.4rem;
   border: 4px solid #7DF9FF;
   border-radius: 999px;
   background: transparent;
   color: #7DF9FF;
-  font-size: 1.8rem;
+  font-size: 3.4rem;
   font-weight: 700;
+  line-height: 1;
   letter-spacing: 0.2em;
+  text-indent: 0.2em; /* balances the trailing letter-spacing so the text stays centered */
   text-transform: uppercase;
   box-shadow: 0 0 28px rgba(125, 249, 255, 0.35);
   transition: background-color 0.2s, color 0.2s;

@@ -109,7 +109,7 @@
       '<canvas class="eol-canvas" aria-hidden="true"></canvas>' +
       '<div class="eol-flash"></div>' +
       '<div class="eol-card" role="dialog" aria-label="End of line">' +
-      '  <h2 class="eol-title">END OF LINE.</h2>' +
+      '  <h2 class="eol-title" aria-label="End of line">END OF LINE<span class="eol-cursor" aria-hidden="true"></span></h2>' +
       '  <p class="eol-text">This page has been derezzed.</p>' +
       '  <button type="button" class="eol-rez">Rez</button>' +
       '</div>';
