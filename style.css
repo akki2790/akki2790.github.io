@@ -803,8 +803,17 @@ html.eol-exploding main {
   color: #B8FCFF;
   letter-spacing: 0.04em;
 }
-.eol-rez {
+.eol-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
   margin-top: 1rem;
+}
+/* Shared neon button style for "Rez" and "Play" */
+.eol-btn {
+  display: inline-block;
+  text-decoration: none;
   padding: 1.1rem 4.4rem;
   border: 4px solid #7DF9FF;
   border-radius: 999px;
@@ -822,10 +831,16 @@ html.eol-exploding main {
   box-shadow: 0 0 28px rgba(125, 249, 255, 0.35);
   transition: background-color 0.2s, color 0.2s, text-shadow 0.2s;
 }
-.eol-rez:hover,
-.eol-rez:focus-visible {
+.eol-btn:hover,
+.eol-btn:focus-visible {
   background: #7DF9FF;
   color: #0A0E13;
   text-shadow: none;
   outline: none;
+}
+@media (max-width: 575px) {
+  .eol-btn {
+    padding: 0.9rem 2.6rem;
+    font-size: 2.6rem;
+  }
 }

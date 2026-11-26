@@ -19,6 +19,8 @@
   if (reduceMotion && reduceMotion.matches) return;
 
   var GIF_DURATION_MS = 4400;
+  // "Play" button on the end screen opens this game in a new tab.
+  var GAME_URL = 'https://www.joy.land/tron-light-cycles.html';
   // Centre of the countdown ring, as a fraction of the GIF's width/height (498x280).
   var RING = { x: 276 / 498, y: 93 / 280 };
   // Colours chosen to contrast with the orange (#E99A38) page: white-hot core,
@@ -111,7 +113,10 @@
       '<div class="eol-card" role="dialog" aria-label="End of line">' +
       '  <h2 class="eol-title" aria-label="End of line">END OF LINE<span class="eol-cursor" aria-hidden="true"></span></h2>' +
       '  <p class="eol-text">This page has been derezzed.</p>' +
-      '  <button type="button" class="eol-rez">Rez</button>' +
+      '  <div class="eol-actions">' +
+      '    <button type="button" class="eol-btn eol-rez">Rez</button>' +
+      '    <a class="eol-btn eol-play" href="' + GAME_URL + '" target="_blank" rel="noopener noreferrer">Play</a>' +
+      '  </div>' +
       '</div>';
     document.body.appendChild(layer);
     document.documentElement.classList.add('eol-exploding');
