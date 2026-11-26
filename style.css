@@ -809,19 +809,23 @@ html.eol-exploding main {
   border: 4px solid #7DF9FF;
   border-radius: 999px;
   background: transparent;
+  /* Multi-line neon lettering: Monoton's letters are built from parallel lines. */
   color: #7DF9FF;
+  font-family: "Monoton", "Roboto", sans-serif;
   font-size: 3.4rem;
-  font-weight: 700;
+  font-weight: 400;
   line-height: 1;
-  letter-spacing: 0.2em;
-  text-indent: 0.2em; /* balances the trailing letter-spacing so the text stays centered */
+  letter-spacing: 0.1em;
+  text-indent: 0.1em; /* balances the trailing letter-spacing so the text stays centered */
   text-transform: uppercase;
+  text-shadow: 0 0 6px rgba(125, 249, 255, 0.9), 0 0 18px rgba(125, 249, 255, 0.55);
   box-shadow: 0 0 28px rgba(125, 249, 255, 0.35);
-  transition: background-color 0.2s, color 0.2s;
+  transition: background-color 0.2s, color 0.2s, text-shadow 0.2s;
 }
 .eol-rez:hover,
 .eol-rez:focus-visible {
   background: #7DF9FF;
   color: #0A0E13;
+  text-shadow: none;
   outline: none;
 }
