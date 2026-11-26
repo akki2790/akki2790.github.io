@@ -690,3 +690,104 @@ width: 95%;
     right: 0;
   }
 }
+/*----- End of line easter egg (js/end-of-line.js)
+--------------------------------------------------------------*/
+html.eol-exploding {
+  overflow: hidden;
+}
+html.eol-exploding main {
+  animation: eol-shake 0.65s cubic-bezier(.36, .07, .19, .97);
+}
+@media (min-width: 992px) {
+  html.eol-exploding #header-nav {
+    animation: eol-shake 0.65s cubic-bezier(.36, .07, .19, .97);
+  }
+}
+@keyframes eol-shake {
+  10%, 90% { transform: translate3d(-3px, 2px, 0); }
+  20%, 80% { transform: translate3d(6px, -4px, 0); }
+  30%, 50%, 70% { transform: translate3d(-12px, 6px, 0) rotate(-0.4deg); }
+  40%, 60% { transform: translate3d(12px, -6px, 0) rotate(0.4deg); }
+}
+.eol-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+}
+.eol-layer > * {
+  position: absolute;
+  inset: 0;
+}
+.eol-canvas {
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+.eol-flash {
+  pointer-events: none;
+  background: radial-gradient(circle at var(--eol-x) var(--eol-y),
+    #FFFFFF 0, #FFF6D5 12%, rgba(125, 249, 255, 0.45) 30%, rgba(125, 249, 255, 0) 60%);
+  animation: eol-flash 0.7s ease-out forwards;
+}
+@keyframes eol-flash {
+  0% { opacity: 0; }
+  8% { opacity: 1; }
+  100% { opacity: 0; }
+}
+.eol-dark {
+  background: radial-gradient(circle at var(--eol-x) var(--eol-y), #1B2733 0, #0A0E13 70%);
+  opacity: 0;
+  animation: eol-fade-in 1.3s ease-in 0.3s forwards;
+}
+@keyframes eol-fade-in {
+  to { opacity: 1; }
+}
+.eol-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 0 16px;
+  text-align: center;
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(0.96);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.eol-show-card .eol-card {
+  opacity: 1;
+  pointer-events: auto;
+  transform: scale(1);
+}
+.eol-title {
+  margin: 0;
+  color: #E99A38;
+  font-size: clamp(2.5rem, 8vw, 6rem);
+  letter-spacing: 0.08em;
+  text-shadow: 0 0 12px rgba(233, 154, 56, 0.8), 0 0 40px rgba(233, 154, 56, 0.45);
+}
+.eol-text {
+  margin: 0;
+  color: #B8FCFF;
+  letter-spacing: 0.04em;
+}
+.eol-reboot {
+  margin-top: 0.5rem;
+  padding: 0.7rem 2.2rem;
+  border: 2px solid #7DF9FF;
+  border-radius: 999px;
+  background: transparent;
+  color: #7DF9FF;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  box-shadow: 0 0 14px rgba(125, 249, 255, 0.35);
+  transition: background-color 0.2s, color 0.2s;
+}
+.eol-reboot:hover,
+.eol-reboot:focus-visible {
+  background: #7DF9FF;
+  color: #0A0E13;
+  outline: none;
+}
