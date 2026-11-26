@@ -143,6 +143,14 @@
       // once: true,
     })
 
+    // AOS measures element positions once at init. On a first (uncached) visit,
+    // images and iframes load afterwards and push content down, leaving AOS with
+    // stale trigger points (bottom of the page stays blank). Re-measure as each
+    // one finishes loading.
+    $('img, iframe').on('load', function () {
+      AOS.refresh();
+    });
+
   });
 
 
@@ -150,6 +158,8 @@
   $(window).load(function () {
     $(".preloader").fadeOut("slow");
     initIsotope();
+    // Everything has loaded, so the layout is final: re-measure AOS positions.
+    AOS.refresh();
   })
 
 
