@@ -111,28 +111,28 @@
       '<div class="eol-card" role="dialog" aria-label="End of line">' +
       '  <h2 class="eol-title">END OF LINE.</h2>' +
       '  <p class="eol-text">This page has been derezzed.</p>' +
-      '  <button type="button" class="eol-reboot">Reboot</button>' +
+      '  <button type="button" class="eol-rez">Rez</button>' +
       '</div>';
     document.body.appendChild(layer);
     document.documentElement.classList.add('eol-exploding');
 
     runParticles(layer.querySelector('.eol-canvas'), ox, oy);
 
-    var button = layer.querySelector('.eol-reboot');
+    var button = layer.querySelector('.eol-rez');
     setTimeout(function () {
       layer.classList.add('eol-show-card');
       button.focus({ preventScroll: true });
-    }, 1900);
+    }, 2200);
 
-    function onKey(e) { if (e.key === 'Escape') reboot(); }
-    function reboot() {
+    function onKey(e) { if (e.key === 'Escape') rez(); }
+    function rez() {
       document.removeEventListener('keydown', onKey);
       layer.remove();
       document.documentElement.classList.remove('eol-exploding');
       window.scrollTo(0, 0);
       exploded = false;
     }
-    button.addEventListener('click', reboot);
+    button.addEventListener('click', rez);
     document.addEventListener('keydown', onKey);
   }
 
@@ -149,43 +149,55 @@
     var reach = Math.hypot(Math.max(ox, W - ox), Math.max(oy, H - oy));
     var pick = function (arr) { return arr[(Math.random() * arr.length) | 0]; };
     var particles = [];
-    var i, angle, speed;
 
     // Glowing sparks, drawn as streaks.
-    for (i = 0; i < 420; i++) {
-      angle = Math.random() * Math.PI * 2;
-      speed = 2 + Math.pow(Math.random(), 1.6) * 24;
-      particles.push({
-        x: ox, y: oy,
-        vx: Math.cos(angle) * speed, vy: Math.sin(angle) * speed,
-        life: 0, max: 45 + Math.random() * 75,
-        size: 1 + Math.random() * 2.4,
-        color: pick(SPARK_COLORS), debris: false
-      });
+    function burstSparks(count, maxSpeed) {
+      for (var i = 0; i < count; i++) {
+        var angle = Math.random() * Math.PI * 2;
+        var speed = 2 + Math.pow(Math.random(), 1.5) * maxSpeed;
+        particles.push({
+          x: ox, y: oy,
+          vx: Math.cos(angle) * speed, vy: Math.sin(angle) * speed,
+          life: 0, max: 50 + Math.random() * 90,
+          size: 1 + Math.random() * 3,
+          color: pick(SPARK_COLORS), debris: false
+        });
+      }
     }
     // Dark tumbling debris.
-    for (i = 0; i < 60; i++) {
-      angle = Math.random() * Math.PI * 2;
-      speed = 3 + Math.random() * 14;
-      particles.push({
-        x: ox, y: oy,
-        vx: Math.cos(angle) * speed, vy: Math.sin(angle) * speed - 3,
-        life: 0, max: 80 + Math.random() * 50,
-        size: 3 + Math.random() * 6,
-        rot: Math.random() * Math.PI, spin: (Math.random() - 0.5) * 0.4,
-        color: pick(DEBRIS_COLORS), debris: true
-      });
+    function burstDebris(count) {
+      for (var i = 0; i < count; i++) {
+        var angle = Math.random() * Math.PI * 2;
+        var speed = 3 + Math.random() * 18;
+        particles.push({
+          x: ox, y: oy,
+          vx: Math.cos(angle) * speed, vy: Math.sin(angle) * speed - 4,
+          life: 0, max: 90 + Math.random() * 60,
+          size: 3 + Math.random() * 8,
+          rot: Math.random() * Math.PI, spin: (Math.random() - 0.5) * 0.5,
+          color: pick(DEBRIS_COLORS), debris: true
+        });
+      }
     }
+    // Main blast now; a second, smaller blast follows (see tick()).
+    burstSparks(950, 32);
+    burstDebris(130);
+
     // Shockwave rings, echoing the countdown ring.
     var waves = [
-      { delay: 0, r: 0, speed: reach / 28, width: 14, color: '255,255,255' },
-      { delay: 5, r: 0, speed: reach / 34, width: 6, color: '125,249,255' },
-      { delay: 10, r: 0, speed: reach / 40, width: 3, color: '255,233,168' }
+      { delay: 0, r: 0, speed: reach / 24, width: 22, color: '255,255,255' },
+      { delay: 4, r: 0, speed: reach / 30, width: 10, color: '125,249,255' },
+      { delay: 9, r: 0, speed: reach / 36, width: 5, color: '255,233,168' },
+      { delay: 16, r: 0, speed: reach / 26, width: 12, color: '0,229,255' }
     ];
 
     var frame = 0;
     function tick() {
       frame++;
+      if (frame === 27) { // ~0.45s, in step with the shake's aftershock
+        burstSparks(450, 26);
+        burstDebris(40);
+      }
       ctx.clearRect(0, 0, W, H);
       var alive = false;
 
